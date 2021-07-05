@@ -17,6 +17,7 @@ function ContentColumn() {
 
   return (
     <Grid container item direction="column">
+      Title
       <Paper className={classes.root}>
         {
           data[0].cards.map(card => {
