@@ -1,8 +1,24 @@
+import React from 'react';
 import { useState } from 'react';
 import { DragDropContext, DropResult, Droppable } from 'react-beautiful-dnd';
 import styled from 'styled-components';
 import Column from './components/Column'
-import initialData, { ColumnsInterface, TasksInterface } from './initial-data';
+import initialData, { ColumnInterface, ColumnsInterface, TasksInterface } from './initial-data';
+
+interface InnerListProps {
+  column: ColumnInterface
+  taskMap: TasksInterface
+  index: number
+}
+
+const InnerList = React.memo(({ column, taskMap, index }: InnerListProps) => {
+  //make this generic or use a type guard???
+  const tasks = column.taskIds.map(taskId => taskMap[taskId as keyof TasksInterface]);
+
+  return (
+    <Column column={column} tasks={tasks} index={index}/>
+  )
+})
 
 function App() {
   const [state, setState] = useState(initialData)
@@ -95,10 +111,8 @@ function App() {
               state.columnOrder.map((columnId, index) => {
                 //make this generic or use a type guard????
                 const column = state.columns[columnId as keyof ColumnsInterface];
-                //make this generic or use a type guard????
-                const tasks = column.taskIds.map(taskId => state.tasks[taskId as keyof TasksInterface]);
           
-                return <Column key={column.id} column={column} tasks={tasks} index={index}/>;
+                return <InnerList key={column.id} column={column} taskMap={state.tasks} index={index}/>;
               })
             }
           </Container>

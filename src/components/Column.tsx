@@ -1,7 +1,8 @@
 import styled from 'styled-components'
 import Task from './Task'
 import { Draggable, Droppable } from 'react-beautiful-dnd';
-import { ColumnInterface, TaskInterface } from '../initial-data'
+import { ColumnInterface, TaskInterface } from '../initial-data';
+import React from 'react';
 
 const Container = styled.div`
   margin: 8px;
@@ -30,6 +31,22 @@ const TaskList = styled.div<BoardItemStylesProps>`
   min-height: 100px;
 `;
 
+interface InnerListProps {
+  tasks: TaskInterface[]
+}
+
+const InnerList = React.memo(({ tasks }: InnerListProps) => {
+  return (
+    <>
+      {
+        tasks.map((task, index) => (
+          <Task key={task.id} task={task} index={index} />
+        ))
+      }
+    </>
+  )
+})
+
 interface Props {
   column: ColumnInterface
   index: number
@@ -51,7 +68,7 @@ function Column({ column, index, tasks }: Props) {
                 {...provided.droppableProps}
                 isDraggingOver={snapshot.isDraggingOver}
               >
-                {tasks.map((task, index)=> <Task key={task.id} task={task} index={index}/>)}
+                <InnerList tasks={tasks} />
                 {provided.placeholder}
               </TaskList>
             )}
