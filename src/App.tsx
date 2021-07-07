@@ -1,169 +1,111 @@
-import { useState } from "react";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-
-// fake data generator
-const getItems = (count: number, offset = 0) =>
-  Array.from({ length: count }, (v, k) => k).map(k => ({
-    id: `item-${k + offset}-${new Date().getTime()}`,
-    content: `item ${k + offset}`
-  }));
-
-const reorder = (list: any, startIndex: any, endIndex: any) => {
-  const result = Array.from(list);
-  const [removed] = result.splice(startIndex, 1);
-  result.splice(endIndex, 0, removed);
-
-  return result;
-};
-
-/**
- * Moves an item from one list to another list.
- */
-const move = (source: any, destination: any, droppableSource: any, droppableDestination: any) => {
-  const sourceClone = Array.from(source);
-  const destClone = Array.from(destination);
-  const [removed] = sourceClone.splice(droppableSource.index, 1);
-
-  destClone.splice(droppableDestination.index, 0, removed);
-
-  const result = {};
-  // @ts-ignore
-  result[droppableSource.droppableId]  = sourceClone;
-  // @ts-ignore
-  result[droppableDestination.droppableId] = destClone;
-
-  return result;
-};
-
-const grid = 8;
-
-const getItemStyle = (isDragging: any, draggableStyle: any) => ({
-  // some basic styles to make the items look a bit nicer
-  userSelect: "none",
-  padding: grid * 2,
-  margin: `0 0 ${grid}px 0`,
-
-  // change background colour if dragging
-  background: isDragging ? "lightgreen" : "grey",
-
-  // styles we need to apply on draggables
-  ...draggableStyle
-});
-
-const getListStyle = ( isDraggingOver: boolean ) => ({
-  background: isDraggingOver ? "lightblue" : "lightgrey",
-  padding: grid,
-  width: 250
-});
+import { useState } from 'react';
+import { DragDropContext, DropResult, Droppable } from 'react-beautiful-dnd';
+import styled from 'styled-components';
+import Column from './components/Column'
+import initialData, { ColumnsInterface, TasksInterface } from './initial-data';
 
 function App() {
-  const [state, setState] = useState([getItems(10), getItems(5, 10)]);
+  const [state, setState] = useState(initialData)
 
-  function onDragEnd(result: any) {
-    const { source, destination } = result;
-
-    // dropped outside the list
-    if (!destination) {
+  let onDragEnd = (result: DropResult) => {
+    const { destination, draggableId, source, type } = result;
+  
+    if (!destination) return;
+  
+    if (destination.droppableId === source.droppableId && destination.index === source.index) {
       return;
     }
-    const sInd = +source.droppableId;
-    const dInd = +destination.droppableId;
-
-    if (sInd === dInd) {
-      const items = reorder(state[sInd], source.index, destination.index);
-      const newState = [...state];
-      // @ts-ignore
-      newState[sInd] = items;
+  
+    if (type === 'column') {
+      const newColumnOrder = Array.from(state.columnOrder);
+      newColumnOrder.splice(source.index, 1);
+      newColumnOrder.splice(destination.index, 0, draggableId);
+    
+      const newState = {
+        ...state,
+        columnOrder: newColumnOrder,
+      };
       setState(newState);
-    } else {
-      const result = move(state[sInd], state[dInd], source, destination);
-      const newState = [...state];
-      // @ts-ignore
-      newState[sInd] = result[sInd];
-      // @ts-ignore
-      newState[dInd] = result[dInd];
-
-      setState(newState.filter(group => group.length));
+      return
     }
-  }
+
+    //make these generic or use a typeguard?????
+    const start = state.columns[source.droppableId as keyof ColumnsInterface];
+    const finish = state.columns[destination.droppableId as keyof ColumnsInterface];
+
+    if (start === finish) {
+      const column = state.columns[source.droppableId as keyof ColumnsInterface];
+      const newTaskIds = Array.from(column.taskIds);
+      newTaskIds.splice(source.index, 1);
+      newTaskIds.splice(destination.index, 0, draggableId);
+    
+      const newColumn = {
+        ...column,
+        taskIds: newTaskIds,
+      };
+    
+      const newState = {
+        ...state,
+        columns: {
+          ...state.columns,
+          [newColumn.id]: newColumn,
+        },
+      };
+    
+      setState(newState);
+      return
+    }
+
+    //if moving to a new column
+    const startTaskIds = Array.from(start.taskIds);
+    startTaskIds.splice(source.index, 1);
+    const newStart = {
+      ...start,
+      taskIds: startTaskIds,
+    };
+
+    const finishTaskIds = Array.from(finish.taskIds);
+    finishTaskIds.splice(destination.index, 0, draggableId);
+    const newFinish = {
+      ...finish,
+      taskIds: finishTaskIds,
+    };
+
+    const newState = {
+      ...state,
+      columns: {
+        ...state.columns,
+        [newStart.id]: newStart,
+        [newFinish.id]: newFinish,
+      },
+    };
+    setState(newState);
+  };
+
+  const Container = styled.div`
+    display: flex;
+  `;
 
   return (
-    <div>
-      <button
-        type="button"
-        onClick={() => {
-          setState([...state, []]);
-        }}
-      >
-        Add new group
-      </button>
-      <button
-        type="button"
-        onClick={() => {
-          setState([...state, getItems(1)]);
-        }}
-      >
-        Add new item
-      </button>
-      <div style={{ display: "flex" }}>
-        <DragDropContext onDragEnd={onDragEnd}>
-          {state.map((el, ind) => (
-            <Droppable key={ind} droppableId={`${ind}`}>
-              {(provided, snapshot) => (
-                <div
-                  ref={provided.innerRef}
-                  style={getListStyle(snapshot.isDraggingOver)}
-                  {...provided.droppableProps}
-                >
-                  {el.map((item, index) => (
-                    <Draggable
-                      key={item.id}
-                      draggableId={item.id}
-                      index={index}
-                    >
-                      {(provided, snapshot) => (
-                        <div
-                          ref={provided.innerRef}
-                          {...provided.draggableProps}
-                          {...provided.dragHandleProps}
-                          style={getItemStyle(
-                            snapshot.isDragging,
-                            provided.draggableProps.style
-                          )}
-                        >
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "space-around"
-                            }}
-                          >
-                            {item.content}
-                            <button
-                              type="button"
-                              onClick={() => {
-                                const newState = [...state];
-                                newState[ind].splice(index, 1);
-                                setState(
-                                  newState.filter(group => group.length)
-                                );
-                              }}
-                            >
-                              delete
-                            </button>
-                          </div>
-                        </div>
-                      )}
-                    </Draggable>
-                  ))}
-                  {provided.placeholder}
-                </div>
-              )}
-            </Droppable>
-          ))}
-        </DragDropContext>
-      </div>
-    </div>
-  );
+    <DragDropContext onDragEnd={onDragEnd}>
+      <Droppable droppableId="all-columns" direction="horizontal" type="column">
+        {provided => (
+          <Container {...provided.droppableProps} ref={provided.innerRef}>
+            {
+              state.columnOrder.map((columnId, index) => {
+                //make this generic or use a type guard????
+                const column = state.columns[columnId as keyof ColumnsInterface];
+                //make this generic or use a type guard????
+                const tasks = column.taskIds.map(taskId => state.tasks[taskId as keyof TasksInterface]);
+          
+                return <Column key={column.id} column={column} tasks={tasks} index={index}/>;
+              })
+            }
+          </Container>
+        )}
+      </Droppable>
+    </DragDropContext>
+  )
 }
 
 export default App;
