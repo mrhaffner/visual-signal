@@ -91,13 +91,17 @@ const Board = () => {
     <DragDropContext onDragEnd={onDragEnd}>
       <Droppable droppableId="all-columns" direction="horizontal" type="column">
         {provided => (
-          <Grid {...provided.droppableProps} ref={provided.innerRef} container direction="row">
+          <Grid {...provided.droppableProps} ref={provided.innerRef} container direction="row" spacing={2}>
             {
               state.columnOrder.map((columnId, index) => {
                 //make this generic or use a type guard????
                 const column = state.columns[columnId as keyof ColumnsInterface];
           
-                return <ColumnList key={column.id} column={column} taskMap={state.tasks} index={index}/>;
+                return (
+                  <Grid item>
+                    <ColumnList key={column.id} column={column} taskMap={state.tasks} index={index}/>
+                  </Grid>
+                  );
               })
             }
           </Grid>
