@@ -1,7 +1,8 @@
 import ContentCard from './ContentCard';
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid, Paper } from '@material-ui/core/';
-import { data } from '../data';
+
+const data = [{}]
 
 const useStyles = makeStyles({
   root: {
@@ -18,13 +19,13 @@ function ContentColumn() {
   return (
     <Grid container item direction="column">
       Title
-      <Paper className={classes.root}>
+      {/* <Paper className={classes.root}>
         {
           data[0].cards.map(card => {
             return <ContentCard key={card.id} title={card.title} />
           })
         }
-      </Paper>
+      </Paper> */}
     </Grid>
   );
 }
