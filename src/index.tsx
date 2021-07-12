@@ -1,13 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import CssBaseline from '@material-ui/core/CssBaseline';
+import { CssBaseline, StylesProvider } from '@material-ui/core';
 import '@fontsource/roboto';
 
 ReactDOM.render(
   <React.StrictMode>
     <CssBaseline />
-    <App />
+    <StylesProvider injectFirst>
+      <App />
+    </StylesProvider>
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById('root'),
 );

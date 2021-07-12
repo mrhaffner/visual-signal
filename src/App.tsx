@@ -1,4 +1,4 @@
-import NavBar from './components/NavBar'
+import NavBar from './components/NavBar';
 import Board from './pages/Board';
 
 const App = () => (

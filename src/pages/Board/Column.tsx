@@ -1,11 +1,9 @@
 import TaskList from './TaskList';
-import styled from 'styled-components'
+import styled from 'styled-components';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 import { ColumnInterface, TaskInterface } from '../../initial-data';
-import { makeStyles } from '@material-ui/core/styles';
-import { Grid, Paper, Container, Typography } from '@material-ui/core/';
+import { Paper, Typography } from '@material-ui/core/';
 
-//aka root
 // const Container = styled.div`
 //   margin: 8px;
 //   border: 1px solid lightgrey;
@@ -17,63 +15,58 @@ import { Grid, Paper, Container, Typography } from '@material-ui/core/';
 //   flex-direction: column;
 // `;
 
-const useStyles = makeStyles({
-  root: {
-    width: "220px",
-  },
-  title: {
-    padding: 8
-  }
-});
-
 // const Title = styled.h3`
 //   padding: 8px;
 // `;
 
+const Wrapper = styled(Paper)`
+  width: 200px;
+`;
+
+const Title = styled(Typography)`
+  padding: 8px;
+`;
+
 type BoardItemStylesProps = {
-  isDraggingOver: boolean
-}
+  isDraggingOver: boolean;
+};
 
 const List = styled.div<BoardItemStylesProps>`
   padding: 8px;
   transition: background-color 0.2s ease;
-  background-color: ${props => (props.isDraggingOver ? 'skyblue' : 'white')};
+  background-color: ${(props) => (props.isDraggingOver ? 'skyblue' : 'white')};
   flex-grow: 1;
   min-height: 100px;
 `;
 
 interface Props {
-  column: ColumnInterface
-  index: number
-  tasks: TaskInterface[]
+  column: ColumnInterface;
+  index: number;
+  tasks: TaskInterface[];
 }
 
-const Column = ({ column, index, tasks }: Props) => {
-  const classes = useStyles();
+const Column = ({ column, index, tasks }: Props) => (
+  <Draggable draggableId={column.id} index={index}>
+    {(provided) => (
+      <Wrapper {...provided.draggableProps} ref={provided.innerRef}>
+        <Title {...provided.dragHandleProps} variant="subtitle1">
+          {column.title}
+        </Title>
+        <Droppable droppableId={column.id} type="task">
+          {(provided, snapshot) => (
+            <List
+              ref={provided.innerRef}
+              {...provided.droppableProps}
+              isDraggingOver={snapshot.isDraggingOver}
+            >
+              <TaskList tasks={tasks} />
+              {provided.placeholder}
+            </List>
+          )}
+        </Droppable>
+      </Wrapper>
+    )}
+  </Draggable>
+);
 
-  return (
-    <Draggable draggableId={column.id} index={index}>
-      {provided => (
-        <Paper {...provided.draggableProps} ref={provided.innerRef} className={classes.root}>
-          <Typography {...provided.dragHandleProps} className={classes.title} variant="subtitle1">
-            {column.title}
-          </Typography>
-          <Droppable droppableId={column.id} type='task'>
-            {(provided, snapshot) => (
-              <List 
-                ref={provided.innerRef} 
-                {...provided.droppableProps}
-                isDraggingOver={snapshot.isDraggingOver}
-              >
-                <TaskList tasks={tasks} />
-                {provided.placeholder}
-              </List>
-            )}
-          </Droppable>
-        </Paper>
-      )}
-    </Draggable>
-  )
-}
-
-export default Column
+export default Column;
