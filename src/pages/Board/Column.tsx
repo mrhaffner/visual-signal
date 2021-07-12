@@ -4,24 +4,25 @@ import { Draggable, Droppable } from 'react-beautiful-dnd';
 import { ColumnInterface, TaskInterface } from '../../initial-data';
 import { Paper, Typography } from '@material-ui/core/';
 
-// const Container = styled.div`
-//   margin: 8px;
-//   border: 1px solid lightgrey;
-//   background-color: white;
-//   border-radius: 2px;
-//   width: 220px;
+const Wrapper = styled.div`
+  margin: 8px;
+  border: 1px solid lightgrey;
+  background-color: white;
+  border-radius: 2px;
+  width: 220px;
 
-//   display: flex;
-//   flex-direction: column;
-// `;
+  display: flex;
+  flex-direction: column;
+`;
 
 // const Title = styled.h3`
 //   padding: 8px;
 // `;
 
-const Wrapper = styled(Paper)`
-  width: 200px;
-`;
+// const Wrapper = styled(Paper)`
+//   margin: 8px;
+//   width: 220px;
+// `;
 
 const Title = styled(Typography)`
   padding: 8px;
