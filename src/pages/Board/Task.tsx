@@ -6,11 +6,6 @@ type BoardItemStylesProps = {
   isDragging: boolean;
 };
 
-// const Wrapper = styled(Card)<BoardItemStylesProps>`
-//   margin-bottom: 8px;
-//   background-color: ${(props) => (props.isDragging ? 'lightgreen' : 'white')};
-// `;
-
 const Wrapper = styled.div<BoardItemStylesProps>`
   border: 1px solid lightgrey;
   border-radius: 2px;

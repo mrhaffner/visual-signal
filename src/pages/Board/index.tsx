@@ -12,26 +12,26 @@ const Board = () => {
   const [state, setState] = useState(boardData);
 
   let onDragEnd = (result: DropResult) => {
-    // const { destination, draggableId, source, type } = result;
-    // if (!destination) return;
-    // if (
-    //   destination.droppableId === source.droppableId &&
-    //   destination.index === source.index
-    // ) {
-    //   return;
-    // }
+    const { destination, draggableId, source, type } = result;
+
+    if (!destination) return;
+
+    if (
+      destination.droppableId === source.droppableId &&
+      destination.index === source.index
+    ) {
+      return;
+    }
+
     // //reorder columns
-    // if (type === 'column') {
-    //   const newColumnOrder = Array.from(state.columnOrder);
-    //   newColumnOrder.splice(source.index, 1);
-    //   newColumnOrder.splice(destination.index, 0, draggableId);
-    //   const newState = {
-    //     ...state,
-    //     columnOrder: newColumnOrder,
-    //   };
-    //   setState(newState);
-    //   return;
-    // }
+    if (type === 'column') {
+      const newState = Array.from(state);
+      const splicedColumn = newState.splice(source.index, 1);
+      newState.splice(destination.index, 0, ...splicedColumn);
+      setState(newState);
+      return;
+    }
+    // /////////////////////////////
     // //make these generic or use a typeguard?????
     // const start = state.columns[source.droppableId as keyof ColumnsInterface];
     // const finish =
