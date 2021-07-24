@@ -1,33 +1,33 @@
 export interface TaskInterface {
-  id: string
-  content: string
+  id: string;
+  content: string;
 }
 
 //make this generic????
 export interface TasksInterface {
-  'task-1': TaskInterface
-  'task-2': TaskInterface
-  'task-3': TaskInterface
-  'task-4': TaskInterface
+  'task-1': TaskInterface;
+  'task-2': TaskInterface;
+  'task-3': TaskInterface;
+  'task-4': TaskInterface;
 }
 
 export interface ColumnInterface {
-  id: string
-  title: string
-  taskIds: string[]
+  id: string;
+  title: string;
+  taskIds: string[];
 }
 
 //make this generic????
 export interface ColumnsInterface {
-  'column-1': ColumnInterface
-  'column-2': ColumnInterface
-  'column-3': ColumnInterface
+  'column-1': ColumnInterface;
+  'column-2': ColumnInterface;
+  'column-3': ColumnInterface;
 }
 
 interface iData {
-  tasks: TasksInterface
-  columns: ColumnsInterface
-  columnOrder: string[]
+  tasks: TasksInterface;
+  columns: ColumnsInterface;
+  columnOrder: string[];
 }
 
 const initialData: iData = {
@@ -52,10 +52,10 @@ const initialData: iData = {
       id: 'column-3',
       title: 'Done',
       taskIds: [],
-    }
+    },
   },
   // Facilitate reordering of the columns
-  columnOrder: [ 'column-1', 'column-2', 'column-3']
+  columnOrder: ['column-1', 'column-2', 'column-3'],
 };
-  
-  export default initialData;
+
+export default initialData;

@@ -3,6 +3,7 @@ import { DragDropContext, DropResult, Droppable } from 'react-beautiful-dnd';
 import styled from 'styled-components';
 import ColumnList from './ColumnList';
 import initialData, { ColumnsInterface } from '../../initial-data';
+import { Button } from '@material-ui/core';
 
 const Wrapper = styled.div`
   display: flex;
@@ -10,6 +11,7 @@ const Wrapper = styled.div`
 
 const Board = () => {
   const [state, setState] = useState(initialData);
+  const [idCounter, setIdCounter] = useState(4);
 
   let onDragEnd = (result: DropResult) => {
     const { destination, draggableId, source, type } = result;
@@ -41,6 +43,7 @@ const Board = () => {
     const finish =
       state.columns[destination.droppableId as keyof ColumnsInterface];
 
+    //if moving within the same column
     if (start === finish) {
       const column =
         state.columns[source.droppableId as keyof ColumnsInterface];
@@ -91,6 +94,31 @@ const Board = () => {
     setState(newState);
   };
 
+  //add ability to add name
+  const addColumn = () => {
+    const newId = `column-${idCounter}`;
+    const newColumnOrder = Array.from(state.columnOrder);
+    newColumnOrder.push(newId);
+    const newState = {
+      ...state,
+      columns: {
+        ...state.columns,
+        [newId]: {
+          id: newId,
+          title: `${Math.random()}`,
+          taskIds: [],
+        },
+      },
+      columnOrder: newColumnOrder,
+    };
+    setState(newState);
+    setIdCounter(idCounter + 1);
+  };
+
+  const addTask = () => {};
+  const deleteColumn = () => {};
+  const deleteTask = () => {};
+
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <Droppable droppableId="all-columns" direction="horizontal" type="column">
@@ -108,6 +136,10 @@ const Board = () => {
                 />
               );
             })}
+
+            <div>
+              <Button onClick={() => addColumn()}>Add Column</Button>
+            </div>
           </Wrapper>
         )}
       </Droppable>
