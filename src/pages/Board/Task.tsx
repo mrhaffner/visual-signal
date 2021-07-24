@@ -1,8 +1,6 @@
 import styled from 'styled-components';
 import { Draggable } from 'react-beautiful-dnd';
-import { TaskInterface } from '../../initial-data';
-
-import { Card, CardContent, Typography } from '@material-ui/core';
+import { TaskInterface } from '../../board-data';
 
 type BoardItemStylesProps = {
   isDragging: boolean;
@@ -35,7 +33,7 @@ const Task = ({ task, index }: Props) => (
         ref={provided.innerRef}
         isDragging={snapshot.isDragging}
       >
-        <Typography variant="subtitle2">{task.content}</Typography>
+        <div>{task.content}</div>
       </Wrapper>
     )}
   </Draggable>

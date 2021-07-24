@@ -1,8 +1,7 @@
 import TaskList from './TaskList';
 import styled from 'styled-components';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
-import { ColumnInterface, TaskInterface } from '../../initial-data';
-import { Paper, Typography } from '@material-ui/core/';
+import { ColumnInterface } from '../../board-data';
 
 const Wrapper = styled.div`
   margin: 8px;
@@ -15,16 +14,7 @@ const Wrapper = styled.div`
   flex-direction: column;
 `;
 
-// const Title = styled.h3`
-//   padding: 8px;
-// `;
-
-// const Wrapper = styled(Paper)`
-//   margin: 8px;
-//   width: 220px;
-// `;
-
-const Title = styled(Typography)`
+const Title = styled.h3`
   padding: 8px;
 `;
 
@@ -43,16 +33,13 @@ const List = styled.div<BoardItemStylesProps>`
 interface Props {
   column: ColumnInterface;
   index: number;
-  tasks: TaskInterface[];
 }
 
-const Column = ({ column, index, tasks }: Props) => (
+const Column = ({ column, index }: Props) => (
   <Draggable draggableId={column.id} index={index}>
     {(provided) => (
       <Wrapper {...provided.draggableProps} ref={provided.innerRef}>
-        <Title {...provided.dragHandleProps} variant="subtitle1">
-          {column.title}
-        </Title>
+        <Title {...provided.dragHandleProps}>{column.title}</Title>
         <Droppable droppableId={column.id} type="task">
           {(provided, snapshot) => (
             <List
@@ -60,7 +47,7 @@ const Column = ({ column, index, tasks }: Props) => (
               {...provided.droppableProps}
               isDraggingOver={snapshot.isDraggingOver}
             >
-              <TaskList tasks={tasks} />
+              <TaskList tasks={column.tasks} />
               {provided.placeholder}
             </List>
           )}

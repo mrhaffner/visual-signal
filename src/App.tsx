@@ -1,11 +1,5 @@
-import NavBar from './components/NavBar';
 import Board from './pages/Board';
 
-const App = () => (
-  <>
-    <NavBar />
-    <Board />
-  </>
-);
+const App = () => <Board />;
 
 export default App;

@@ -1,12 +1,12 @@
 import React from 'react';
 import Task from './Task';
-import { TaskInterface } from '../../initial-data';
+import { TaskInterface } from '../../board-data';
 
-interface InnerListProps {
+interface Props {
   tasks: TaskInterface[];
 }
 
-const TaskList = React.memo(({ tasks }: InnerListProps) => (
+const TaskList = React.memo(({ tasks }: Props) => (
   <>
     {tasks.map((task, index) => (
       <Task key={task.id} task={task} index={index} />
