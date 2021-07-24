@@ -3,7 +3,6 @@ import { DragDropContext, DropResult, Droppable } from 'react-beautiful-dnd';
 import styled from 'styled-components';
 import ColumnList from './ColumnList';
 import boardData from '../../board-data';
-import { ColumnInterface } from '../../board-data';
 
 const Wrapper = styled.div`
   display: flex;
@@ -13,7 +12,7 @@ const Board = () => {
   const [state, setState] = useState(boardData);
 
   let onDragEnd = (result: DropResult) => {
-    const { destination, draggableId, source, type } = result;
+    const { destination, source, type } = result;
 
     if (!destination) return;
 
@@ -94,7 +93,7 @@ const Board = () => {
         {(provided) => (
           <Wrapper {...provided.droppableProps} ref={provided.innerRef}>
             <ColumnList columns={state} />
-            {/* placeholder? */}
+            {provided.placeholder}
           </Wrapper>
         )}
       </Droppable>
