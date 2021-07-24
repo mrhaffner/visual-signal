@@ -27,22 +27,23 @@ const Board = () => {
     //reorder columns
     if (type === 'column') {
       const newState = Array.from(state);
-      const splicedColumn = newState.splice(source.index, 1)[0]; //changed this form desctructure
+      const splicedColumn = newState.splice(source.index, 1)[0];
       newState.splice(destination.index, 0, splicedColumn);
       setState(newState);
       return;
     }
-    //this probably needs to change
+
     const start = source.droppableId;
     const finish = destination.droppableId;
 
+    //if a task is moved within the same column, reorder tasks
     if (start === finish) {
       const column = state.filter((col) => col.id === start)[0];
 
       const newTaskArray = Array.from(column.tasks);
 
-      const splicedTask = newTaskArray.splice(source.index, 1);
-      newTaskArray.splice(destination.index, 0, ...splicedTask);
+      const splicedTask = newTaskArray.splice(source.index, 1)[0];
+      newTaskArray.splice(destination.index, 0, splicedTask);
 
       const newColumn = {
         ...column,
@@ -54,55 +55,37 @@ const Board = () => {
       setState(newState);
       return;
     }
-    /////////////////////////////
-    //make these generic or use a typeguard?????
-    // const start = state.columns[source.droppableId as keyof ColumnsInterface];
-    // const finish =
-    //   state.columns[destination.droppableId as keyof ColumnsInterface];
 
-    // //if moving within the same column
-    // if (start === finish) {
-    //   const column =
-    //     state.columns[source.droppableId as keyof ColumnsInterface];
-    //   const newTaskIds = Array.from(column.taskIds);
-    //   newTaskIds.splice(source.index, 1);
-    //   newTaskIds.splice(destination.index, 0, draggableId);
-    //   const newColumn = {
-    //     ...column,
-    //     taskIds: newTaskIds,
-    //   };
-    //   const newState = {
-    //     ...state,
-    //     columns: {
-    //       ...state.columns,
-    //       [newColumn.id]: newColumn,
-    //     },
-    //   };
-    //   setState(newState);
-    //   return;
-    // }
-    //if moving to a new column
-    // const startTaskIds = Array.from(start.taskIds);
-    // startTaskIds.splice(source.index, 1);
-    // const newStart = {
-    //   ...start,
-    //   taskIds: startTaskIds,
-    // };
-    // const finishTaskIds = Array.from(finish.taskIds);
-    // finishTaskIds.splice(destination.index, 0, draggableId);
-    // const newFinish = {
-    //   ...finish,
-    //   taskIds: finishTaskIds,
-    // };
-    // const newState = {
-    //   ...state,
-    //   columns: {
-    //     ...state.columns,
-    //     [newStart.id]: newStart,
-    //     [newFinish.id]: newFinish,
-    //   },
-    // };
-    // setState(newState);
+    //if a task is moved between columns
+    const startColumn = state.filter((col) => col.id === start)[0];
+    const newStartTaskArray = Array.from(startColumn.tasks);
+    const splicedTask = newStartTaskArray.splice(source.index, 1)[0];
+
+    const newStartColumn = {
+      ...startColumn,
+      tasks: newStartTaskArray,
+    };
+
+    const finishColumn = state.filter((col) => col.id === finish)[0];
+    const newFinishTaskArray = Array.from(finishColumn.tasks);
+    newFinishTaskArray.splice(destination.index, 0, splicedTask);
+
+    const newFinishColumn = {
+      ...finishColumn,
+      tasks: newFinishTaskArray,
+    };
+
+    const newState = state.map((col) => {
+      if (col.id === start) {
+        return newStartColumn;
+      } else if (col.id === finish) {
+        return newFinishColumn;
+      } else {
+        return col;
+      }
+    });
+
+    setState(newState);
   };
 
   return (
