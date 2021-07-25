@@ -11,6 +11,7 @@ const Wrapper = styled.div`
 const Board = () => {
   const [state, setState] = useState(boardData);
 
+  //make this into a hook/hooks?
   let onDragEnd = (result: DropResult) => {
     const { destination, source, type } = result;
 
@@ -87,13 +88,39 @@ const Board = () => {
     setState(newState);
   };
 
+  const newColumn = () => {
+    const column = {
+      id: `${Math.random()}`,
+      title: `${Math.random()}`,
+      tasks: [],
+    };
+    const newState = [...state, column];
+    setState(newState);
+  };
+
+  const deleteColumn = (columnId: string) => {
+    const newState = state.filter((x) => x.id !== columnId);
+    setState(newState);
+  };
+  const newTask = () => {};
+  const deleteTask = () => {};
+
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <Droppable droppableId="all-columns" direction="horizontal" type="column">
         {(provided) => (
           <Wrapper {...provided.droppableProps} ref={provided.innerRef}>
-            <ColumnList columns={state} />
+            <ColumnList columns={state} deleteColumn={deleteColumn} />
             {provided.placeholder}
+            <div>
+              <button
+                onClick={() => {
+                  newColumn();
+                }}
+              >
+                Add Column
+              </button>
+            </div>
           </Wrapper>
         )}
       </Droppable>

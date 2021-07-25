@@ -4,12 +4,18 @@ import { ColumnInterface } from '../../board-data';
 
 interface Props {
   columns: ColumnInterface[];
+  deleteColumn: (columnId: string) => void;
 }
 
-const ColumnList = React.memo(({ columns }: Props) => (
+const ColumnList = React.memo(({ columns, deleteColumn }: Props) => (
   <>
     {columns.map((column, index) => (
-      <Column key={column.id} column={column} index={index} />
+      <Column
+        key={column.id}
+        column={column}
+        index={index}
+        deleteColumn={deleteColumn}
+      />
     ))}
   </>
 ));

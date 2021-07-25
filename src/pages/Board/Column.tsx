@@ -33,13 +33,15 @@ const List = styled.div<BoardItemStylesProps>`
 interface Props {
   column: ColumnInterface;
   index: number;
+  deleteColumn: (columnId: string) => void;
 }
 
-const Column = ({ column, index }: Props) => (
+const Column = ({ column, index, deleteColumn }: Props) => (
   <Draggable draggableId={column.id} index={index}>
     {(provided) => (
       <Wrapper {...provided.draggableProps} ref={provided.innerRef}>
         <Title {...provided.dragHandleProps}>{column.title}</Title>
+        <button onClick={() => deleteColumn(column.id)}>Delete Me</button>
         <Droppable droppableId={column.id} type="task">
           {(provided, snapshot) => (
             <List
