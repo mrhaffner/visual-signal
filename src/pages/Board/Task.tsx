@@ -17,9 +17,11 @@ const Wrapper = styled.div<BoardItemStylesProps>`
 interface Props {
   task: TaskInterface;
   index: number;
+  columnId: string;
+  deleteTask: (columnId: string, taskId: string) => void;
 }
 
-const Task = ({ task, index }: Props) => (
+const Task = ({ task, index, columnId, deleteTask }: Props) => (
   <Draggable draggableId={task.id} index={index}>
     {(provided, snapshot) => (
       <Wrapper
@@ -29,6 +31,7 @@ const Task = ({ task, index }: Props) => (
         isDragging={snapshot.isDragging}
       >
         <div>{task.content}</div>
+        <button onClick={() => deleteTask(columnId, task.id)}>Delete Me</button>
       </Wrapper>
     )}
   </Draggable>

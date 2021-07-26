@@ -103,21 +103,6 @@ const Board = () => {
     setState(newState);
   };
 
-  // const newTask = (columnId: string) => {
-  //   const task = {
-  //     id: `${Math.random()}`,
-  //     content: `${Math.random()}`,
-  //   };
-
-  //   const column = state.filter((x) => x.id === columnId)[0];
-  //   //this mutates state...what else mutates state?
-  //   //need to go back and check all previous functions
-  //   column.tasks.push(task);
-
-  //   const newState = state.map((x) => (x.id === columnId ? column : x));
-  //   setState(newState);
-  // };
-
   const newTask = (columnId: string) => {
     const task = {
       id: `${Math.random()}`,
@@ -125,18 +110,30 @@ const Board = () => {
     };
 
     //this line is very ugly, probably update with .find
-    const newTasks = state.filter((x) => x.id === columnId)[0].tasks;
-    const newNewTasks = [...newTasks, task];
+    const taskList = state.filter((x) => x.id === columnId)[0].tasks;
+    const newTaskList = [...taskList, task];
 
     const newState = state.map((x) =>
-      x.id === columnId ? { ...x, tasks: newNewTasks } : x,
+      x.id === columnId ? { ...x, tasks: newTaskList } : x,
     );
     console.log(state);
 
     setState(newState);
   };
 
-  const deleteTask = () => {};
+  const deleteTask = (columnId: string, taskId: string) => {
+    //probably should change this line
+    const taskList = state.filter((x) => x.id === columnId)[0].tasks;
+    const newTaskList = [...taskList].filter((x) => x.id !== taskId);
+    console.log(state);
+
+    const newState = state.map((x) =>
+      x.id === columnId ? { ...x, tasks: newTaskList } : x,
+    );
+    console.log(state);
+
+    setState(newState);
+  };
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
@@ -147,6 +144,7 @@ const Board = () => {
               columns={state}
               deleteColumn={deleteColumn}
               newTask={newTask}
+              deleteTask={deleteTask}
             />
             {provided.placeholder}
             <div>

@@ -35,9 +35,16 @@ interface Props {
   index: number;
   deleteColumn: (columnId: string) => void;
   newTask: (columnId: string) => void;
+  deleteTask: (columnId: string, taskId: string) => void;
 }
 
-const Column = ({ column, index, deleteColumn, newTask }: Props) => (
+const Column = ({
+  column,
+  index,
+  deleteColumn,
+  newTask,
+  deleteTask,
+}: Props) => (
   <Draggable draggableId={column.id} index={index}>
     {(provided) => (
       <Wrapper {...provided.draggableProps} ref={provided.innerRef}>
@@ -50,7 +57,11 @@ const Column = ({ column, index, deleteColumn, newTask }: Props) => (
               {...provided.droppableProps}
               isDraggingOver={snapshot.isDraggingOver}
             >
-              <TaskList tasks={column.tasks} />
+              <TaskList
+                tasks={column.tasks}
+                deleteTask={deleteTask}
+                columnId={column.id}
+              />
               {provided.placeholder}
             </List>
           )}
