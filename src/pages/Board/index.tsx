@@ -26,9 +26,10 @@ const Board = () => {
 
     //reorder columns
     if (type === 'column') {
-      const newState = Array.from(state);
+      const newState = [...state];
       const splicedColumn = newState.splice(source.index, 1)[0];
       newState.splice(destination.index, 0, splicedColumn);
+
       setState(newState);
       return;
     }
@@ -38,10 +39,9 @@ const Board = () => {
 
     //if a task is moved within the same column, reorder tasks
     if (start === finish) {
-      const column = state.filter((col) => col.id === start)[0];
-
-      const newTaskArray = Array.from(column.tasks);
-
+      const column = state.find((col) => col.id === start);
+      // @ts-ignore comment
+      const newTaskArray = [...column.tasks];
       const splicedTask = newTaskArray.splice(source.index, 1)[0];
       newTaskArray.splice(destination.index, 0, splicedTask);
 
@@ -51,14 +51,15 @@ const Board = () => {
       };
 
       const newState = state.map((col) => (col.id === start ? newColumn : col));
-
+      // @ts-ignore comment
       setState(newState);
       return;
     }
 
     //if a task is moved between columns
-    const startColumn = state.filter((col) => col.id === start)[0];
-    const newStartTaskArray = Array.from(startColumn.tasks);
+    const startColumn = state.find((col) => col.id === start);
+    // @ts-ignore comment
+    const newStartTaskArray = [...startColumn.tasks];
     const splicedTask = newStartTaskArray.splice(source.index, 1)[0];
 
     const newStartColumn = {
@@ -66,8 +67,9 @@ const Board = () => {
       tasks: newStartTaskArray,
     };
 
-    const finishColumn = state.filter((col) => col.id === finish)[0];
-    const newFinishTaskArray = Array.from(finishColumn.tasks);
+    const finishColumn = state.find((col) => col.id === finish);
+    // @ts-ignore comment
+    const newFinishTaskArray = [...finishColumn.tasks];
     newFinishTaskArray.splice(destination.index, 0, splicedTask);
 
     const newFinishColumn = {
@@ -84,7 +86,7 @@ const Board = () => {
         return col;
       }
     });
-
+    // @ts-ignore comment
     setState(newState);
   };
 
