@@ -2,7 +2,13 @@ import { useState } from 'react';
 import { DragDropContext, DropResult, Droppable } from 'react-beautiful-dnd';
 import styled from 'styled-components';
 import ColumnList from './ColumnList';
+import { useForm } from 'react-hook-form';
 import boardData from '../../board-data';
+
+export type FormData = {
+  title: string;
+  content: string;
+};
 
 const Wrapper = styled.div`
   display: flex;
@@ -10,6 +16,7 @@ const Wrapper = styled.div`
 
 const Board = () => {
   const [state, setState] = useState(boardData);
+  const { register, handleSubmit } = useForm<FormData>();
 
   //make this into a hook/hooks?
   let onDragEnd = (result: DropResult) => {
@@ -90,10 +97,12 @@ const Board = () => {
     setState(newState);
   };
 
-  const newColumn = () => {
+  const addColumn = (data: FormData) => {
+    console.log(data);
+
     const column = {
       id: `${Math.random()}`,
-      title: `${Math.random()}`,
+      title: data.title,
       tasks: [],
     };
     const newState = [...state, column];
@@ -105,10 +114,10 @@ const Board = () => {
     setState(newState);
   };
 
-  const newTask = (columnId: string) => {
+  const newTask = (columnId: string, data: FormData) => {
     const task = {
       id: `${Math.random()}`,
-      content: `${Math.random()}`,
+      content: data.content,
     };
 
     // @ts-ignore comment
@@ -132,6 +141,8 @@ const Board = () => {
     setState(newState);
   };
 
+  const onSubmit = handleSubmit((data) => addColumn(data));
+
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <Droppable droppableId="all-columns" direction="horizontal" type="column">
@@ -144,15 +155,10 @@ const Board = () => {
               deleteTask={deleteTask}
             />
             {provided.placeholder}
-            <div>
-              <button
-                onClick={() => {
-                  newColumn();
-                }}
-              >
-                Add Column
-              </button>
-            </div>
+            <form onSubmit={onSubmit}>
+              <input type="text" {...register('title', { required: true })} />
+              <button type="submit">Add Column</button>
+            </form>
           </Wrapper>
         )}
       </Droppable>

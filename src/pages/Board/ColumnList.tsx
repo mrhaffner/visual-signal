@@ -1,11 +1,12 @@
 import React from 'react';
 import Column from './Column';
 import { ColumnInterface } from '../../board-data';
+import { FormData } from './index';
 
 interface Props {
   columns: ColumnInterface[];
   deleteColumn: (columnId: string) => void;
-  newTask: (columnId: string) => void;
+  newTask: (columnId: string, data: FormData) => void;
   deleteTask: (columnId: string, taskId: string) => void;
 }
 
