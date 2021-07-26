@@ -102,7 +102,40 @@ const Board = () => {
     const newState = state.filter((x) => x.id !== columnId);
     setState(newState);
   };
-  const newTask = () => {};
+
+  // const newTask = (columnId: string) => {
+  //   const task = {
+  //     id: `${Math.random()}`,
+  //     content: `${Math.random()}`,
+  //   };
+
+  //   const column = state.filter((x) => x.id === columnId)[0];
+  //   //this mutates state...what else mutates state?
+  //   //need to go back and check all previous functions
+  //   column.tasks.push(task);
+
+  //   const newState = state.map((x) => (x.id === columnId ? column : x));
+  //   setState(newState);
+  // };
+
+  const newTask = (columnId: string) => {
+    const task = {
+      id: `${Math.random()}`,
+      content: `${Math.random()}`,
+    };
+
+    //this line is very ugly, probably update with .find
+    const newTasks = state.filter((x) => x.id === columnId)[0].tasks;
+    const newNewTasks = [...newTasks, task];
+
+    const newState = state.map((x) =>
+      x.id === columnId ? { ...x, tasks: newNewTasks } : x,
+    );
+    console.log(state);
+
+    setState(newState);
+  };
+
   const deleteTask = () => {};
 
   return (
@@ -110,7 +143,11 @@ const Board = () => {
       <Droppable droppableId="all-columns" direction="horizontal" type="column">
         {(provided) => (
           <Wrapper {...provided.droppableProps} ref={provided.innerRef}>
-            <ColumnList columns={state} deleteColumn={deleteColumn} />
+            <ColumnList
+              columns={state}
+              deleteColumn={deleteColumn}
+              newTask={newTask}
+            />
             {provided.placeholder}
             <div>
               <button

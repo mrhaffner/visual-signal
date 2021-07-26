@@ -5,9 +5,10 @@ import { ColumnInterface } from '../../board-data';
 interface Props {
   columns: ColumnInterface[];
   deleteColumn: (columnId: string) => void;
+  newTask: (columnId: string) => void;
 }
 
-const ColumnList = React.memo(({ columns, deleteColumn }: Props) => (
+const ColumnList = React.memo(({ columns, deleteColumn, newTask }: Props) => (
   <>
     {columns.map((column, index) => (
       <Column
@@ -15,6 +16,7 @@ const ColumnList = React.memo(({ columns, deleteColumn }: Props) => (
         column={column}
         index={index}
         deleteColumn={deleteColumn}
+        newTask={newTask}
       />
     ))}
   </>

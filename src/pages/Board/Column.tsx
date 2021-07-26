@@ -34,9 +34,10 @@ interface Props {
   column: ColumnInterface;
   index: number;
   deleteColumn: (columnId: string) => void;
+  newTask: (columnId: string) => void;
 }
 
-const Column = ({ column, index, deleteColumn }: Props) => (
+const Column = ({ column, index, deleteColumn, newTask }: Props) => (
   <Draggable draggableId={column.id} index={index}>
     {(provided) => (
       <Wrapper {...provided.draggableProps} ref={provided.innerRef}>
@@ -54,6 +55,7 @@ const Column = ({ column, index, deleteColumn }: Props) => (
             </List>
           )}
         </Droppable>
+        <button onClick={() => newTask(column.id)}>Add Task</button>
       </Wrapper>
     )}
   </Draggable>
