@@ -109,29 +109,24 @@ const Board = () => {
       content: `${Math.random()}`,
     };
 
-    //this line is very ugly, probably update with .find
-    const taskList = state.filter((x) => x.id === columnId)[0].tasks;
+    // @ts-ignore comment
+    const taskList = state.find((x) => x.id === columnId).tasks;
     const newTaskList = [...taskList, task];
 
     const newState = state.map((x) =>
       x.id === columnId ? { ...x, tasks: newTaskList } : x,
     );
-    console.log(state);
-
     setState(newState);
   };
 
   const deleteTask = (columnId: string, taskId: string) => {
-    //probably should change this line
-    const taskList = state.filter((x) => x.id === columnId)[0].tasks;
-    const newTaskList = [...taskList].filter((x) => x.id !== taskId);
-    console.log(state);
+    // @ts-ignore comment
+    const taskList = state.find((x) => x.id === columnId).tasks;
+    const newTaskList = taskList.filter((x) => x.id !== taskId);
 
     const newState = state.map((x) =>
       x.id === columnId ? { ...x, tasks: newTaskList } : x,
     );
-    console.log(state);
-
     setState(newState);
   };
 
