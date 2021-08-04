@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { DragDropContext, DropResult, Droppable } from 'react-beautiful-dnd';
 import styled from 'styled-components';
 import ColumnList from './ColumnList';
 import { useForm } from 'react-hook-form';
-import boardData from '../../board-data';
+import ALL_LISTS from '../../graphql/queries/getAllLists';
+import { useQuery } from '@apollo/client';
+import { ColumnInterface } from '../../board-data';
 
 export type FormData = {
   title: string;
@@ -15,8 +17,23 @@ const Wrapper = styled.div`
 `;
 
 const Board = () => {
-  const [state, setState] = useState(boardData);
+  const { loading, error, data } = useQuery(ALL_LISTS);
+  const [board, setBoard] = useState<ColumnInterface[]>([]);
+  console.log(data);
+
+  useEffect(() => {
+    if (data) {
+      setBoard(data.allLists);
+      console.log(data.allLists);
+      console.log(data);
+      console.log(board);
+    }
+  }, [data]);
+
   const { register, handleSubmit } = useForm<FormData>();
+
+  if (loading || !board.length) return <p>Loading...</p>;
+  if (error) return <p>Error :(</p>;
 
   //make this into a hook/hooks?
   let onDragEnd = (result: DropResult) => {
@@ -33,11 +50,11 @@ const Board = () => {
 
     //reorder columns
     if (type === 'column') {
-      const newState = [...state];
-      const splicedColumn = newState.splice(source.index, 1)[0];
-      newState.splice(destination.index, 0, splicedColumn);
+      const newBoard = [...board];
+      const splicedColumn = newBoard.splice(source.index, 1)[0];
+      newBoard.splice(destination.index, 0, splicedColumn);
 
-      setState(newState);
+      setBoard(newBoard);
       return;
     }
 
@@ -46,7 +63,7 @@ const Board = () => {
 
     //if a task is moved within the same column, reorder tasks
     if (start === finish) {
-      const column = state.find((col) => col.id === start);
+      const column = board.find((col) => col.id === start);
       // @ts-ignore comment
       const newTaskArray = [...column.tasks];
       const splicedTask = newTaskArray.splice(source.index, 1)[0];
@@ -57,14 +74,14 @@ const Board = () => {
         tasks: newTaskArray,
       };
 
-      const newState = state.map((col) => (col.id === start ? newColumn : col));
+      const newBoard = board.map((col) => (col.id === start ? newColumn : col));
       // @ts-ignore comment
-      setState(newState);
+      setBoard(newBoard);
       return;
     }
 
     //if a task is moved between columns
-    const startColumn = state.find((col) => col.id === start);
+    const startColumn = board.find((col) => col.id === start);
     // @ts-ignore comment
     const newStartTaskArray = [...startColumn.tasks];
     const splicedTask = newStartTaskArray.splice(source.index, 1)[0];
@@ -74,7 +91,7 @@ const Board = () => {
       tasks: newStartTaskArray,
     };
 
-    const finishColumn = state.find((col) => col.id === finish);
+    const finishColumn = board.find((col) => col.id === finish);
     // @ts-ignore comment
     const newFinishTaskArray = [...finishColumn.tasks];
     newFinishTaskArray.splice(destination.index, 0, splicedTask);
@@ -84,7 +101,7 @@ const Board = () => {
       tasks: newFinishTaskArray,
     };
 
-    const newState = state.map((col) => {
+    const newBoard = board.map((col) => {
       if (col.id === start) {
         return newStartColumn;
       } else if (col.id === finish) {
@@ -94,7 +111,7 @@ const Board = () => {
       }
     });
     // @ts-ignore comment
-    setState(newState);
+    setBoard(newBoard);
   };
 
   const addColumn = (data: FormData) => {
@@ -105,13 +122,13 @@ const Board = () => {
       title: data.title,
       tasks: [],
     };
-    const newState = [...state, column];
-    setState(newState);
+    const newBoard = [...board, column];
+    setBoard(newBoard);
   };
 
   const deleteColumn = (columnId: string) => {
-    const newState = state.filter((x) => x.id !== columnId);
-    setState(newState);
+    const newBoard = board.filter((x) => x.id !== columnId);
+    setBoard(newBoard);
   };
 
   const newTask = (columnId: string, data: FormData) => {
@@ -121,24 +138,24 @@ const Board = () => {
     };
 
     // @ts-ignore comment
-    const taskList = state.find((x) => x.id === columnId).tasks;
+    const taskList = board.find((x) => x.id === columnId).tasks;
     const newTaskList = [...taskList, task];
 
-    const newState = state.map((x) =>
+    const newBoard = board.map((x) =>
       x.id === columnId ? { ...x, tasks: newTaskList } : x,
     );
-    setState(newState);
+    setBoard(newBoard);
   };
 
   const deleteTask = (columnId: string, taskId: string) => {
     // @ts-ignore comment
-    const taskList = state.find((x) => x.id === columnId).tasks;
+    const taskList = board.find((x) => x.id === columnId).tasks;
     const newTaskList = taskList.filter((x) => x.id !== taskId);
 
-    const newState = state.map((x) =>
+    const newBoard = board.map((x) =>
       x.id === columnId ? { ...x, tasks: newTaskList } : x,
     );
-    setState(newState);
+    setBoard(newBoard);
   };
 
   const onSubmit = handleSubmit((data) => addColumn(data));
@@ -149,7 +166,7 @@ const Board = () => {
         {(provided) => (
           <Wrapper {...provided.droppableProps} ref={provided.innerRef}>
             <ColumnList
-              columns={state}
+              columns={board}
               deleteColumn={deleteColumn}
               newTask={newTask}
               deleteTask={deleteTask}
