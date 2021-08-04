@@ -1,9 +1,9 @@
-import TaskList from './TaskList';
+import CardList from './CardList';
 import styled from 'styled-components';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
-import { ColumnInterface } from '../../board-data';
 import { FormData } from './index';
 import { useForm } from 'react-hook-form';
+import { ListInterface } from '../../types';
 
 const Wrapper = styled.div`
   margin: 8px;
@@ -24,7 +24,7 @@ type BoardItemStylesProps = {
   isDraggingOver: boolean;
 };
 
-const List = styled.div<BoardItemStylesProps>`
+const Container = styled.div<BoardItemStylesProps>`
   padding: 8px;
   transition: background-color 0.2s ease;
   background-color: ${(props) => (props.isDraggingOver ? 'skyblue' : 'white')};
@@ -33,48 +33,42 @@ const List = styled.div<BoardItemStylesProps>`
 `;
 
 interface Props {
-  column: ColumnInterface;
+  list: ListInterface;
   index: number;
-  deleteColumn: (columnId: string) => void;
-  newTask: (columnId: string, data: FormData) => void;
-  deleteTask: (columnId: string, taskId: string) => void;
+  deleteList: (listId: string) => void;
+  newCard: (listId: string, data: FormData) => void;
+  deleteCard: (listId: string, cardId: string) => void;
 }
 
-const Column = ({
-  column,
-  index,
-  deleteColumn,
-  newTask,
-  deleteTask,
-}: Props) => {
+const List = ({ list, index, deleteList, newCard, deleteCard }: Props) => {
   const { register, handleSubmit } = useForm<FormData>();
-  const onSubmit = handleSubmit((data) => newTask(column.id, data));
+  const onSubmit = handleSubmit((data) => newCard(list._id, data));
 
   return (
-    <Draggable draggableId={column.id} index={index}>
+    <Draggable draggableId={list._id} index={index}>
       {(provided) => (
         <Wrapper {...provided.draggableProps} ref={provided.innerRef}>
-          <Title {...provided.dragHandleProps}>{column.title}</Title>
-          <button onClick={() => deleteColumn(column.id)}>Delete Me</button>
-          <Droppable droppableId={column.id} type="task">
+          <Title {...provided.dragHandleProps}>{list.title}</Title>
+          <button onClick={() => deleteList(list._id)}>Delete Me</button>
+          <Droppable droppableId={list._id} type="card">
             {(provided, snapshot) => (
-              <List
+              <Container
                 ref={provided.innerRef}
                 {...provided.droppableProps}
                 isDraggingOver={snapshot.isDraggingOver}
               >
-                <TaskList
-                  tasks={column.tasks}
-                  deleteTask={deleteTask}
-                  columnId={column.id}
+                <CardList
+                  cards={list.cards}
+                  deleteCard={deleteCard}
+                  listId={list._id}
                 />
                 {provided.placeholder}
-              </List>
+              </Container>
             )}
           </Droppable>
           <form onSubmit={onSubmit}>
             <input type="text" {...register('content', { required: true })} />
-            <button type="submit">Add Task</button>
+            <button type="submit">Add Card</button>
           </form>
         </Wrapper>
       )}
@@ -82,4 +76,4 @@ const Column = ({
   );
 };
 
-export default Column;
+export default List;

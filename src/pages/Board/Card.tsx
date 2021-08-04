@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Draggable } from 'react-beautiful-dnd';
-import { TaskInterface } from '../../board-data';
+import { CardInterface } from '../../types';
 
 type BoardItemStylesProps = {
   isDragging: boolean;
@@ -15,14 +15,14 @@ const Wrapper = styled.div<BoardItemStylesProps>`
 `;
 
 interface Props {
-  task: TaskInterface;
+  card: CardInterface;
   index: number;
-  columnId: string;
-  deleteTask: (columnId: string, taskId: string) => void;
+  listId: string;
+  deleteCard: (listId: string, cardId: string) => void;
 }
 
-const Task = ({ task, index, columnId, deleteTask }: Props) => (
-  <Draggable draggableId={task.id} index={index}>
+const Card = ({ card, index, listId, deleteCard }: Props) => (
+  <Draggable draggableId={card._id} index={index}>
     {(provided, snapshot) => (
       <Wrapper
         {...provided.draggableProps}
@@ -30,11 +30,11 @@ const Task = ({ task, index, columnId, deleteTask }: Props) => (
         ref={provided.innerRef}
         isDragging={snapshot.isDragging}
       >
-        <div>{task.content}</div>
-        <button onClick={() => deleteTask(columnId, task.id)}>Delete Me</button>
+        <div>{card.content}</div>
+        <button onClick={() => deleteCard(listId, card._id)}>Delete Me</button>
       </Wrapper>
     )}
   </Draggable>
 );
 
-export default Task;
+export default Card;

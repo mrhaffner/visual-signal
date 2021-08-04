@@ -1,15 +1,16 @@
 import { useState, useEffect } from 'react';
 import { DragDropContext, DropResult, Droppable } from 'react-beautiful-dnd';
 import styled from 'styled-components';
-import ColumnList from './ColumnList';
+import ListList from './ListList';
 import { useForm } from 'react-hook-form';
 import ALL_LISTS from '../../graphql/queries/getAllLists';
 import { useQuery } from '@apollo/client';
-import { ColumnInterface } from '../../board-data';
+import { ListInterface } from '../../types';
 
 export type FormData = {
   title: string;
   content: string;
+  index: number;
 };
 
 const Wrapper = styled.div`
@@ -18,15 +19,12 @@ const Wrapper = styled.div`
 
 const Board = () => {
   const { loading, error, data } = useQuery(ALL_LISTS);
-  const [board, setBoard] = useState<ColumnInterface[]>([]);
+  const [board, setBoard] = useState<ListInterface[]>([]);
   console.log(data);
 
   useEffect(() => {
     if (data) {
       setBoard(data.allLists);
-      console.log(data.allLists);
-      console.log(data);
-      console.log(board);
     }
   }, [data]);
 
@@ -48,11 +46,11 @@ const Board = () => {
       return;
     }
 
-    //reorder columns
-    if (type === 'column') {
+    //reorder Lists
+    if (type === 'list') {
       const newBoard = [...board];
-      const splicedColumn = newBoard.splice(source.index, 1)[0];
-      newBoard.splice(destination.index, 0, splicedColumn);
+      const splicedList = newBoard.splice(source.index, 1)[0];
+      newBoard.splice(destination.index, 0, splicedList);
 
       setBoard(newBoard);
       return;
@@ -61,120 +59,120 @@ const Board = () => {
     const start = source.droppableId;
     const finish = destination.droppableId;
 
-    //if a task is moved within the same column, reorder tasks
+    //if a Card is moved within the same List, reorder Cards
     if (start === finish) {
-      const column = board.find((col) => col.id === start);
+      const list = board.find((x) => x._id === start);
       // @ts-ignore comment
-      const newTaskArray = [...column.tasks];
-      const splicedTask = newTaskArray.splice(source.index, 1)[0];
-      newTaskArray.splice(destination.index, 0, splicedTask);
+      const newCardArray = [...list.cards];
+      const splicedCard = newCardArray.splice(source.index, 1)[0];
+      newCardArray.splice(destination.index, 0, splicedCard);
 
-      const newColumn = {
-        ...column,
-        tasks: newTaskArray,
+      const newList = {
+        ...list,
+        cards: newCardArray,
       };
 
-      const newBoard = board.map((col) => (col.id === start ? newColumn : col));
+      const newBoard = board.map((x) => (x._id === start ? newList : x));
       // @ts-ignore comment
       setBoard(newBoard);
       return;
     }
 
-    //if a task is moved between columns
-    const startColumn = board.find((col) => col.id === start);
+    //if a Card is moved between Lists
+    const startList = board.find((x) => x._id === start);
     // @ts-ignore comment
-    const newStartTaskArray = [...startColumn.tasks];
-    const splicedTask = newStartTaskArray.splice(source.index, 1)[0];
+    const newStartCardArray = [...startList.cards];
+    const splicedCard = newStartCardArray.splice(source.index, 1)[0];
 
-    const newStartColumn = {
-      ...startColumn,
-      tasks: newStartTaskArray,
+    const newStartList = {
+      ...startList,
+      cards: newStartCardArray,
     };
 
-    const finishColumn = board.find((col) => col.id === finish);
+    const finishList = board.find((x) => x._id === finish);
     // @ts-ignore comment
-    const newFinishTaskArray = [...finishColumn.tasks];
-    newFinishTaskArray.splice(destination.index, 0, splicedTask);
+    const newFinishCardArray = [...finishList.cards];
+    newFinishCardArray.splice(destination.index, 0, splicedCard);
 
-    const newFinishColumn = {
-      ...finishColumn,
-      tasks: newFinishTaskArray,
+    const newFinishList = {
+      ...finishList,
+      cards: newFinishCardArray,
     };
 
-    const newBoard = board.map((col) => {
-      if (col.id === start) {
-        return newStartColumn;
-      } else if (col.id === finish) {
-        return newFinishColumn;
+    const newBoard = board.map((x) => {
+      if (x._id === start) {
+        return newStartList;
+      } else if (x._id === finish) {
+        return newFinishList;
       } else {
-        return col;
+        return x;
       }
     });
     // @ts-ignore comment
     setBoard(newBoard);
   };
 
-  const addColumn = (data: FormData) => {
-    console.log(data);
-
-    const column = {
-      id: `${Math.random()}`,
+  const addList = (data: FormData) => {
+    const list = {
+      _id: `${Math.random()}`,
       title: data.title,
-      tasks: [],
+      index: data.index,
+      cards: [],
     };
-    const newBoard = [...board, column];
+    const newBoard = [...board, list];
     setBoard(newBoard);
   };
 
-  const deleteColumn = (columnId: string) => {
-    const newBoard = board.filter((x) => x.id !== columnId);
+  const deleteList = (listId: string) => {
+    const newBoard = board.filter((x) => x._id !== listId);
     setBoard(newBoard);
   };
 
-  const newTask = (columnId: string, data: FormData) => {
-    const task = {
-      id: `${Math.random()}`,
+  const newCard = (listId: string, data: FormData) => {
+    const card = {
+      _id: `${Math.random()}`,
       content: data.content,
+      index: data.index,
     };
 
     // @ts-ignore comment
-    const taskList = board.find((x) => x.id === columnId).tasks;
-    const newTaskList = [...taskList, task];
+    const cardList = board.find((x) => x._id === listId).cards;
+    const newCardList = [...cardList, card];
 
     const newBoard = board.map((x) =>
-      x.id === columnId ? { ...x, tasks: newTaskList } : x,
+      x._id === listId ? { ...x, cards: newCardList } : x,
     );
     setBoard(newBoard);
   };
 
-  const deleteTask = (columnId: string, taskId: string) => {
+  const deleteCard = (listId: string, cardId: string) => {
     // @ts-ignore comment
-    const taskList = board.find((x) => x.id === columnId).tasks;
-    const newTaskList = taskList.filter((x) => x.id !== taskId);
+    const cardList = board.find((x) => x._id === listId).cards;
+    const newCardList = cardList.filter((x) => x._id !== cardId);
 
     const newBoard = board.map((x) =>
-      x.id === columnId ? { ...x, tasks: newTaskList } : x,
+      x._id === listId ? { ...x, cards: newCardList } : x,
     );
     setBoard(newBoard);
   };
 
-  const onSubmit = handleSubmit((data) => addColumn(data));
+  const onSubmit = handleSubmit((data) => addList(data));
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <Droppable droppableId="all-columns" direction="horizontal" type="column">
+      <Droppable droppableId="all-lists" direction="horizontal" type="list">
         {(provided) => (
           <Wrapper {...provided.droppableProps} ref={provided.innerRef}>
-            <ColumnList
-              columns={board}
-              deleteColumn={deleteColumn}
-              newTask={newTask}
-              deleteTask={deleteTask}
+            <ListList
+              lists={board}
+              deleteList={deleteList}
+              newCard={newCard}
+              deleteCard={deleteCard}
             />
             {provided.placeholder}
             <form onSubmit={onSubmit}>
               <input type="text" {...register('title', { required: true })} />
-              <button type="submit">Add Column</button>
+              <button type="submit">Add List</button>
             </form>
           </Wrapper>
         )}

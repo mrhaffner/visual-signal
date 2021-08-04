@@ -7,6 +7,7 @@ const ALL_LISTS = gql`
       title
       index
       cards {
+        content
         index
         _id
       }
