@@ -6,7 +6,6 @@ import ALL_LISTS from '../../graphql/queries/getAllLists';
 import { useQuery } from '@apollo/client';
 import { ListInterface } from '../../types';
 import CreateForm, { OutputData } from '../../components/CreateForm';
-import { FormData as FormData2 } from './List';
 
 const Wrapper = styled.div`
   display: flex;
@@ -15,7 +14,7 @@ const Wrapper = styled.div`
 const Board = () => {
   const { loading, error, data } = useQuery(ALL_LISTS);
   const [board, setBoard] = useState<ListInterface[]>([]);
-  console.log(data);
+  console.log(board);
 
   useEffect(() => {
     if (data) {
@@ -105,11 +104,11 @@ const Board = () => {
     setBoard(newBoard);
   };
 
-  const addList = (inputData: OutputData) => {
+  const addList = ({ input, index }: OutputData) => {
     const list = {
       _id: `${Math.random()}`,
-      title: inputData.input,
-      index: 10,
+      title: input,
+      index,
       cards: [],
     };
     const newBoard = [...board, list];
@@ -121,19 +120,19 @@ const Board = () => {
     setBoard(newBoard);
   };
 
-  const newCard = (inputData: OutputData) => {
+  const newCard = ({ input, index, listId }: OutputData) => {
     const card = {
       _id: `${Math.random()}`,
-      content: inputData.input,
-      index: 10,
+      content: input,
+      index,
     };
 
     // @ts-ignore comment
-    const cardList = board.find((x) => x._id === inputData.listId).cards;
+    const cardList = board.find((x) => x._id === listId).cards;
     const newCardList = [...cardList, card];
 
     const newBoard = board.map((x) =>
-      x._id === inputData.listId ? { ...x, cards: newCardList } : x,
+      x._id === listId ? { ...x, cards: newCardList } : x,
     );
     setBoard(newBoard);
   };
@@ -163,7 +162,7 @@ const Board = () => {
             {provided.placeholder}
             <CreateForm
               buttonText="List"
-              parentData={{ index: board.length + 1 }}
+              parentData={{ index: board.length }}
               submitData={addList}
             />
           </Wrapper>

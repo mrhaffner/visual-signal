@@ -65,7 +65,7 @@ const List = ({ list, index, deleteList, newCard, deleteCard }: Props) => {
           <CreateForm
             buttonText="Card"
             // fix inputs
-            parentData={{ index: 10, listId: list._id }}
+            parentData={{ index: list.cards.length, listId: list._id }}
             submitData={newCard}
           />
         </Wrapper>
