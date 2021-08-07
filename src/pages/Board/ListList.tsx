@@ -1,12 +1,12 @@
 import React from 'react';
 import List from './List';
-import { FormData } from './index';
+import { OutputData } from '../../components/CreateForm';
 import { ListInterface } from '../../types';
 
 interface Props {
   lists: ListInterface[];
   deleteList: (listId: string) => void;
-  newCard: (listId: string, data: FormData) => void;
+  newCard: (inputData: OutputData) => void;
   deleteCard: (listId: string, cardId: string) => void;
 }
 

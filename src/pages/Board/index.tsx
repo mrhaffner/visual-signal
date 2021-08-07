@@ -2,16 +2,11 @@ import { useState, useEffect } from 'react';
 import { DragDropContext, DropResult, Droppable } from 'react-beautiful-dnd';
 import styled from 'styled-components';
 import ListList from './ListList';
-import { useForm } from 'react-hook-form';
 import ALL_LISTS from '../../graphql/queries/getAllLists';
 import { useQuery } from '@apollo/client';
 import { ListInterface } from '../../types';
-
-export type FormData = {
-  title: string;
-  content: string;
-  index: number;
-};
+import CreateForm, { OutputData } from '../../components/CreateForm';
+import { FormData as FormData2 } from './List';
 
 const Wrapper = styled.div`
   display: flex;
@@ -27,8 +22,6 @@ const Board = () => {
       setBoard(data.allLists);
     }
   }, [data]);
-
-  const { register, handleSubmit } = useForm<FormData>();
 
   if (loading || !board.length) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
@@ -112,11 +105,11 @@ const Board = () => {
     setBoard(newBoard);
   };
 
-  const addList = (data: FormData) => {
+  const addList = (inputData: OutputData) => {
     const list = {
       _id: `${Math.random()}`,
-      title: data.title,
-      index: data.index,
+      title: inputData.input,
+      index: 10,
       cards: [],
     };
     const newBoard = [...board, list];
@@ -128,19 +121,19 @@ const Board = () => {
     setBoard(newBoard);
   };
 
-  const newCard = (listId: string, data: FormData) => {
+  const newCard = (inputData: OutputData) => {
     const card = {
       _id: `${Math.random()}`,
-      content: data.content,
-      index: data.index,
+      content: inputData.input,
+      index: 10,
     };
 
     // @ts-ignore comment
-    const cardList = board.find((x) => x._id === listId).cards;
+    const cardList = board.find((x) => x._id === inputData.listId).cards;
     const newCardList = [...cardList, card];
 
     const newBoard = board.map((x) =>
-      x._id === listId ? { ...x, cards: newCardList } : x,
+      x._id === inputData.listId ? { ...x, cards: newCardList } : x,
     );
     setBoard(newBoard);
   };
@@ -156,8 +149,6 @@ const Board = () => {
     setBoard(newBoard);
   };
 
-  const onSubmit = handleSubmit((data) => addList(data));
-
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <Droppable droppableId="all-lists" direction="horizontal" type="list">
@@ -170,10 +161,11 @@ const Board = () => {
               deleteCard={deleteCard}
             />
             {provided.placeholder}
-            <form onSubmit={onSubmit}>
-              <input type="text" {...register('title', { required: true })} />
-              <button type="submit">Add List</button>
-            </form>
+            <CreateForm
+              buttonText="List"
+              parentData={{ index: board.length + 1 }}
+              submitData={addList}
+            />
           </Wrapper>
         )}
       </Droppable>

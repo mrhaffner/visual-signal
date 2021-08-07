@@ -1,9 +1,8 @@
 import CardList from './CardList';
 import styled from 'styled-components';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
-import { FormData } from './index';
-import { useForm } from 'react-hook-form';
 import { ListInterface } from '../../types';
+import CreateForm, { OutputData } from '../../components/CreateForm';
 
 const Wrapper = styled.div`
   margin: 8px;
@@ -36,14 +35,11 @@ interface Props {
   list: ListInterface;
   index: number;
   deleteList: (listId: string) => void;
-  newCard: (listId: string, data: FormData) => void;
+  newCard: (inputData: OutputData) => void;
   deleteCard: (listId: string, cardId: string) => void;
 }
 
 const List = ({ list, index, deleteList, newCard, deleteCard }: Props) => {
-  const { register, handleSubmit } = useForm<FormData>();
-  const onSubmit = handleSubmit((data) => newCard(list._id, data));
-
   return (
     <Draggable draggableId={list._id} index={index}>
       {(provided) => (
@@ -66,10 +62,12 @@ const List = ({ list, index, deleteList, newCard, deleteCard }: Props) => {
               </Container>
             )}
           </Droppable>
-          <form onSubmit={onSubmit}>
-            <input type="text" {...register('content', { required: true })} />
-            <button type="submit">Add Card</button>
-          </form>
+          <CreateForm
+            buttonText="Card"
+            // fix inputs
+            parentData={{ index: 10, listId: list._id }}
+            submitData={newCard}
+          />
         </Wrapper>
       )}
     </Draggable>
