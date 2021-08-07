@@ -2,7 +2,8 @@ import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import styled from 'styled-components';
 import ListList from './ListList';
 import CreateForm from '../../components/CreateForm';
-import useBoard from '../../hooks/useBoard';
+import { useContext } from 'react';
+import { BoardContext } from '../../contexts/BoardProvider';
 
 const Wrapper = styled.div`
   display: flex;
@@ -10,15 +11,17 @@ const Wrapper = styled.div`
 
 const Board = () => {
   const {
+    // @ts-ignore comment
     loading,
+    // @ts-ignore comment
     error,
+    // @ts-ignore comment
     board,
+    // @ts-ignore comment
     onDragEnd,
+    // @ts-ignore comment
     addList,
-    deleteList,
-    newCard,
-    deleteCard,
-  } = useBoard();
+  } = useContext(BoardContext);
 
   if (loading || !board.length) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
@@ -28,12 +31,7 @@ const Board = () => {
       <Droppable droppableId="all-lists" direction="horizontal" type="list">
         {(provided) => (
           <Wrapper {...provided.droppableProps} ref={provided.innerRef}>
-            <ListList
-              lists={board}
-              deleteList={deleteList}
-              newCard={newCard}
-              deleteCard={deleteCard}
-            />
+            <ListList lists={board} />
             {provided.placeholder}
             <CreateForm
               buttonText="List"

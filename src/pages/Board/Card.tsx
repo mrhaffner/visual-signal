@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import { Draggable } from 'react-beautiful-dnd';
 import { CardInterface } from '../../types';
+import { BoardContext } from '../../contexts/BoardProvider';
+import { useContext } from 'react';
 
 type BoardItemStylesProps = {
   isDragging: boolean;
@@ -18,23 +20,28 @@ interface Props {
   card: CardInterface;
   index: number;
   listId: string;
-  deleteCard: (listId: string, cardId: string) => void;
 }
 
-const Card = ({ card, index, listId, deleteCard }: Props) => (
-  <Draggable draggableId={card._id} index={index}>
-    {(provided, snapshot) => (
-      <Wrapper
-        {...provided.draggableProps}
-        {...provided.dragHandleProps}
-        ref={provided.innerRef}
-        isDragging={snapshot.isDragging}
-      >
-        <div>{card.content}</div>
-        <button onClick={() => deleteCard(listId, card._id)}>Delete Me</button>
-      </Wrapper>
-    )}
-  </Draggable>
-);
+const Card = ({ card, index, listId }: Props) => {
+  // @ts-ignore comment
+  const { deleteCard } = useContext(BoardContext);
+  return (
+    <Draggable draggableId={card._id} index={index}>
+      {(provided, snapshot) => (
+        <Wrapper
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+          ref={provided.innerRef}
+          isDragging={snapshot.isDragging}
+        >
+          <div>{card.content}</div>
+          <button onClick={() => deleteCard(listId, card._id)}>
+            Delete Me
+          </button>
+        </Wrapper>
+      )}
+    </Draggable>
+  );
+};
 
 export default Card;

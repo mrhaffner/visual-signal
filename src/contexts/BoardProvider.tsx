@@ -1,3 +1,4 @@
+import { createContext } from 'react';
 import { useState, useEffect } from 'react';
 import ALL_LISTS from '../graphql/queries/getAllLists';
 import { useQuery } from '@apollo/client';
@@ -5,7 +6,11 @@ import { ListInterface } from '../types';
 import { OutputData } from '../components/CreateForm';
 import { DropResult } from 'react-beautiful-dnd';
 
-const useBoard = () => {
+// @ts-ignore comment
+export const BoardContext = createContext();
+
+// @ts-ignore comment
+const BoardProvider = ({ children }) => {
   const { loading, error, data } = useQuery(ALL_LISTS);
   const [board, setBoard] = useState<ListInterface[]>([]);
   console.log(board);
@@ -138,16 +143,22 @@ const useBoard = () => {
     setBoard(newBoard);
   };
 
-  return {
-    loading,
-    error,
-    board,
-    onDragEnd,
-    addList,
-    deleteList,
-    newCard,
-    deleteCard,
-  };
+  return (
+    <BoardContext.Provider
+      value={{
+        loading,
+        error,
+        board,
+        onDragEnd,
+        addList,
+        deleteList,
+        newCard,
+        deleteCard,
+      }}
+    >
+      {children}
+    </BoardContext.Provider>
+  );
 };
 
-export default useBoard;
+export default BoardProvider;

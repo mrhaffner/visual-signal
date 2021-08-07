@@ -5,26 +5,14 @@ import { ListInterface } from '../../types';
 
 interface Props {
   lists: ListInterface[];
-  deleteList: (listId: string) => void;
-  newCard: (inputData: OutputData) => void;
-  deleteCard: (listId: string, cardId: string) => void;
 }
 
-const ListList = React.memo(
-  ({ lists, deleteList, newCard, deleteCard }: Props) => (
-    <>
-      {lists.map((list, index) => (
-        <List
-          key={list._id}
-          list={list}
-          index={index}
-          deleteList={deleteList}
-          newCard={newCard}
-          deleteCard={deleteCard}
-        />
-      ))}
-    </>
-  ),
-);
+const ListList = React.memo(({ lists }: Props) => (
+  <>
+    {lists.map((list, index) => (
+      <List key={list._id} list={list} index={index} />
+    ))}
+  </>
+));
 
 export default ListList;
