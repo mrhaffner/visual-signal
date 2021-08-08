@@ -38,9 +38,8 @@ interface Props {
 }
 
 const List = ({ list, index }: Props) => {
-  // @ts-ignore comment
-
   const { deleteList, newCard } = useBoardContext();
+
   return (
     <Draggable draggableId={list._id} index={index}>
       {(provided) => (
@@ -61,7 +60,6 @@ const List = ({ list, index }: Props) => {
           </Droppable>
           <CreateForm
             buttonText="Card"
-            // fix inputs
             parentData={{ index: list.cards.length, listId: list._id }}
             submitData={newCard}
           />

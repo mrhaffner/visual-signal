@@ -2,7 +2,7 @@ import { useState, useEffect, ReactNode } from 'react';
 import ALL_LISTS from '../graphql/queries/getAllLists';
 import { useQuery } from '@apollo/client';
 import { ListInterface } from '../types';
-import { OutputData } from '../components/CreateForm';
+import { OutputData } from '../types';
 import { DropResult } from 'react-beautiful-dnd';
 import { BoardContext } from '../hooks/useBoardContext';
 

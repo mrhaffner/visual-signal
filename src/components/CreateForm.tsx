@@ -1,15 +1,5 @@
 import { useForm } from 'react-hook-form';
-
-interface FormData {
-  input: string;
-}
-
-interface ParentData {
-  index: number;
-  listId?: string;
-}
-
-export interface OutputData extends FormData, ParentData {}
+import { FormData, ParentData, OutputData } from '../types';
 
 interface Props {
   buttonText: string;

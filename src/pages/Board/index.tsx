@@ -9,19 +9,7 @@ const Wrapper = styled.div`
 `;
 
 const Board = () => {
-  const {
-    // @ts-ignore comment
-    loading,
-    // @ts-ignore comment
-    error,
-    // @ts-ignore comment
-    board,
-    // @ts-ignore comment
-    onDragEnd,
-    // @ts-ignore comment
-    addList,
-    // @ts-ignore comment
-  } = useBoardContext();
+  const { loading, error, board, onDragEnd, addList } = useBoardContext();
 
   if (loading || !board.length) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;

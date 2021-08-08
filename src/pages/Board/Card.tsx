@@ -22,8 +22,8 @@ interface Props {
 }
 
 const Card = ({ card, index, listId }: Props) => {
-  // @ts-ignore comment
   const { deleteCard } = useBoardContext();
+
   return (
     <Draggable draggableId={card._id} index={index}>
       {(provided, snapshot) => (

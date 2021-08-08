@@ -1,10 +1,10 @@
 import { ApolloError } from '@apollo/client';
 import { createContext, useContext } from 'react';
 import { DropResult } from 'react-beautiful-dnd';
-import { OutputData } from '../components/CreateForm';
+import { OutputData } from '../types';
 import { ListInterface } from '../types';
 
-export type BoardState = {
+type BoardState = {
   loading: boolean;
   error: ApolloError | undefined;
   board: ListInterface[];

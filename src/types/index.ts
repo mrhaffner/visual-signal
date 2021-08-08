@@ -10,3 +10,14 @@ export interface ListInterface {
   index: number;
   cards: CardInterface[];
 }
+
+export interface FormData {
+  input: string;
+}
+
+export interface ParentData {
+  index: number;
+  listId?: string;
+}
+
+export interface OutputData extends FormData, ParentData {}
