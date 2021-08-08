@@ -5,6 +5,11 @@ import { ListInterface } from '../types';
 import { OutputData } from '../types';
 import { DropResult } from 'react-beautiful-dnd';
 import { BoardContext } from '../hooks/useBoardContext';
+import {
+  reorderCardsAcrossLists,
+  reorderCardsInSameList,
+  reorderLists,
+} from '../utlities/onDragEndHelpers';
 
 interface Props {
   children: ReactNode;
@@ -33,70 +38,17 @@ const BoardProvider = ({ children }: Props) => {
       return;
     }
 
-    //reorder Lists
     if (type === 'list') {
-      const newBoard = [...board];
-      const splicedList = newBoard.splice(source.index, 1)[0];
-      newBoard.splice(destination.index, 0, splicedList);
-
-      setBoard(newBoard);
+      reorderLists(board, source, destination, setBoard);
       return;
     }
 
-    const start = source.droppableId;
-    const finish = destination.droppableId;
-
-    //if a Card is moved within the same List, reorder Cards
-    if (start === finish) {
-      const list = board.find((x) => x._id === start);
-      // @ts-ignore comment
-      const newCardArray = [...list.cards];
-      const splicedCard = newCardArray.splice(source.index, 1)[0];
-      newCardArray.splice(destination.index, 0, splicedCard);
-
-      const newList = {
-        ...list,
-        cards: newCardArray,
-      };
-
-      const newBoard = board.map((x) => (x._id === start ? newList : x));
-      // @ts-ignore comment
-      setBoard(newBoard);
+    if (source.droppableId === destination.droppableId) {
+      reorderCardsInSameList(board, source, destination, setBoard);
       return;
     }
 
-    //if a Card is moved between Lists
-    const startList = board.find((x) => x._id === start);
-    // @ts-ignore comment
-    const newStartCardArray = [...startList.cards];
-    const splicedCard = newStartCardArray.splice(source.index, 1)[0];
-
-    const newStartList = {
-      ...startList,
-      cards: newStartCardArray,
-    };
-
-    const finishList = board.find((x) => x._id === finish);
-    // @ts-ignore comment
-    const newFinishCardArray = [...finishList.cards];
-    newFinishCardArray.splice(destination.index, 0, splicedCard);
-
-    const newFinishList = {
-      ...finishList,
-      cards: newFinishCardArray,
-    };
-
-    const newBoard = board.map((x) => {
-      if (x._id === start) {
-        return newStartList;
-      } else if (x._id === finish) {
-        return newFinishList;
-      } else {
-        return x;
-      }
-    });
-    // @ts-ignore comment
-    setBoard(newBoard);
+    reorderCardsAcrossLists(board, source, destination, setBoard);
   };
 
   const addList = ({ input, index }: OutputData) => {
