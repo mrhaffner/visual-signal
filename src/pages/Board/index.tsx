@@ -2,8 +2,7 @@ import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import styled from 'styled-components';
 import ListList from './ListList';
 import CreateForm from '../../components/CreateForm';
-import { useContext } from 'react';
-import { BoardContext } from '../../contexts/BoardProvider';
+import useBoardContext from '../../hooks/useBoardContext';
 
 const Wrapper = styled.div`
   display: flex;
@@ -21,7 +20,8 @@ const Board = () => {
     onDragEnd,
     // @ts-ignore comment
     addList,
-  } = useContext(BoardContext);
+    // @ts-ignore comment
+  } = useBoardContext();
 
   if (loading || !board.length) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;

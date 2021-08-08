@@ -1,6 +1,5 @@
 import React from 'react';
 import List from './List';
-import { OutputData } from '../../components/CreateForm';
 import { ListInterface } from '../../types';
 
 interface Props {

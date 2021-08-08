@@ -1,4 +1,4 @@
-import BoardProvider from './contexts/BoardProvider';
+import BoardProvider from './providers/BoardProvider';
 import Board from './pages/Board';
 
 const App = () => (

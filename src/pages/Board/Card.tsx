@@ -1,8 +1,7 @@
 import styled from 'styled-components';
 import { Draggable } from 'react-beautiful-dnd';
 import { CardInterface } from '../../types';
-import { BoardContext } from '../../contexts/BoardProvider';
-import { useContext } from 'react';
+import useBoardContext from '../../hooks/useBoardContext';
 
 type BoardItemStylesProps = {
   isDragging: boolean;
@@ -24,7 +23,7 @@ interface Props {
 
 const Card = ({ card, index, listId }: Props) => {
   // @ts-ignore comment
-  const { deleteCard } = useContext(BoardContext);
+  const { deleteCard } = useBoardContext();
   return (
     <Draggable draggableId={card._id} index={index}>
       {(provided, snapshot) => (

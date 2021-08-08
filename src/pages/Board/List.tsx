@@ -2,9 +2,8 @@ import CardList from './CardList';
 import styled from 'styled-components';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 import { ListInterface } from '../../types';
-import CreateForm, { OutputData } from '../../components/CreateForm';
-import { BoardContext } from '../../contexts/BoardProvider';
-import { useContext } from 'react';
+import CreateForm from '../../components/CreateForm';
+import useBoardContext from '../../hooks/useBoardContext';
 
 const Wrapper = styled.div`
   margin: 8px;
@@ -41,7 +40,7 @@ interface Props {
 const List = ({ list, index }: Props) => {
   // @ts-ignore comment
 
-  const { deleteList, newCard } = useContext(BoardContext);
+  const { deleteList, newCard } = useBoardContext();
   return (
     <Draggable draggableId={list._id} index={index}>
       {(provided) => (

@@ -1,16 +1,16 @@
-import { createContext } from 'react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, ReactNode } from 'react';
 import ALL_LISTS from '../graphql/queries/getAllLists';
 import { useQuery } from '@apollo/client';
 import { ListInterface } from '../types';
 import { OutputData } from '../components/CreateForm';
 import { DropResult } from 'react-beautiful-dnd';
+import { BoardContext } from '../hooks/useBoardContext';
 
-// @ts-ignore comment
-export const BoardContext = createContext();
+interface Props {
+  children: ReactNode;
+}
 
-// @ts-ignore comment
-const BoardProvider = ({ children }) => {
+const BoardProvider = ({ children }: Props) => {
   const { loading, error, data } = useQuery(ALL_LISTS);
   const [board, setBoard] = useState<ListInterface[]>([]);
   console.log(board);
