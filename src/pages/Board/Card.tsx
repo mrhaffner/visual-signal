@@ -2,6 +2,9 @@ import styled from 'styled-components';
 import { Draggable } from 'react-beautiful-dnd';
 import { CardInterface } from '../../types';
 import useBoardContext from '../../hooks/useBoardContext';
+import { useMutation } from '@apollo/client';
+import { DELETE_CARD } from '../../graphql/mutations/all';
+import DeleteButton from '../../components/DeleteButton';
 
 type BoardItemStylesProps = {
   isDragging: boolean;
@@ -24,6 +27,18 @@ interface Props {
 const Card = ({ card, index, listId }: Props) => {
   const { deleteCard } = useBoardContext();
 
+  const [deleteCardMutation, { data, loading, error }] =
+    useMutation(DELETE_CARD);
+
+  const handleDelete = () => {
+    try {
+      deleteCardMutation({ variables: { deleteCardId: card._id } });
+      deleteCard(listId, card._id);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   return (
     <Draggable draggableId={card._id} index={index}>
       {(provided, snapshot) => (
@@ -34,9 +49,7 @@ const Card = ({ card, index, listId }: Props) => {
           isDragging={snapshot.isDragging}
         >
           <div>{card.content}</div>
-          <button onClick={() => deleteCard(listId, card._id)}>
-            Delete Me
-          </button>
+          <DeleteButton handleDelete={handleDelete} />
         </Wrapper>
       )}
     </Draggable>
