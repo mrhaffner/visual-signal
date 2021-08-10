@@ -27,8 +27,7 @@ interface Props {
 const Card = ({ card, index, listId }: Props) => {
   const { deleteCard } = useBoardContext();
 
-  const [deleteCardMutation, { data, loading, error }] =
-    useMutation(DELETE_CARD);
+  const [deleteCardMutation] = useMutation(DELETE_CARD);
 
   const handleDelete = () => {
     try {

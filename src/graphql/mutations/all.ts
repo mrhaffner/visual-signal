@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
 export const CREATE_LIST = gql`
-  mutation Mutation($createListInput: ListCreateInput) {
+  mutation Mutation($createListInput: CreateList!) {
     createList(input: $createListInput) {
       _id
       title
@@ -14,11 +14,8 @@ export const CREATE_LIST = gql`
 `;
 
 export const UPDATE_LIST = gql`
-  mutation UpdateListMutation(
-    $updateListId: ID!
-    $updateListInput: ListUpdateInput
-  ) {
-    updateList(_id: $updateListId, input: $updateListInput) {
+  mutation UpdateListMutation($updateListInput: UpdateList!) {
+    updateList(input: $updateListInput) {
       _id
       title
       index
@@ -33,7 +30,7 @@ export const DELETE_LIST = gql`
 `;
 
 export const CREATE_CARD = gql`
-  mutation CreateCardMutation($createCardInput: CardCreateInput) {
+  mutation CreateCardMutation($createCardInput: CreateCard!) {
     createCard(input: $createCardInput) {
       _id
       content
@@ -44,11 +41,8 @@ export const CREATE_CARD = gql`
 `;
 
 export const UPDATE_CARD = gql`
-  mutation UpdateCardMutation(
-    $updateCardId: ID!
-    $updateCardInput: CardUpdateInput
-  ) {
-    updateCard(_id: $updateCardId, input: $updateCardInput) {
+  mutation UpdateCardMutation($updateCardInput: UpdateCard!) {
+    updateCard(input: $updateCardInput) {
       _id
       content
       listId

@@ -11,13 +11,13 @@ export interface ListInterface {
   cards: CardInterface[];
 }
 
-export interface FormData {
-  input: string;
-}
-
-export interface ParentData {
+export interface ListData {
+  title: string;
   index: number;
-  listId?: string;
 }
 
-export interface OutputData extends FormData, ParentData {}
+export interface CardData {
+  content: string;
+  index: number;
+  listId: string;
+}

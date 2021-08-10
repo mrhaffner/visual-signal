@@ -1,8 +1,7 @@
 import { useState, useEffect, ReactNode } from 'react';
 import ALL_LISTS from '../graphql/queries/getAllLists';
 import { useQuery } from '@apollo/client';
-import { ListInterface } from '../types';
-import { OutputData } from '../types';
+import { CardData, ListData, ListInterface } from '../types';
 import { DropResult } from 'react-beautiful-dnd';
 import { BoardContext } from '../hooks/useBoardContext';
 import {
@@ -51,10 +50,10 @@ const BoardProvider = ({ children }: Props) => {
     reorderCardsAcrossLists(board, source, destination, setBoard);
   };
 
-  const addList = ({ input, index }: OutputData) => {
+  const addList = ({ title, index }: ListData) => {
     const list = {
       _id: `${Math.random()}`,
-      title: input,
+      title,
       index,
       cards: [],
     };
@@ -67,10 +66,10 @@ const BoardProvider = ({ children }: Props) => {
     setBoard(newBoard);
   };
 
-  const newCard = ({ input, index, listId }: OutputData) => {
+  const newCard = ({ content, index, listId }: CardData) => {
     const card = {
       _id: `${Math.random()}`,
-      content: input,
+      content,
       index,
     };
 

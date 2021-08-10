@@ -1,11 +1,11 @@
 import CardList from './CardList';
 import styled from 'styled-components';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
-import { ListInterface } from '../../types';
+import { CardData, ListInterface } from '../../types';
 import { useMutation } from '@apollo/client';
 import CreateForm from '../../components/CreateForm';
 import useBoardContext from '../../hooks/useBoardContext';
-import { DELETE_LIST } from '../../graphql/mutations/all';
+import { CREATE_CARD, DELETE_LIST } from '../../graphql/mutations/all';
 import DeleteButton from '../../components/DeleteButton';
 
 const Wrapper = styled.div`
@@ -14,7 +14,6 @@ const Wrapper = styled.div`
   background-color: white;
   border-radius: 2px;
   width: 220px;
-
   display: flex;
   flex-direction: column;
 `;
@@ -43,13 +42,29 @@ interface Props {
 const List = ({ list, index }: Props) => {
   const { deleteList, newCard } = useBoardContext();
 
-  const [deleteListMutation, { data, loading, error }] =
-    useMutation(DELETE_LIST);
+  const [deleteListMutation] = useMutation(DELETE_LIST);
 
   const handleDelete = () => {
     try {
       deleteListMutation({ variables: { deleteListId: list._id } });
       deleteList(list._id);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const [newCardMutation] = useMutation(CREATE_CARD);
+
+  const handleCreateCard = (input: string) => {
+    try {
+      const cardObject: CardData = {
+        content: input,
+        index: list.cards.length,
+        listId: list._id,
+      };
+      newCardMutation({ variables: { createCardInput: cardObject } });
+      //gonna need the new card mutation data to create newCard id
+      newCard(cardObject);
     } catch (e) {
       console.log(e);
     }
@@ -73,11 +88,7 @@ const List = ({ list, index }: Props) => {
               </Container>
             )}
           </Droppable>
-          <CreateForm
-            buttonText="Card"
-            parentData={{ index: list.cards.length, listId: list._id }}
-            submitData={newCard}
-          />
+          <CreateForm buttonText="Card" submitData={handleCreateCard} />
         </Wrapper>
       )}
     </Draggable>

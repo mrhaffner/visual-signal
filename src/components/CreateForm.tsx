@@ -1,22 +1,15 @@
 import { useForm } from 'react-hook-form';
-import { FormData, ParentData, OutputData } from '../types';
 
 interface Props {
   buttonText: string;
-  parentData: ParentData;
-  submitData: (inputData: OutputData) => void;
+  submitData: (data: string) => void;
 }
 
-const CreateForm = ({ buttonText, parentData, submitData }: Props) => {
-  const { register, handleSubmit } = useForm<FormData>();
+const CreateForm = ({ buttonText, submitData }: Props) => {
+  const { register, handleSubmit } = useForm();
 
   const onSubmit = handleSubmit((data) => {
-    const dataObj: OutputData = {
-      input: data.input,
-      index: parentData.index,
-    };
-    if ('listId' in parentData) dataObj.listId = parentData.listId;
-    submitData(dataObj);
+    submitData(data.input);
   });
 
   return (
