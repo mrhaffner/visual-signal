@@ -9,8 +9,18 @@ import {
   reorderCardsInSameList,
   reorderLists,
 } from '../utlities/onDragEndHelpers';
-import { CREATE_LIST, CREATE_CARD } from '../graphql/mutations/all';
-import { addCardState, addListState } from '../utlities/createUpdateHelpers';
+import {
+  CREATE_LIST,
+  DELETE_LIST,
+  CREATE_CARD,
+  DELETE_CARD,
+} from '../graphql/mutations/all';
+import {
+  addCardState,
+  addListState,
+  deleteListState,
+  deleteCardState,
+} from '../utlities/createUpdateHelpers';
 
 interface Props {
   children: ReactNode;
@@ -21,7 +31,9 @@ const BoardProvider = ({ children }: Props) => {
   const [board, setBoard] = useState<ListInterface[]>([]);
 
   const [newListMutation] = useMutation(CREATE_LIST);
+  const [deleteListMutation] = useMutation(DELETE_LIST);
   const [newCardMutation] = useMutation(CREATE_CARD);
+  const [deleteCardMutation] = useMutation(DELETE_CARD);
 
   console.log(board);
 
@@ -71,8 +83,12 @@ const BoardProvider = ({ children }: Props) => {
   };
 
   const deleteList = (listId: string) => {
-    const newBoard = board.filter((x) => x._id !== listId);
-    setBoard(newBoard);
+    try {
+      deleteListMutation({ variables: { deleteListId: listId } });
+      deleteListState(listId, board, setBoard);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const addCard = (input: string, list: ListInterface) => {
@@ -91,14 +107,12 @@ const BoardProvider = ({ children }: Props) => {
   };
 
   const deleteCard = (listId: string, cardId: string) => {
-    // @ts-ignore comment
-    const cardList = board.find((x) => x._id === listId).cards;
-    const newCardList = cardList.filter((x) => x._id !== cardId);
-
-    const newBoard = board.map((x) =>
-      x._id === listId ? { ...x, cards: newCardList } : x,
-    );
-    setBoard(newBoard);
+    try {
+      deleteCardMutation({ variables: { deleteCardId: cardId } });
+      deleteCardState(listId, cardId, board, setBoard);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (

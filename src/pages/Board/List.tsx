@@ -2,11 +2,9 @@ import CardList from './CardList';
 import styled from 'styled-components';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 import { ListInterface } from '../../types';
-import { useMutation } from '@apollo/client';
 import CreateCardForm from '../../components/CreateCardForm';
 import useBoardContext from '../../hooks/useBoardContext';
-import { DELETE_LIST } from '../../graphql/mutations/all';
-import DeleteButton from '../../components/DeleteButton';
+import DeleteListButton from '../../components/DeleteListButton';
 
 const Wrapper = styled.div`
   margin: 8px;
@@ -42,23 +40,12 @@ interface Props {
 const List = ({ list, index }: Props) => {
   const { deleteList, addCard } = useBoardContext();
 
-  const [deleteListMutation] = useMutation(DELETE_LIST);
-
-  const handleDelete = () => {
-    try {
-      deleteListMutation({ variables: { deleteListId: list._id } });
-      deleteList(list._id);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
   return (
     <Draggable draggableId={list._id} index={index}>
       {(provided) => (
         <Wrapper {...provided.draggableProps} ref={provided.innerRef}>
           <Title {...provided.dragHandleProps}>{list.title}</Title>
-          <DeleteButton handleDelete={handleDelete} />
+          <DeleteListButton handleDelete={deleteList} id={list._id} />
           <Droppable droppableId={list._id} type="card">
             {(provided, snapshot) => (
               <Container
