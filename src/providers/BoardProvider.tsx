@@ -10,7 +10,7 @@ import {
   reorderLists,
 } from '../utlities/onDragEndHelpers';
 import { CREATE_LIST, CREATE_CARD } from '../graphql/mutations/all';
-import { addListState } from '../utlities/createUpdateHelpers';
+import { addCardState, addListState } from '../utlities/createUpdateHelpers';
 
 interface Props {
   children: ReactNode;
@@ -75,35 +75,19 @@ const BoardProvider = ({ children }: Props) => {
     setBoard(newBoard);
   };
 
-  // const addCard = (input: string) => {
-  //   try {
-  //     const cardObject: CardData = {
-  //       content: input,
-  //       index: list.cards.length,
-  //       listId: list._id,
-  //     };
-  //     newCardMutation({ variables: { createCardInput: cardObject } });
-  //     //gonna need the new card mutation data to create newCard id
-  //     addCard(cardObject);
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-
-  const addCard = ({ content, index, listId }: CardData) => {
-    const card = {
-      _id: `${Math.random()}`,
-      content,
-      index,
-    };
-
-    // @ts-ignore comment
-    const cardList = board.find((x) => x._id === listId).cards;
-    const newCardList = [...cardList, card];
-
-    const newBoard = board.map((x) =>
-      x._id === listId ? { ...x, cards: newCardList } : x,
-    );
-    setBoard(newBoard);
+  const addCard = (input: string, list: ListInterface) => {
+    try {
+      const cardObject: CardData = {
+        content: input,
+        index: list.cards.length,
+        listId: list._id,
+      };
+      newCardMutation({ variables: { createCardInput: cardObject } });
+      //gonna need the new card mutation data to create newCard id
+      addCardState(cardObject, board, setBoard);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const deleteCard = (listId: string, cardId: string) => {

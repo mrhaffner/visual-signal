@@ -1,4 +1,4 @@
-import { ListData, ListInterface } from '../types';
+import { ListData, CardData, ListInterface } from '../types';
 
 export const addListState = (
   { title, index }: ListData,
@@ -16,19 +16,25 @@ export const addListState = (
   setBoardState(newBoard);
 };
 
-// export const addCardState = ({ content, index, listId }: CardData) => {
-//   const card = {
-//     _id: `${Math.random()}`,
-//     content,
-//     index,
-//   };
+export const addCardState = (
+  { content, index, listId }: CardData,
+  boardState: ListInterface[],
+  setBoardState: React.Dispatch<React.SetStateAction<ListInterface[]>>,
+) => {
+  const card = {
+    //need to feed proper ID
+    _id: `${Math.random()}`,
+    content,
+    index,
+    listId,
+  };
 
-//   // @ts-ignore comment
-//   const cardList = board.find((x) => x._id === listId).cards;
-//   const newCardList = [...cardList, card];
+  // @ts-ignore comment
+  const cardList = boardState.find((x) => x._id === listId).cards;
+  const newCardList = [...cardList, card];
 
-//   const newBoard = board.map((x) =>
-//     x._id === listId ? { ...x, cards: newCardList } : x,
-//   );
-//   setBoard(newBoard);
-// };
+  const newBoard = boardState.map((x) =>
+    x._id === listId ? { ...x, cards: newCardList } : x,
+  );
+  setBoardState(newBoard);
+};

@@ -1,7 +1,7 @@
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import styled from 'styled-components';
 import ListList from './ListList';
-import CreateForm from '../../components/CreateForm';
+import CreateListForm from '../../components/CreateListForm';
 import useBoardContext from '../../hooks/useBoardContext';
 
 const Wrapper = styled.div`
@@ -21,7 +21,7 @@ const Board = () => {
           <Wrapper {...provided.droppableProps} ref={provided.innerRef}>
             <ListList lists={board} />
             {provided.placeholder}
-            <CreateForm buttonText="List" submitData={addList} />
+            <CreateListForm buttonText="List" submitData={addList} />
           </Wrapper>
         )}
       </Droppable>

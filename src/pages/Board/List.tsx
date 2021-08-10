@@ -1,11 +1,11 @@
 import CardList from './CardList';
 import styled from 'styled-components';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
-import { CardData, ListInterface } from '../../types';
+import { ListInterface } from '../../types';
 import { useMutation } from '@apollo/client';
-import CreateForm from '../../components/CreateForm';
+import CreateCardForm from '../../components/CreateCardForm';
 import useBoardContext from '../../hooks/useBoardContext';
-import { CREATE_CARD, DELETE_LIST } from '../../graphql/mutations/all';
+import { DELETE_LIST } from '../../graphql/mutations/all';
 import DeleteButton from '../../components/DeleteButton';
 
 const Wrapper = styled.div`
@@ -53,23 +53,6 @@ const List = ({ list, index }: Props) => {
     }
   };
 
-  const [newCardMutation] = useMutation(CREATE_CARD);
-
-  const handleCreateCard = (input: string) => {
-    try {
-      const cardObject: CardData = {
-        content: input,
-        index: list.cards.length,
-        listId: list._id,
-      };
-      newCardMutation({ variables: { createCardInput: cardObject } });
-      //gonna need the new card mutation data to create newCard id
-      addCard(cardObject);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
   return (
     <Draggable draggableId={list._id} index={index}>
       {(provided) => (
@@ -88,7 +71,7 @@ const List = ({ list, index }: Props) => {
               </Container>
             )}
           </Droppable>
-          <CreateForm buttonText="Card" submitData={handleCreateCard} />
+          <CreateCardForm buttonText="Card" submitData={addCard} list={list} />
         </Wrapper>
       )}
     </Draggable>

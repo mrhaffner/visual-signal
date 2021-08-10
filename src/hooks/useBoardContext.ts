@@ -1,7 +1,7 @@
 import { ApolloError } from '@apollo/client';
 import { createContext, useContext } from 'react';
 import { DropResult } from 'react-beautiful-dnd';
-import { CardData, ListInterface } from '../types';
+import { ListInterface } from '../types';
 
 type BoardState = {
   loading: boolean;
@@ -10,7 +10,7 @@ type BoardState = {
   onDragEnd: (result: DropResult) => void;
   addList: (input: string) => void;
   deleteList: (listId: string) => void;
-  addCard: ({ content, index, listId }: CardData) => void;
+  addCard: (input: string, list: ListInterface) => void;
   deleteCard: (listId: string, cardId: string) => void;
 };
 
