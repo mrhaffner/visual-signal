@@ -40,7 +40,7 @@ interface Props {
 }
 
 const List = ({ list, index }: Props) => {
-  const { deleteList, newCard } = useBoardContext();
+  const { deleteList, addCard } = useBoardContext();
 
   const [deleteListMutation] = useMutation(DELETE_LIST);
 
@@ -64,7 +64,7 @@ const List = ({ list, index }: Props) => {
       };
       newCardMutation({ variables: { createCardInput: cardObject } });
       //gonna need the new card mutation data to create newCard id
-      newCard(cardObject);
+      addCard(cardObject);
     } catch (e) {
       console.log(e);
     }

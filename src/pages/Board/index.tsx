@@ -3,9 +3,6 @@ import styled from 'styled-components';
 import ListList from './ListList';
 import CreateForm from '../../components/CreateForm';
 import useBoardContext from '../../hooks/useBoardContext';
-import { CREATE_LIST } from '../../graphql/mutations/all';
-import { ListData } from '../../types';
-import { useMutation } from '@apollo/client';
 
 const Wrapper = styled.div`
   display: flex;
