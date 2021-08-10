@@ -1,14 +1,14 @@
 import { ApolloError } from '@apollo/client';
 import { createContext, useContext } from 'react';
 import { DropResult } from 'react-beautiful-dnd';
-import { CardData, ListData, ListInterface } from '../types';
+import { CardData, ListInterface } from '../types';
 
 type BoardState = {
   loading: boolean;
   error: ApolloError | undefined;
   board: ListInterface[];
   onDragEnd: (result: DropResult) => void;
-  addList: ({ title, index }: ListData) => void;
+  addList: (input: string) => void;
   deleteList: (listId: string) => void;
   newCard: ({ content, index, listId }: CardData) => void;
   deleteCard: (listId: string, cardId: string) => void;

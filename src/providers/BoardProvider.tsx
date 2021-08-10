@@ -1,6 +1,6 @@
 import { useState, useEffect, ReactNode } from 'react';
 import ALL_LISTS from '../graphql/queries/getAllLists';
-import { useQuery } from '@apollo/client';
+import { useQuery, useMutation } from '@apollo/client';
 import { CardData, ListData, ListInterface } from '../types';
 import { DropResult } from 'react-beautiful-dnd';
 import { BoardContext } from '../hooks/useBoardContext';
@@ -9,6 +9,7 @@ import {
   reorderCardsInSameList,
   reorderLists,
 } from '../utlities/onDragEndHelpers';
+import { CREATE_LIST } from '../graphql/mutations/all';
 
 interface Props {
   children: ReactNode;
@@ -17,6 +18,8 @@ interface Props {
 const BoardProvider = ({ children }: Props) => {
   const { loading, error, data } = useQuery(ALL_LISTS);
   const [board, setBoard] = useState<ListInterface[]>([]);
+  const [newListMutation] = useMutation(CREATE_LIST);
+
   console.log(board);
 
   useEffect(() => {
@@ -50,15 +53,36 @@ const BoardProvider = ({ children }: Props) => {
     reorderCardsAcrossLists(board, source, destination, setBoard);
   };
 
-  const addList = ({ title, index }: ListData) => {
-    const list = {
-      _id: `${Math.random()}`,
-      title,
-      index,
-      cards: [],
-    };
-    const newBoard = [...board, list];
-    setBoard(newBoard);
+  // const addList = ({ title, index }: ListData) => {
+  //   const list = {
+  //     _id: `${Math.random()}`,
+  //     title,
+  //     index,
+  //     cards: [],
+  //   };
+  //   const newBoard = [...board, list];
+  //   setBoard(newBoard);
+  // };
+
+  const addList = (input: string) => {
+    try {
+      const listObject: ListData = {
+        title: input,
+        index: board.length,
+      };
+      newListMutation({ variables: { createListInput: listObject } });
+      //gonna need the new list mutation data to create newList id
+      const stateList = {
+        _id: `${Math.random()}`,
+        title: input,
+        index: board.length,
+        cards: [],
+      };
+      const newBoard = [...board, stateList];
+      setBoard(newBoard);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const deleteList = (listId: string) => {
