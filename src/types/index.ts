@@ -1,23 +1,20 @@
-export interface CardInterface {
-  _id: string;
-  content: string;
-  index: number;
+interface CommonData {
+  name: string;
+  pos: number;
 }
 
-export interface ListInterface {
+export interface ListData extends CommonData {}
+
+export interface ListInterface extends ListData {
   _id: string;
-  title: string;
-  index: number;
   cards: CardInterface[];
 }
 
-export interface ListData {
-  title: string;
-  index: number;
+export interface CardData extends CommonData {
+  idList: string;
 }
 
-export interface CardData {
-  content: string;
-  index: number;
-  listId: string;
+export interface CardInterface extends CardData {
+  _id: string;
+  idList: string;
 }

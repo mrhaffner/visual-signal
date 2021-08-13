@@ -4,12 +4,13 @@ const ALL_LISTS = gql`
   query Query {
     allLists {
       _id
-      title
-      index
+      name
+      pos
       cards {
-        content
-        index
         _id
+        name
+        pos
+        idList
       }
     }
   }

@@ -44,7 +44,7 @@ const List = ({ list, index }: Props) => {
     <Draggable draggableId={list._id} index={index}>
       {(provided) => (
         <Wrapper {...provided.draggableProps} ref={provided.innerRef}>
-          <Title {...provided.dragHandleProps}>{list.title}</Title>
+          <Title {...provided.dragHandleProps}>{list.name}</Title>
           <DeleteListButton handleDelete={deleteList} id={list._id} />
           <Droppable droppableId={list._id} type="card">
             {(provided, snapshot) => (
@@ -53,7 +53,7 @@ const List = ({ list, index }: Props) => {
                 {...provided.droppableProps}
                 isDraggingOver={snapshot.isDraggingOver}
               >
-                <CardList cards={list.cards} listId={list._id} />
+                <CardList cards={list.cards} idList={list._id} />
                 {provided.placeholder}
               </Container>
             )}

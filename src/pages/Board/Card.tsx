@@ -19,10 +19,10 @@ const Wrapper = styled.div<BoardItemStylesProps>`
 interface Props {
   card: CardInterface;
   index: number;
-  listId: string;
+  idList: string;
 }
 
-const Card = ({ card, index, listId }: Props) => {
+const Card = ({ card, index, idList }: Props) => {
   const { deleteCard } = useBoardContext();
 
   return (
@@ -34,10 +34,10 @@ const Card = ({ card, index, listId }: Props) => {
           ref={provided.innerRef}
           isDragging={snapshot.isDragging}
         >
-          <div>{card.content}</div>
+          <div>{card.name}</div>
           <DeleteCardButton
             handleDelete={deleteCard}
-            listId={listId}
+            idList={idList}
             cardId={card._id}
           />
         </Wrapper>

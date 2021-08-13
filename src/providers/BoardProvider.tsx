@@ -71,8 +71,8 @@ const BoardProvider = ({ children }: Props) => {
   const addList = (input: string) => {
     try {
       const listObject: ListData = {
-        title: input,
-        index: board.length,
+        name: input,
+        pos: board.length,
       };
       newListMutation({ variables: { createListInput: listObject } });
       //gonna need the new list mutation data to create newList id
@@ -82,10 +82,10 @@ const BoardProvider = ({ children }: Props) => {
     }
   };
 
-  const deleteList = (listId: string) => {
+  const deleteList = (idList: string) => {
     try {
-      deleteListMutation({ variables: { deleteListId: listId } });
-      deleteListState(listId, board, setBoard);
+      deleteListMutation({ variables: { deleteListId: idList } });
+      deleteListState(idList, board, setBoard);
     } catch (e) {
       console.log(e);
     }
@@ -94,9 +94,9 @@ const BoardProvider = ({ children }: Props) => {
   const addCard = (input: string, list: ListInterface) => {
     try {
       const cardObject: CardData = {
-        content: input,
-        index: list.cards.length,
-        listId: list._id,
+        name: input,
+        pos: list.cards.length,
+        idList: list._id,
       };
       newCardMutation({ variables: { createCardInput: cardObject } });
       //gonna need the new card mutation data to create newCard id
@@ -106,10 +106,10 @@ const BoardProvider = ({ children }: Props) => {
     }
   };
 
-  const deleteCard = (listId: string, cardId: string) => {
+  const deleteCard = (idList: string, cardId: string) => {
     try {
       deleteCardMutation({ variables: { deleteCardId: cardId } });
-      deleteCardState(listId, cardId, board, setBoard);
+      deleteCardState(idList, cardId, board, setBoard);
     } catch (e) {
       console.log(e);
     }

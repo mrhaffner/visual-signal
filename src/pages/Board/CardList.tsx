@@ -4,13 +4,13 @@ import Card from './Card';
 
 interface Props {
   cards: CardInterface[];
-  listId: string;
+  idList: string;
 }
 
-const CardList = React.memo(({ cards, listId }: Props) => (
+const CardList = React.memo(({ cards, idList }: Props) => (
   <>
     {cards.map((card, index) => (
-      <Card key={card._id} card={card} index={index} listId={listId} />
+      <Card key={card._id} card={card} index={index} idList={idList} />
     ))}
   </>
 ));

@@ -1,11 +1,11 @@
 interface Props {
-  handleDelete: (listId: string, cardId: string) => void;
-  listId: string;
+  handleDelete: (idList: string, cardId: string) => void;
+  idList: string;
   cardId: string;
 }
 
-const DeleteButton = ({ handleDelete, listId, cardId }: Props) => (
-  <button onClick={() => handleDelete(listId, cardId)}>Delete Me</button>
+const DeleteButton = ({ handleDelete, idList, cardId }: Props) => (
+  <button onClick={() => handleDelete(idList, cardId)}>Delete Me</button>
 );
 
 export default DeleteButton;
