@@ -9,9 +9,9 @@ type BoardState = {
   board: ListInterface[];
   onDragEnd: (result: DropResult) => void;
   addList: (input: string) => void;
-  deleteList: (idList: string) => void;
+  deleteList: (id: string) => void;
   addCard: (input: string, list: ListInterface) => void;
-  deleteCard: (idList: string, cardId: string) => void;
+  deleteCard: (id: string) => void;
 };
 
 export const BoardContext = createContext<BoardState>({

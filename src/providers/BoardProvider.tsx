@@ -15,12 +15,6 @@ import {
   CREATE_CARD,
   DELETE_CARD,
 } from '../graphql/mutations/all';
-import {
-  addCardState,
-  addListState,
-  deleteListState,
-  deleteCardState,
-} from '../utlities/createUpdateHelpers';
 import { newItemPosition } from '../utlities/calculatePositionHelpers';
 
 interface Props {
@@ -31,10 +25,18 @@ const BoardProvider = ({ children }: Props) => {
   const { loading, error, data } = useQuery(ALL_LISTS);
   const [board, setBoard] = useState<ListInterface[]>([]);
 
-  const [newListMutation] = useMutation(CREATE_LIST);
-  const [deleteListMutation] = useMutation(DELETE_LIST);
-  const [newCardMutation] = useMutation(CREATE_CARD);
-  const [deleteCardMutation] = useMutation(DELETE_CARD);
+  const [newListMutation] = useMutation(CREATE_LIST, {
+    refetchQueries: [{ query: ALL_LISTS }],
+  });
+  const [deleteListMutation] = useMutation(DELETE_LIST, {
+    refetchQueries: [{ query: ALL_LISTS }],
+  });
+  const [newCardMutation] = useMutation(CREATE_CARD, {
+    refetchQueries: [{ query: ALL_LISTS }],
+  });
+  const [deleteCardMutation] = useMutation(DELETE_CARD, {
+    refetchQueries: [{ query: ALL_LISTS }],
+  });
 
   console.log(board);
 
@@ -76,8 +78,6 @@ const BoardProvider = ({ children }: Props) => {
         pos: newItemPosition(board),
       };
       newListMutation({ variables: { createListInput: listObject } });
-      //gonna need the new list mutation data to create newList id
-      addListState(listObject, board, setBoard);
     } catch (e) {
       console.log(e);
     }
@@ -86,7 +86,6 @@ const BoardProvider = ({ children }: Props) => {
   const deleteList = (idList: string) => {
     try {
       deleteListMutation({ variables: { deleteListId: idList } });
-      deleteListState(idList, board, setBoard);
     } catch (e) {
       console.log(e);
     }
@@ -100,17 +99,14 @@ const BoardProvider = ({ children }: Props) => {
         idList: list._id,
       };
       newCardMutation({ variables: { createCardInput: cardObject } });
-      //gonna need the new card mutation data to create newCard id
-      addCardState(cardObject, board, setBoard);
     } catch (e) {
       console.log(e);
     }
   };
 
-  const deleteCard = (idList: string, cardId: string) => {
+  const deleteCard = (cardId: string) => {
     try {
       deleteCardMutation({ variables: { deleteCardId: cardId } });
-      deleteCardState(idList, cardId, board, setBoard);
     } catch (e) {
       console.log(e);
     }

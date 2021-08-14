@@ -4,7 +4,7 @@ import { Draggable, Droppable } from 'react-beautiful-dnd';
 import { ListInterface } from '../../types';
 import CreateCardForm from '../../components/CreateCardForm';
 import useBoardContext from '../../hooks/useBoardContext';
-import DeleteListButton from '../../components/DeleteListButton';
+import DeleteButton from '../../components/DeleteButton';
 
 const Wrapper = styled.div`
   margin: 8px;
@@ -45,7 +45,7 @@ const List = ({ list, index }: Props) => {
       {(provided) => (
         <Wrapper {...provided.draggableProps} ref={provided.innerRef}>
           <Title {...provided.dragHandleProps}>{list.name}</Title>
-          <DeleteListButton handleDelete={deleteList} id={list._id} />
+          <DeleteButton handleDelete={deleteList} id={list._id} />
           <Droppable droppableId={list._id} type="card">
             {(provided, snapshot) => (
               <Container
@@ -53,7 +53,7 @@ const List = ({ list, index }: Props) => {
                 {...provided.droppableProps}
                 isDraggingOver={snapshot.isDraggingOver}
               >
-                <CardList cards={list.cards} idList={list._id} />
+                <CardList cards={list.cards} />
                 {provided.placeholder}
               </Container>
             )}
