@@ -21,6 +21,7 @@ import {
   deleteListState,
   deleteCardState,
 } from '../utlities/createUpdateHelpers';
+import { newItemPosition } from '../utlities/calculatePositionHelpers';
 
 interface Props {
   children: ReactNode;
@@ -72,7 +73,7 @@ const BoardProvider = ({ children }: Props) => {
     try {
       const listObject: ListData = {
         name: input,
-        pos: board.length,
+        pos: newItemPosition(board),
       };
       newListMutation({ variables: { createListInput: listObject } });
       //gonna need the new list mutation data to create newList id
@@ -95,7 +96,7 @@ const BoardProvider = ({ children }: Props) => {
     try {
       const cardObject: CardData = {
         name: input,
-        pos: list.cards.length,
+        pos: newItemPosition(list.cards),
         idList: list._id,
       };
       newCardMutation({ variables: { createCardInput: cardObject } });
