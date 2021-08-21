@@ -22,22 +22,37 @@ import {
   updateItemPosition,
   updateItemPositionAcross,
 } from '../utlities/calculatePositionHelpers';
+import BOARD_SUBSCRIPTION from '../graphql/subscriptions/all';
 
 interface Props {
   children: ReactNode;
 }
 
 const BoardProvider = ({ children }: Props) => {
-  const { loading, error, data } = useQuery(ALL_LISTS);
+  const { loading, error, data, subscribeToMore } = useQuery(ALL_LISTS);
+  subscribeToMore({
+    document: BOARD_SUBSCRIPTION,
+    updateQuery: (prev, { subscriptionData }) => {
+      if (!subscriptionData.data) return prev;
+      const newBoard = subscriptionData.data.newBoard;
+      console.log('hi', newBoard);
+      console.log(prev);
+
+      return Object.assign({}, prev, {
+        allLists: {
+          newBoard,
+        },
+      });
+    },
+  });
+
   const [board, setBoard] = useState<ListInterface[]>([]);
 
   const [newListMutation] = useMutation(CREATE_LIST, {
     refetchQueries: [{ query: ALL_LISTS }],
   });
 
-  const [updateListMutation] = useMutation(UPDATE_LIST, {
-    refetchQueries: [{ query: ALL_LISTS }],
-  });
+  const [updateListMutation] = useMutation(UPDATE_LIST);
 
   const [deleteListMutation] = useMutation(DELETE_LIST, {
     refetchQueries: [{ query: ALL_LISTS }],
@@ -47,9 +62,7 @@ const BoardProvider = ({ children }: Props) => {
     refetchQueries: [{ query: ALL_LISTS }],
   });
 
-  const [updateCardMutation] = useMutation(UPDATE_CARD, {
-    refetchQueries: [{ query: ALL_LISTS }],
-  });
+  const [updateCardMutation] = useMutation(UPDATE_CARD);
 
   const [deleteCardMutation] = useMutation(DELETE_CARD, {
     refetchQueries: [{ query: ALL_LISTS }],
@@ -75,12 +88,8 @@ const BoardProvider = ({ children }: Props) => {
       return;
     }
 
-    // if (type === 'list') {
-    //   reorderLists(board, source, destination, setBoard);
-    //   return;
-    // }
-
     if (type === 'list') {
+      reorderLists(board, source, destination, setBoard);
       const newPos = updateItemPosition(board, destination.index, source.index);
       const updateListObject = {
         _id: board[source.index]._id,
@@ -93,12 +102,8 @@ const BoardProvider = ({ children }: Props) => {
       return;
     }
 
-    // if (source.droppableId === destination.droppableId) {
-    //   reorderCardsInSameList(board, source, destination, setBoard);
-    //   return;
-    // }
-
     if (source.droppableId === destination.droppableId) {
+      reorderCardsInSameList(board, source, destination, setBoard);
       const list = board.find((x) => x._id === source.droppableId);
       const newPos = updateItemPosition(
         // @ts-ignore comment
@@ -119,7 +124,7 @@ const BoardProvider = ({ children }: Props) => {
       return;
     }
 
-    // reorderCardsAcrossLists(board, source, destination, setBoard);
+    reorderCardsAcrossLists(board, source, destination, setBoard);
     const sourceList = board.find((x) => x._id === source.droppableId);
     const destinationList = board.find(
       (x) => x._id === destination.droppableId,

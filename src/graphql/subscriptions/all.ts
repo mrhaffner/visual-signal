@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client';
 
-const ALL_LISTS = gql`
-  query GetAllLists {
-    allLists {
+const BOARD_SUBSCRIPTION = gql`
+  subscription BoardSubscription {
+    newBoard {
       _id
       name
       pos
@@ -16,4 +16,4 @@ const ALL_LISTS = gql`
   }
 `;
 
-export default ALL_LISTS;
+export default BOARD_SUBSCRIPTION;
