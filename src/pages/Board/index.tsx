@@ -11,21 +11,25 @@ const Wrapper = styled.div`
 const Board = () => {
   const { loading, error, board, onDragEnd, addList } = useBoardContext();
 
-  if (loading || !board.length) return <p>Loading...</p>;
+  if (loading || board === null) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
 
   return (
-    <DragDropContext onDragEnd={onDragEnd}>
-      <Droppable droppableId="all-lists" direction="horizontal" type="list">
-        {(provided) => (
-          <Wrapper {...provided.droppableProps} ref={provided.innerRef}>
-            <ListList lists={board} />
-            {provided.placeholder}
-            <CreateListForm buttonText="List" submitData={addList} />
-          </Wrapper>
-        )}
-      </Droppable>
-    </DragDropContext>
+    <>
+      <h1>{board.name}</h1>
+      <button onClick={() => console.log(board)}>Get State</button>
+      <DragDropContext onDragEnd={onDragEnd}>
+        <Droppable droppableId="all-lists" direction="horizontal" type="list">
+          {(provided) => (
+            <Wrapper {...provided.droppableProps} ref={provided.innerRef}>
+              <ListList lists={board.lists} />
+              {provided.placeholder}
+              <CreateListForm buttonText="List" submitData={addList} />
+            </Wrapper>
+          )}
+        </Droppable>
+      </DragDropContext>
+    </>
   );
 };
 

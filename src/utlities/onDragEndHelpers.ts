@@ -1,29 +1,33 @@
 import { DraggableLocation } from 'react-beautiful-dnd';
-import { ListInterface } from '../types';
+import { BoardInterface, ListInterface } from '../types';
 
 export const reorderLists = (
-  boardData: ListInterface[],
+  boardData: BoardInterface,
   sourceData: DraggableLocation,
   destinationData: DraggableLocation,
-  updateBoard: React.Dispatch<React.SetStateAction<ListInterface[]>>,
+  updateBoard: React.Dispatch<React.SetStateAction<BoardInterface | null>>,
 ) => {
-  const newBoard = [...boardData];
-  const splicedList = newBoard.splice(sourceData.index, 1)[0];
-  newBoard.splice(destinationData.index, 0, splicedList);
+  let newLists = [...boardData.lists];
+  console.log('newLists: ', newLists);
+  const splicedList = newLists.splice(sourceData.index, 1)[0];
+  console.log('splicedList: ', splicedList);
+  newLists.splice(destinationData.index, 0, splicedList);
+  const newBoard = { ...boardData, lists: newLists };
+  console.log('newBoard: ', newBoard);
 
   updateBoard(newBoard);
 };
 
 export const reorderCardsInSameList = (
-  boardData: ListInterface[],
+  boardData: BoardInterface,
   sourceData: DraggableLocation,
   destinationData: DraggableLocation,
-  updateBoard: React.Dispatch<React.SetStateAction<ListInterface[]>>,
+  updateBoard: React.Dispatch<React.SetStateAction<BoardInterface | null>>,
 ) => {
-  const list = boardData.find((x) => x._id === sourceData.droppableId);
+  const list = boardData.lists.find((x) => x._id === sourceData.droppableId);
   // @ts-ignore comment
-  const newCardArray = [...list.cards];
-  const splicedCard = newCardArray.splice(sourceData.index, 1)[0];
+  let newCardArray = [...list.cards];
+  let splicedCard = newCardArray.splice(sourceData.index, 1)[0];
   newCardArray.splice(destinationData.index, 0, splicedCard);
 
   const newList = {
@@ -31,20 +35,23 @@ export const reorderCardsInSameList = (
     cards: newCardArray,
   };
 
-  const newBoard = boardData.map((x) =>
+  const newLists = boardData.lists.map((x) =>
     x._id === sourceData.droppableId ? newList : x,
   );
+  const newBoard = { ...boardData, lists: newLists };
   // @ts-ignore comment
   updateBoard(newBoard);
 };
 
 export const reorderCardsAcrossLists = (
-  boardData: ListInterface[],
+  boardData: BoardInterface,
   sourceData: DraggableLocation,
   destinationData: DraggableLocation,
-  updateBoard: React.Dispatch<React.SetStateAction<ListInterface[]>>,
+  updateBoard: React.Dispatch<React.SetStateAction<BoardInterface | null>>,
 ) => {
-  const startList = boardData.find((x) => x._id === sourceData.droppableId);
+  const startList = boardData.lists.find(
+    (x) => x._id === sourceData.droppableId,
+  );
   // @ts-ignore comment
   const newStartCardArray = [...startList.cards];
   const splicedCard = newStartCardArray.splice(sourceData.index, 1)[0];
@@ -54,11 +61,11 @@ export const reorderCardsAcrossLists = (
     cards: newStartCardArray,
   };
 
-  const finishList = boardData.find(
+  const finishList = boardData.lists.find(
     (x) => x._id === destinationData.droppableId,
   );
   // @ts-ignore comment
-  const newFinishCardArray = [...finishList.cards];
+  let newFinishCardArray = [...finishList.cards];
   newFinishCardArray.splice(destinationData.index, 0, splicedCard);
 
   const newFinishList = {
@@ -66,7 +73,7 @@ export const reorderCardsAcrossLists = (
     cards: newFinishCardArray,
   };
 
-  const newBoard = boardData.map((x) => {
+  const newLists = boardData.lists.map((x) => {
     if (x._id === sourceData.droppableId) {
       return newStartList;
     } else if (x._id === destinationData.droppableId) {
@@ -75,6 +82,7 @@ export const reorderCardsAcrossLists = (
       return x;
     }
   });
+  const newBoard = { ...boardData, lists: newLists };
   // @ts-ignore comment
   updateBoard(newBoard);
 };

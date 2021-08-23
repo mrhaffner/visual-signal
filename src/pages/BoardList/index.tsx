@@ -1,4 +1,4 @@
-import { useState, useEffect, ReactNode } from 'react';
+import { useState, useEffect } from 'react';
 import { useQuery } from '@apollo/client';
 import { ALL_BOARDS } from '../../graphql/queries/getAllLists';
 import { BoardInterface } from '../../types';
@@ -23,7 +23,11 @@ const BoardList = () => {
       <h2>Boards</h2>
       {boardList.map((board) => {
         const url = `/board/${board._id}`;
-        return <Link to={url}>{board.name}</Link>;
+        return (
+          <Link to={url} key={board._id}>
+            {board.name}
+          </Link>
+        );
       })}
     </>
   );

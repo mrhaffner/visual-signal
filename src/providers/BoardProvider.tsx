@@ -1,7 +1,7 @@
 import { useState, useEffect, ReactNode } from 'react';
-import { ALL_LISTS } from '../graphql/queries/getAllLists';
+import { ALL_LISTS, GET_BOARD } from '../graphql/queries/getAllLists';
 import { useQuery, useMutation } from '@apollo/client';
-import { CardData, ListData, ListInterface } from '../types';
+import { BoardInterface, CardData, ListData, ListInterface } from '../types';
 import { DropResult } from 'react-beautiful-dnd';
 import { BoardContext } from '../hooks/useBoardContext';
 import {
@@ -23,60 +23,80 @@ import {
   updateItemPositionAcross,
 } from '../utlities/calculatePositionHelpers';
 import BOARD_SUBSCRIPTION from '../graphql/subscriptions/all';
+import { useParams } from 'react-router-dom';
 
 interface Props {
   children: ReactNode;
 }
 
 const BoardProvider = ({ children }: Props) => {
-  const { loading, error, data, subscribeToMore } = useQuery(ALL_LISTS);
-  subscribeToMore({
-    document: BOARD_SUBSCRIPTION,
-    updateQuery: (prev, { subscriptionData }) => {
-      if (!subscriptionData.data) return prev;
-      const newBoard = subscriptionData.data.newBoard;
-      console.log('hi', newBoard);
-      console.log(prev);
+  // @ts-ignore comment
+  let { boardId } = useParams();
 
-      return Object.assign({}, prev, {
-        allLists: {
-          newBoard,
-        },
-      });
-    },
+  //perhaps change the fetch policy, but you would need to sort the cache by pos.
+  //Benefit here would be that you can remove the onDragEndHelpers
+  const { loading, error, data, refetch } = useQuery(GET_BOARD, {
+    variables: { id: boardId },
+    fetchPolicy: 'network-only',
+    nextFetchPolicy: 'standby',
   });
+  // const { loading, error, data, subscribeToMore } = useQuery(GET_BOARD, {
+  //   variables: { _id: boardId },
+  // });
+  // subscribeToMore({
+  //   document: BOARD_SUBSCRIPTION,
+  //   updateQuery: (prev, { subscriptionData }) => {
+  //     if (!subscriptionData.data) return prev;
+  //     const newBoard = subscriptionData.data.newBoard;
+  //     console.log('hi', newBoard);
+  //     console.log(prev);
 
-  const [board, setBoard] = useState<ListInterface[]>([]);
+  //     return Object.assign({}, prev, {
+  //       allLists: {
+  //         newBoard,
+  //       },
+  //     });
+  //   },
+  // });
+
+  const [board, setBoard] = useState<BoardInterface | null>(null);
 
   const [newListMutation] = useMutation(CREATE_LIST, {
-    refetchQueries: [{ query: ALL_LISTS }],
+    // refetchQueries: [{ query: GET_BOARD, variables: { id: boardId } }],
   });
 
   const [updateListMutation] = useMutation(UPDATE_LIST);
 
   const [deleteListMutation] = useMutation(DELETE_LIST, {
-    refetchQueries: [{ query: ALL_LISTS }],
+    // refetchQueries: [{ query: GET_BOARD, variables: { id: boardId } }],
   });
 
   const [newCardMutation] = useMutation(CREATE_CARD, {
-    refetchQueries: [{ query: ALL_LISTS }],
+    // refetchQueries: [{ query: GET_BOARD, variables: { id: boardId } }],
   });
 
   const [updateCardMutation] = useMutation(UPDATE_CARD);
 
   const [deleteCardMutation] = useMutation(DELETE_CARD, {
-    refetchQueries: [{ query: ALL_LISTS }],
+    // refetchQueries: [{ query: GET_BOARD, variables: { id: boardId } }],
   });
-
-  console.log(board);
 
   useEffect(() => {
     if (data) {
-      setBoard(data.allLists);
+      console.log(data);
+
+      setBoard(data.getBoardById);
     }
   }, [data]);
 
   const onDragEnd = (result: DropResult) => {
+    if (board === null) {
+      console.log(
+        "Board is null!  Don't worry, this will never actuall happen.",
+      );
+      return;
+    }
+
     const { destination, source, type } = result;
 
     if (!destination) return;
@@ -90,21 +110,27 @@ const BoardProvider = ({ children }: Props) => {
 
     if (type === 'list') {
       reorderLists(board, source, destination, setBoard);
-      const newPos = updateItemPosition(board, destination.index, source.index);
+
+      const newPos = updateItemPosition(
+        board.lists,
+        destination.index,
+        source.index,
+      );
       const updateListObject = {
-        _id: board[source.index]._id,
+        _id: board.lists[source.index]._id,
         pos: newPos,
       };
 
       updateListMutation({
         variables: { updateListPosInput: updateListObject },
       });
+
       return;
     }
 
     if (source.droppableId === destination.droppableId) {
       reorderCardsInSameList(board, source, destination, setBoard);
-      const list = board.find((x) => x._id === source.droppableId);
+      const list = board.lists.find((x) => x._id === source.droppableId);
       const newPos = updateItemPosition(
         // @ts-ignore comment
         list.cards,
@@ -116,7 +142,6 @@ const BoardProvider = ({ children }: Props) => {
         _id: list.cards[source.index]._id,
         pos: newPos,
       };
-      console.log(updateCardObject);
 
       updateCardMutation({
         variables: { updateCardPosInput: updateCardObject },
@@ -125,8 +150,8 @@ const BoardProvider = ({ children }: Props) => {
     }
 
     reorderCardsAcrossLists(board, source, destination, setBoard);
-    const sourceList = board.find((x) => x._id === source.droppableId);
-    const destinationList = board.find(
+    const sourceList = board.lists.find((x) => x._id === source.droppableId);
+    const destinationList = board.lists.find(
       (x) => x._id === destination.droppableId,
     );
 
@@ -143,7 +168,6 @@ const BoardProvider = ({ children }: Props) => {
       pos: newPos,
       idList: destination.droppableId,
     };
-    console.log(updateCardObject);
 
     updateCardMutation({
       variables: { updateCardPosInput: updateCardObject },
@@ -151,12 +175,20 @@ const BoardProvider = ({ children }: Props) => {
   };
 
   const addList = (input: string) => {
+    if (board === null) {
+      console.log(
+        "Board is null!  Don't worry, this will never actuall happen.",
+      );
+      return;
+    }
     try {
       const listObject: ListData = {
         name: input,
-        pos: newItemPosition(board),
+        pos: newItemPosition(board.lists),
+        idBoard: board._id,
       };
       newListMutation({ variables: { createListInput: listObject } });
+      refetch();
     } catch (e) {
       console.log(e);
     }
@@ -165,6 +197,7 @@ const BoardProvider = ({ children }: Props) => {
   const deleteList = (idList: string) => {
     try {
       deleteListMutation({ variables: { deleteListId: idList } });
+      refetch();
     } catch (e) {
       console.log(e);
     }
@@ -178,6 +211,7 @@ const BoardProvider = ({ children }: Props) => {
         idList: list._id,
       };
       newCardMutation({ variables: { createCardInput: cardObject } });
+      refetch();
     } catch (e) {
       console.log(e);
     }
@@ -186,6 +220,7 @@ const BoardProvider = ({ children }: Props) => {
   const deleteCard = (cardId: string) => {
     try {
       deleteCardMutation({ variables: { deleteCardId: cardId } });
+      refetch();
     } catch (e) {
       console.log(e);
     }

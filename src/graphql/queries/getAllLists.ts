@@ -10,8 +10,8 @@ export const ALL_BOARDS = gql`
 `;
 
 export const GET_BOARD = gql`
-  query GetBoard {
-    getBoardById {
+  query GetBoard($id: ID!) {
+    getBoardById(_id: $id) {
       _id
       name
       lists {

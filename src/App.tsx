@@ -5,7 +5,7 @@ import BoardList from './pages/BoardList';
 
 const App = () => (
   <Switch>
-    <Route path="/board/:id">
+    <Route path="/board/:boardId">
       <BoardProvider>
         <Board />
       </BoardProvider>
