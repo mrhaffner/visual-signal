@@ -5,6 +5,7 @@ import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import { split, HttpLink } from '@apollo/client';
 import { getMainDefinition } from '@apollo/client/utilities';
 import { WebSocketLink } from '@apollo/client/link/ws';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 const httpLink = new HttpLink({
   uri: 'http://localhost:8080/graphql',
@@ -34,15 +35,12 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-// const client = new ApolloClient({
-//   uri: 'http://localhost:8080/graphql',
-//   cache: new InMemoryCache(),
-// });
-
 ReactDOM.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
-      <App />
+      <Router>
+        <App />
+      </Router>
     </ApolloProvider>
   </React.StrictMode>,
   document.getElementById('root'),

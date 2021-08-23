@@ -3,6 +3,11 @@ interface CommonData {
   pos: number;
 }
 
+export interface BoardInterface {
+  _id: string;
+  name: string;
+}
+
 export interface ListData extends CommonData {}
 
 export interface ListInterface extends ListData {

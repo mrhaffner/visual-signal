@@ -1,5 +1,5 @@
 import { useState, useEffect, ReactNode } from 'react';
-import ALL_LISTS from '../graphql/queries/getAllLists';
+import { ALL_LISTS } from '../graphql/queries/getAllLists';
 import { useQuery, useMutation } from '@apollo/client';
 import { CardData, ListData, ListInterface } from '../types';
 import { DropResult } from 'react-beautiful-dnd';
