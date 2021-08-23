@@ -1,28 +1,19 @@
 interface CommonData {
-  name: string;
-  pos: number;
-}
-
-export interface BoardInterface {
   _id: string;
   name: string;
+}
+
+export interface BoardInterface extends CommonData {
   lists: ListInterface[];
 }
 
-export interface ListData extends CommonData {
-  idBoard: string;
-}
-
-export interface ListInterface extends ListData {
-  _id: string;
+export interface ListInterface extends CommonData {
+  idBoard: String;
+  pos: number;
   cards: CardInterface[];
 }
 
-export interface CardData extends CommonData {
+export interface CardInterface extends CommonData {
   idList: string;
-}
-
-export interface CardInterface extends CardData {
-  _id: string;
-  idList: string;
+  pos: number;
 }

@@ -17,7 +17,6 @@ const Board = () => {
   return (
     <>
       <h1>{board.name}</h1>
-      <button onClick={() => console.log(board)}>Get State</button>
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="all-lists" direction="horizontal" type="list">
           {(provided) => (

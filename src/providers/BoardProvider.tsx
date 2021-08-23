@@ -1,7 +1,7 @@
 import { useState, useEffect, ReactNode } from 'react';
-import { ALL_LISTS, GET_BOARD } from '../graphql/queries/getAllLists';
+import { GET_BOARD } from '../graphql/queries/getAllLists';
 import { useQuery, useMutation } from '@apollo/client';
-import { BoardInterface, CardData, ListData, ListInterface } from '../types';
+import { BoardInterface, ListInterface } from '../types';
 import { DropResult } from 'react-beautiful-dnd';
 import { BoardContext } from '../hooks/useBoardContext';
 import {
@@ -33,58 +33,38 @@ const BoardProvider = ({ children }: Props) => {
   // @ts-ignore comment
   let { boardId } = useParams();
 
-  //perhaps change the fetch policy, but you would need to sort the cache by pos.
-  //Benefit here would be that you can remove the onDragEndHelpers
-  const { loading, error, data, refetch } = useQuery(GET_BOARD, {
+  const { loading, error, data, subscribeToMore } = useQuery(GET_BOARD, {
     variables: { id: boardId },
-    fetchPolicy: 'network-only',
-    nextFetchPolicy: 'standby',
   });
-  // const { loading, error, data, subscribeToMore } = useQuery(GET_BOARD, {
-  //   variables: { _id: boardId },
-  // });
-  // subscribeToMore({
-  //   document: BOARD_SUBSCRIPTION,
-  //   updateQuery: (prev, { subscriptionData }) => {
-  //     if (!subscriptionData.data) return prev;
-  //     const newBoard = subscriptionData.data.newBoard;
-  //     console.log('hi', newBoard);
-  //     console.log(prev);
 
-  //     return Object.assign({}, prev, {
-  //       allLists: {
-  //         newBoard,
-  //       },
-  //     });
-  //   },
-  // });
+  subscribeToMore({
+    document: BOARD_SUBSCRIPTION,
+    updateQuery: (prev, { subscriptionData }) => {
+      if (!subscriptionData.data.newBoard) return prev;
+      const newBoard = subscriptionData.data.newBoard;
+
+      return Object.assign({}, prev, {
+        getBoardById: newBoard,
+      });
+    },
+  });
 
   const [board, setBoard] = useState<BoardInterface | null>(null);
 
-  const [newListMutation] = useMutation(CREATE_LIST, {
-    // refetchQueries: [{ query: GET_BOARD, variables: { id: boardId } }],
-  });
+  const [newListMutation] = useMutation(CREATE_LIST);
 
   const [updateListMutation] = useMutation(UPDATE_LIST);
 
-  const [deleteListMutation] = useMutation(DELETE_LIST, {
-    // refetchQueries: [{ query: GET_BOARD, variables: { id: boardId } }],
-  });
+  const [deleteListMutation] = useMutation(DELETE_LIST);
 
-  const [newCardMutation] = useMutation(CREATE_CARD, {
-    // refetchQueries: [{ query: GET_BOARD, variables: { id: boardId } }],
-  });
+  const [newCardMutation] = useMutation(CREATE_CARD);
 
   const [updateCardMutation] = useMutation(UPDATE_CARD);
 
-  const [deleteCardMutation] = useMutation(DELETE_CARD, {
-    // refetchQueries: [{ query: GET_BOARD, variables: { id: boardId } }],
-  });
+  const [deleteCardMutation] = useMutation(DELETE_CARD);
 
   useEffect(() => {
     if (data) {
-      console.log(data);
-
       setBoard(data.getBoardById);
     }
   }, [data]);
@@ -92,7 +72,7 @@ const BoardProvider = ({ children }: Props) => {
   const onDragEnd = (result: DropResult) => {
     if (board === null) {
       console.log(
-        "Board is null!  Don't worry, this will never actuall happen.",
+        "Board is null!  Don't worry, this will never actually happen.",
       );
       return;
     }
@@ -119,8 +99,9 @@ const BoardProvider = ({ children }: Props) => {
       const updateListObject = {
         _id: board.lists[source.index]._id,
         pos: newPos,
+        idBoard: board._id,
       };
-
+      //can I do an optimistic update here and get rid of reoderLists()?
       updateListMutation({
         variables: { updateListPosInput: updateListObject },
       });
@@ -141,6 +122,7 @@ const BoardProvider = ({ children }: Props) => {
         // @ts-ignore comment
         _id: list.cards[source.index]._id,
         pos: newPos,
+        idBoard: board._id,
       };
 
       updateCardMutation({
@@ -160,13 +142,13 @@ const BoardProvider = ({ children }: Props) => {
       destinationList.cards,
       destination.index,
     );
-    console.log(newPos);
 
     const updateCardObject = {
       // @ts-ignore comment
       _id: sourceList.cards[source.index]._id,
       pos: newPos,
       idList: destination.droppableId,
+      idBoard: board._id,
     };
 
     updateCardMutation({
@@ -177,50 +159,73 @@ const BoardProvider = ({ children }: Props) => {
   const addList = (input: string) => {
     if (board === null) {
       console.log(
-        "Board is null!  Don't worry, this will never actuall happen.",
+        "Board is null!  Don't worry, this will never actually happen.",
       );
       return;
     }
     try {
-      const listObject: ListData = {
+      const listObject = {
         name: input,
         pos: newItemPosition(board.lists),
         idBoard: board._id,
       };
       newListMutation({ variables: { createListInput: listObject } });
-      refetch();
     } catch (e) {
       console.log(e);
     }
   };
 
   const deleteList = (idList: string) => {
+    if (board === null) {
+      console.log(
+        "Board is null!  Don't worry, this will never actually happen.",
+      );
+      return;
+    }
     try {
-      deleteListMutation({ variables: { deleteListId: idList } });
-      refetch();
+      const deleteObject = {
+        _id: idList,
+        idBoard: board._id,
+      };
+      deleteListMutation({ variables: { deleteListInput: deleteObject } });
     } catch (e) {
       console.log(e);
     }
   };
 
   const addCard = (input: string, list: ListInterface) => {
+    if (board === null) {
+      console.log(
+        "Board is null!  Don't worry, this will never actuall happen.",
+      );
+      return;
+    }
     try {
-      const cardObject: CardData = {
+      const cardObject = {
         name: input,
         pos: newItemPosition(list.cards),
         idList: list._id,
+        idBoard: board._id,
       };
       newCardMutation({ variables: { createCardInput: cardObject } });
-      refetch();
     } catch (e) {
       console.log(e);
     }
   };
 
   const deleteCard = (cardId: string) => {
+    if (board === null) {
+      console.log(
+        "Board is null!  Don't worry, this will never actuall happen.",
+      );
+      return;
+    }
     try {
-      deleteCardMutation({ variables: { deleteCardId: cardId } });
-      refetch();
+      const deleteObject = {
+        _id: cardId,
+        idBoard: board._id,
+      };
+      deleteCardMutation({ variables: { deleteCardInput: deleteObject } });
     } catch (e) {
       console.log(e);
     }

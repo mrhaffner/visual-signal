@@ -21,8 +21,8 @@ export const UPDATE_LIST = gql`
 `;
 
 export const DELETE_LIST = gql`
-  mutation DeleteListMutation($deleteListId: ID!) {
-    deleteList(_id: $deleteListId)
+  mutation DeleteListMutation($deleteListInput: DeleteList!) {
+    deleteList(input: $deleteListInput)
   }
 `;
 
@@ -49,7 +49,7 @@ export const UPDATE_CARD = gql`
 `;
 
 export const DELETE_CARD = gql`
-  mutation DeleteCardMutation($deleteCardId: ID!) {
-    deleteCard(_id: $deleteCardId)
+  mutation DeleteCardMutation($deleteCardInput: DeleteCard!) {
+    deleteCard(input: $deleteCardInput)
   }
 `;

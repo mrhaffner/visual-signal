@@ -1,5 +1,5 @@
 import { DraggableLocation } from 'react-beautiful-dnd';
-import { BoardInterface, ListInterface } from '../types';
+import { BoardInterface } from '../types';
 
 export const reorderLists = (
   boardData: BoardInterface,
@@ -8,12 +8,9 @@ export const reorderLists = (
   updateBoard: React.Dispatch<React.SetStateAction<BoardInterface | null>>,
 ) => {
   let newLists = [...boardData.lists];
-  console.log('newLists: ', newLists);
   const splicedList = newLists.splice(sourceData.index, 1)[0];
-  console.log('splicedList: ', splicedList);
   newLists.splice(destinationData.index, 0, splicedList);
   const newBoard = { ...boardData, lists: newLists };
-  console.log('newBoard: ', newBoard);
 
   updateBoard(newBoard);
 };

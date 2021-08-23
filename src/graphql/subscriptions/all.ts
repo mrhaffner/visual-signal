@@ -5,12 +5,17 @@ const BOARD_SUBSCRIPTION = gql`
     newBoard {
       _id
       name
-      pos
-      cards {
+      lists {
         _id
         name
         pos
-        idList
+        idBoard
+        cards {
+          _id
+          name
+          pos
+          idList
+        }
       }
     }
   }
