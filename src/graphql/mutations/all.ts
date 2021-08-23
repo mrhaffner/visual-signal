@@ -1,5 +1,20 @@
 import { gql } from '@apollo/client';
 
+export const CREATE_BOARD = gql`
+  mutation CreateBoard($createBoardInput: CreateBoard!) {
+    createBoard(input: $createBoardInput) {
+      _id
+      name
+    }
+  }
+`;
+
+export const DELETE_BOARD = gql`
+  mutation DeleteBoardMutation($deleteBoardInput: ID!) {
+    deleteBoard(_id: $deleteBoardInput)
+  }
+`;
+
 export const CREATE_LIST = gql`
   mutation CreateList($createListInput: CreateList!) {
     createList(input: $createListInput) {
