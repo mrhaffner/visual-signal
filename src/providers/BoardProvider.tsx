@@ -16,6 +16,7 @@ import {
   CREATE_CARD,
   UPDATE_CARD,
   DELETE_CARD,
+  UPDATE_BOARD_NAME,
 } from '../graphql/mutations/all';
 import {
   newItemPosition,
@@ -50,6 +51,8 @@ const BoardProvider = ({ children }: Props) => {
   });
 
   const [board, setBoard] = useState<BoardInterface | null>(null);
+
+  const [updateBoardNameMutation] = useMutation(UPDATE_BOARD_NAME);
 
   const [newListMutation] = useMutation(CREATE_LIST);
 
@@ -156,6 +159,26 @@ const BoardProvider = ({ children }: Props) => {
     });
   };
 
+  const newBoardName = (input: string) => {
+    if (board === null) {
+      console.log(
+        "Board is null!  Don't worry, this will never actually happen.",
+      );
+      return;
+    }
+    try {
+      const updateObject = {
+        _id: board._id,
+        name: input,
+      };
+      updateBoardNameMutation({
+        variables: { updateBoardInput: updateObject },
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   const addList = (input: string) => {
     if (board === null) {
       console.log(
@@ -238,6 +261,7 @@ const BoardProvider = ({ children }: Props) => {
         error,
         board,
         onDragEnd,
+        newBoardName,
         addList,
         deleteList,
         addCard,

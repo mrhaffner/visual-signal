@@ -3,20 +3,25 @@ import styled from 'styled-components';
 import ListList from './ListList';
 import CreateListBoardForm from '../../components/CreateListBoardForm';
 import useBoardContext from '../../hooks/useBoardContext';
+import EditableTextInput from '../../components/EditableTextInput';
 
 const Wrapper = styled.div`
   display: flex;
 `;
 
 const Board = () => {
-  const { loading, error, board, onDragEnd, addList } = useBoardContext();
+  const { loading, error, board, onDragEnd, newBoardName, addList } =
+    useBoardContext();
 
   if (loading || board === null) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
 
   return (
     <>
-      <h1>{board.name}</h1>
+      <EditableTextInput
+        text={board.name}
+        onSetText={(text: string) => newBoardName(text)}
+      />
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="all-lists" direction="horizontal" type="list">
           {(provided) => (

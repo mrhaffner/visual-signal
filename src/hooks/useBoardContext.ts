@@ -8,6 +8,7 @@ type BoardState = {
   error: ApolloError | undefined;
   board: BoardInterface | null;
   onDragEnd: (result: DropResult) => void;
+  newBoardName: (input: string) => void;
   addList: (input: string) => void;
   deleteList: (id: string) => void;
   addCard: (input: string, list: ListInterface) => void;
@@ -18,6 +19,7 @@ export const BoardContext = createContext<BoardState>({
   loading: false,
   error: undefined,
   board: null,
+  newBoardName: () => {},
   onDragEnd: () => {},
   addList: () => {},
   deleteList: () => {},

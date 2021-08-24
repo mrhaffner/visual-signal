@@ -9,6 +9,15 @@ export const CREATE_BOARD = gql`
   }
 `;
 
+export const UPDATE_BOARD_NAME = gql`
+  mutation UpdateBoardNameMutation($updateBoardInput: UpdateBoardNameInput!) {
+    updateBoardName(input: $updateBoardInput) {
+      _id
+      name
+    }
+  }
+`;
+
 export const DELETE_BOARD = gql`
   mutation DeleteBoardMutation($deleteBoardInput: ID!) {
     deleteBoard(_id: $deleteBoardInput)
