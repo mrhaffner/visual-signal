@@ -38,7 +38,7 @@ const client = new ApolloClient({
 ReactDOM.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
-      <Router>
+      <Router forceRefresh={true}>
         <App />
       </Router>
     </ApolloProvider>

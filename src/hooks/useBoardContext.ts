@@ -9,6 +9,7 @@ type BoardState = {
   board: BoardInterface | null;
   onDragEnd: (result: DropResult) => void;
   newBoardName: (input: string) => void;
+  deleteBoard: (id: string) => void;
   addList: (input: string) => void;
   newListName: (input: any) => void;
   deleteList: (id: string) => void;
@@ -22,6 +23,7 @@ export const BoardContext = createContext<BoardState>({
   error: undefined,
   board: null,
   newBoardName: () => {},
+  deleteBoard: () => {},
   onDragEnd: () => {},
   addList: () => {},
   newListName: () => {},

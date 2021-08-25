@@ -19,6 +19,7 @@ import {
   UPDATE_BOARD_NAME,
   UPDATE_CARD_NAME,
   UPDATE_LIST_NAME,
+  DELETE_BOARD,
 } from '../graphql/mutations/all';
 import {
   newItemPosition,
@@ -55,6 +56,8 @@ const BoardProvider = ({ children }: Props) => {
   const [board, setBoard] = useState<BoardInterface | null>(null);
 
   const [updateBoardNameMutation] = useMutation(UPDATE_BOARD_NAME);
+
+  const [deleteBoardMutation] = useMutation(DELETE_BOARD);
 
   const [newListMutation] = useMutation(CREATE_LIST);
 
@@ -185,6 +188,12 @@ const BoardProvider = ({ children }: Props) => {
     }
   };
 
+  const deleteBoard = (id: string) => {
+    deleteBoardMutation({
+      variables: { deleteBoardInput: id },
+    });
+  };
+
   const addList = (input: string) => {
     if (board === null) {
       console.log(
@@ -288,6 +297,7 @@ const BoardProvider = ({ children }: Props) => {
         board,
         onDragEnd,
         newBoardName,
+        deleteBoard,
         addList,
         newListName,
         deleteList,
