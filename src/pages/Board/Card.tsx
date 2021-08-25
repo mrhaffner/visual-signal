@@ -3,6 +3,7 @@ import { Draggable } from 'react-beautiful-dnd';
 import { CardInterface } from '../../types';
 import useBoardContext from '../../hooks/useBoardContext';
 import DeleteButton from '../../components/DeleteButton';
+import EditableTextInput from '../../components/EditableTextInput';
 
 type BoardItemStylesProps = {
   isDragging: boolean;
@@ -22,7 +23,7 @@ interface Props {
 }
 
 const Card = ({ card, index }: Props) => {
-  const { deleteCard } = useBoardContext();
+  const { deleteCard, newCardName } = useBoardContext();
 
   return (
     <Draggable draggableId={card._id} index={index}>
@@ -33,7 +34,12 @@ const Card = ({ card, index }: Props) => {
           ref={provided.innerRef}
           isDragging={snapshot.isDragging}
         >
-          <div>{card.name}</div>
+          <EditableTextInput
+            text={card.name}
+            onSetText={(text: string) =>
+              newCardName({ _id: card._id, name: text })
+            }
+          />
           <DeleteButton handleDelete={deleteCard} id={card._id} />
         </Wrapper>
       )}

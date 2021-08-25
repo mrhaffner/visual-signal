@@ -11,12 +11,14 @@ import {
 } from '../utlities/onDragEndHelpers';
 import {
   CREATE_LIST,
-  UPDATE_LIST,
+  UPDATE_LIST_POS,
   DELETE_LIST,
   CREATE_CARD,
-  UPDATE_CARD,
+  UPDATE_CARD_POS,
   DELETE_CARD,
   UPDATE_BOARD_NAME,
+  UPDATE_CARD_NAME,
+  UPDATE_LIST_NAME,
 } from '../graphql/mutations/all';
 import {
   newItemPosition,
@@ -56,13 +58,17 @@ const BoardProvider = ({ children }: Props) => {
 
   const [newListMutation] = useMutation(CREATE_LIST);
 
-  const [updateListMutation] = useMutation(UPDATE_LIST);
+  const [updateListPosMutation] = useMutation(UPDATE_LIST_POS);
+
+  const [updateListNameMutation] = useMutation(UPDATE_LIST_NAME);
 
   const [deleteListMutation] = useMutation(DELETE_LIST);
 
   const [newCardMutation] = useMutation(CREATE_CARD);
 
-  const [updateCardMutation] = useMutation(UPDATE_CARD);
+  const [updateCardPosMutation] = useMutation(UPDATE_CARD_POS);
+
+  const [updateCardNameMutation] = useMutation(UPDATE_CARD_NAME);
 
   const [deleteCardMutation] = useMutation(DELETE_CARD);
 
@@ -105,7 +111,7 @@ const BoardProvider = ({ children }: Props) => {
         idBoard: board._id,
       };
       //can I do an optimistic update here and get rid of reoderLists()?
-      updateListMutation({
+      updateListPosMutation({
         variables: { updateListPosInput: updateListObject },
       });
 
@@ -128,7 +134,7 @@ const BoardProvider = ({ children }: Props) => {
         idBoard: board._id,
       };
 
-      updateCardMutation({
+      updateCardPosMutation({
         variables: { updateCardPosInput: updateCardObject },
       });
       return;
@@ -154,7 +160,7 @@ const BoardProvider = ({ children }: Props) => {
       idBoard: board._id,
     };
 
-    updateCardMutation({
+    updateCardPosMutation({
       variables: { updateCardPosInput: updateCardObject },
     });
   };
@@ -198,6 +204,16 @@ const BoardProvider = ({ children }: Props) => {
     }
   };
 
+  const newListName = (updateObject: any) => {
+    try {
+      updateListNameMutation({
+        variables: { updateListNameInput: updateObject },
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   const deleteList = (idList: string) => {
     if (board === null) {
       console.log(
@@ -236,6 +252,16 @@ const BoardProvider = ({ children }: Props) => {
     }
   };
 
+  const newCardName = (updateObject: any) => {
+    try {
+      updateCardNameMutation({
+        variables: { updateCardNameInput: updateObject },
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   const deleteCard = (cardId: string) => {
     if (board === null) {
       console.log(
@@ -263,8 +289,10 @@ const BoardProvider = ({ children }: Props) => {
         onDragEnd,
         newBoardName,
         addList,
+        newListName,
         deleteList,
         addCard,
+        newCardName,
         deleteCard,
       }}
     >

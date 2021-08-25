@@ -34,12 +34,21 @@ export const CREATE_LIST = gql`
   }
 `;
 
-export const UPDATE_LIST = gql`
+export const UPDATE_LIST_POS = gql`
   mutation UpdateListPosMutation($updateListPosInput: UpdateListPosInput!) {
     updateListPos(input: $updateListPosInput) {
       _id
       name
       pos
+    }
+  }
+`;
+
+export const UPDATE_LIST_NAME = gql`
+  mutation UpdateListNameMutation($updateListNameInput: UpdateListNameInput!) {
+    updateListName(input: $updateListNameInput) {
+      _id
+      name
     }
   }
 `;
@@ -61,13 +70,22 @@ export const CREATE_CARD = gql`
   }
 `;
 
-export const UPDATE_CARD = gql`
+export const UPDATE_CARD_POS = gql`
   mutation UpdateCardPosMutation($updateCardPosInput: UpdateCardPosInput!) {
     updateCardPos(input: $updateCardPosInput) {
       _id
       name
       pos
       idList
+    }
+  }
+`;
+
+export const UPDATE_CARD_NAME = gql`
+  mutation UpdateCardNameMutation($updateCardNameInput: UpdateCardNameInput!) {
+    updateCardName(input: $updateCardNameInput) {
+      _id
+      name
     }
   }
 `;

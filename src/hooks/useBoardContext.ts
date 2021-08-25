@@ -10,8 +10,10 @@ type BoardState = {
   onDragEnd: (result: DropResult) => void;
   newBoardName: (input: string) => void;
   addList: (input: string) => void;
+  newListName: (input: any) => void;
   deleteList: (id: string) => void;
   addCard: (input: string, list: ListInterface) => void;
+  newCardName: (input: any) => void;
   deleteCard: (id: string) => void;
 };
 
@@ -22,8 +24,10 @@ export const BoardContext = createContext<BoardState>({
   newBoardName: () => {},
   onDragEnd: () => {},
   addList: () => {},
+  newListName: () => {},
   deleteList: () => {},
   addCard: () => {},
+  newCardName: () => {},
   deleteCard: () => {},
 });
 

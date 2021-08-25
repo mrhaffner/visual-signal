@@ -5,6 +5,7 @@ import { ListInterface } from '../../types';
 import CreateCardForm from '../../components/CreateCardForm';
 import useBoardContext from '../../hooks/useBoardContext';
 import DeleteButton from '../../components/DeleteButton';
+import EditableTextInput from '../../components/EditableTextInput';
 
 const Wrapper = styled.div`
   margin: 8px;
@@ -38,13 +39,21 @@ interface Props {
 }
 
 const List = ({ list, index }: Props) => {
-  const { deleteList, addCard } = useBoardContext();
+  const { deleteList, addCard, newListName } = useBoardContext();
 
   return (
     <Draggable draggableId={list._id} index={index}>
       {(provided) => (
         <Wrapper {...provided.draggableProps} ref={provided.innerRef}>
-          <Title {...provided.dragHandleProps}>{list.name}</Title>
+          <Title {...provided.dragHandleProps}>
+            <EditableTextInput
+              text={list.name}
+              onSetText={(text: string) =>
+                newListName({ _id: list._id, name: text })
+              }
+            />
+          </Title>
+
           <DeleteButton handleDelete={deleteList} id={list._id} />
           <Droppable droppableId={list._id} type="card">
             {(provided, snapshot) => (
