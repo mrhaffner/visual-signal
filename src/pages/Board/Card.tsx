@@ -3,7 +3,7 @@ import { Draggable } from 'react-beautiful-dnd';
 import { CardInterface } from '../../types';
 import useBoardContext from '../../hooks/useBoardContext';
 import DeleteCardButton from '../../components/DeleteCardButton';
-import EditableTextInput from '../../components/EditableTextInput';
+import InlineTextEditCard from '../../components/InlineTextEditCard';
 import useHover from '../../hooks/useHover';
 
 type BoardItemStylesProps = {
@@ -60,7 +60,7 @@ const Card = ({ card, index }: Props) => {
           isDragging={snapshot.isDragging}
         >
           <CardDetails ref={hoverRef}>
-            <EditableTextInput
+            <InlineTextEditCard
               text={card.name}
               onSetText={(text: string) =>
                 newCardName({ _id: card._id, name: text })
