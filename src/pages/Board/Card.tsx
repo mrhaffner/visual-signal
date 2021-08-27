@@ -30,6 +30,9 @@ const Wrapper = styled.div<BoardItemStylesProps>`
   position: relative;
   text-decoration: none;
 
+  /* transform: ${(props) => (props.isDragging ? 'rotate(45deg)' : '')}; */
+  background-color: ${(props) => (props.isDragging ? 'white' : '')};
+
   &:hover {
     background-color: #f4f5f7;
     border-bottom-color: #091e4240;
@@ -70,6 +73,7 @@ const Card = ({ card, index }: Props) => {
               handleDelete={deleteCard}
               id={card._id}
               isHovered={isHovered}
+              isDragging={snapshot.isDragging}
             />
           </CardDetails>
         </Wrapper>

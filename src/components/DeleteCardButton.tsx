@@ -35,11 +35,11 @@ import styled from 'styled-components';
 // `;
 
 interface BtnVisibilityProps {
-  isHovered: boolean;
+  isHoveredOrDragging: boolean;
 }
 
 const Button = styled.span<BtnVisibilityProps>`
-  visibility: ${(props) => (props.isHovered ? 'visible' : 'hidden')};
+  visibility: ${(props) => (props.isHoveredOrDragging ? 'visible' : 'hidden')};
   font-family: trellicons;
   background-clip: padding-box;
   background-color: #f4f5f7;
@@ -79,11 +79,22 @@ interface Props {
   handleDelete: (id: string) => void;
   id: string;
   isHovered: boolean;
+  isDragging: boolean;
 }
 
-const DeleteCardButton = ({ handleDelete, id, isHovered }: Props) => {
+const DeleteCardButton = ({
+  handleDelete,
+  id,
+  isHovered,
+  isDragging,
+}: Props) => {
+  const isHoveredOrDragging = isHovered || isDragging;
+
   return (
-    <Button onClick={() => handleDelete(id)} isHovered={isHovered}></Button>
+    <Button
+      onClick={() => handleDelete(id)}
+      isHoveredOrDragging={isHoveredOrDragging}
+    ></Button>
   );
 };
 
