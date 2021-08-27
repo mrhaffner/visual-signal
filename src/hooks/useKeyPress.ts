@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 
+//update to typescript version
+
 const useKeyPress = (targetKey: any) => {
   // State for keeping track of whether key is pressed
   const [keyPressed, setKeyPressed] = useState<boolean>(false);

@@ -6,7 +6,7 @@ import { split, HttpLink } from '@apollo/client';
 import { getMainDefinition } from '@apollo/client/utilities';
 import { WebSocketLink } from '@apollo/client/link/ws';
 import { BrowserRouter as Router } from 'react-router-dom';
-import GlobalStyles from './Globalstyles';
+import GlobalStyles from './GlobalStyles';
 
 const httpLink = new HttpLink({
   uri: 'http://localhost:8080/graphql',

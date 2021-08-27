@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+//update to typescript version
 
 const useOnClickOutside = (ref: any, handler: any) => {
   useEffect(
