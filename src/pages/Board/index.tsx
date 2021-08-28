@@ -11,6 +11,7 @@ import ListComposer from '../../components/ListComposer';
 
 const Wrapper = styled.div`
   display: flex;
+  align-items: flex-start;
 `;
 
 const Board = () => {

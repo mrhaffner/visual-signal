@@ -33,13 +33,14 @@ const Wrapper = styled.div`
 `;
 
 const Title = styled.h2`
-  margin-left: 8px;
+  margin-left: 6px;
   flex: 0 0 auto;
   min-height: 20px;
   padding-right: 36px;
-  padding: 10px 8px;
+  padding: 10px 8px 0 8px;
   position: relative;
   overflow: hidden;
+  margin-bottom: -4px;
 `;
 
 type BoardItemStylesProps = {
