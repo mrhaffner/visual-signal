@@ -3,7 +3,7 @@ import { useQuery, useMutation } from '@apollo/client';
 import { ALL_BOARDS } from '../../graphql/queries/getAllLists';
 import { BoardInterface } from '../../types';
 import { Link } from 'react-router-dom';
-import CreateListBoardForm from '../../components/CreateListBoardForm';
+import CreateBoardForm from '../../components/CreateBoardForm';
 import { CREATE_BOARD } from '../../graphql/mutations/all';
 
 const BoardList = () => {
@@ -40,7 +40,7 @@ const BoardList = () => {
           </div>
         );
       })}
-      <CreateListBoardForm buttonText="Board" submitData={addBoard} />
+      <CreateBoardForm buttonText="Board" submitData={addBoard} />
     </>
   );
 };

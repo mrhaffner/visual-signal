@@ -5,7 +5,7 @@ interface Props {
   submitData: (data: string) => void;
 }
 
-const CreateForm = ({ buttonText, submitData }: Props) => {
+const CreateBoardForm = ({ buttonText, submitData }: Props) => {
   const { register, handleSubmit } = useForm();
 
   const onSubmit = handleSubmit((data) => {
@@ -20,4 +20,4 @@ const CreateForm = ({ buttonText, submitData }: Props) => {
   );
 };
 
-export default CreateForm;
+export default CreateBoardForm;

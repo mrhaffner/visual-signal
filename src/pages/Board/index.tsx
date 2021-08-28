@@ -2,12 +2,12 @@ import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import ListList from './ListList';
-import CreateListBoardForm from '../../components/CreateListBoardForm';
 import useBoardContext from '../../hooks/useBoardContext';
 import EditableTextInput from '../../components/EditableTextInput';
 import DeleteBoardButton from '../../components/DeleteBoardButton';
 import OpenListComposer from '../../components/OpenListComposer';
 import { useState } from 'react';
+import ListComposer from '../../components/ListComposer';
 
 const Wrapper = styled.div`
   display: flex;
@@ -52,8 +52,14 @@ const Board = () => {
             <Wrapper {...provided.droppableProps} ref={provided.innerRef}>
               <ListList lists={board.lists} />
               {provided.placeholder}
-              <OpenListComposer setShowComposer={setShowComposer} />
-              <CreateListBoardForm buttonText="List" submitData={addList} />
+              {showComposer ? (
+                <ListComposer
+                  setShowComposer={setShowComposer}
+                  submitData={addList}
+                />
+              ) : (
+                <OpenListComposer setShowComposer={setShowComposer} />
+              )}
             </Wrapper>
           )}
         </Droppable>
