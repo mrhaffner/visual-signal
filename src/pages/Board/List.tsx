@@ -2,10 +2,12 @@ import CardList from './CardList';
 import styled from 'styled-components';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 import { ListInterface } from '../../types';
-import CreateCardForm from '../../components/CreateCardForm';
+import AddCardForm from '../../components/AddCardForm';
 import useBoardContext from '../../hooks/useBoardContext';
 import DeleteListButton from '../../components/DeleteListButton';
 import InlineTextEditList from '../../components/InlineTextEditList';
+import OpenCardComposer from '../../components/OpenCardComposer';
+import CardComposer from '../../components/CardComposer';
 
 // const Wrapper = styled.div`
 //   margin: 8px;
@@ -53,10 +55,13 @@ type BoardItemStylesProps = {
 // `;
 
 const Container = styled.div<BoardItemStylesProps>`
-  padding: 8px;
-  transition: background-color 0.2s ease;
-  flex-grow: 1;
-  min-height: 100px;
+  flex: 1 1 auto;
+  margin: 0 4px;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding: 0 4px;
+  z-index: 1;
 `;
 
 interface Props {
@@ -93,7 +98,9 @@ const List = ({ list, index }: Props) => {
               </Container>
             )}
           </Droppable>
-          <CreateCardForm buttonText="Card" submitData={addCard} list={list} />
+          <AddCardForm buttonText="Card" submitData={addCard} list={list} />
+          <CardComposer />
+          <OpenCardComposer />
         </Wrapper>
       )}
     </Draggable>
