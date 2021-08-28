@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import { ListInterface } from '../types';
 import { useForm } from 'react-hook-form';
+import useOnClickOutside from '../hooks/useOnClickOutside';
+import { useRef } from 'react';
 
 const CardComposerContainer = styled.div`
   padding-bottom: 8px;
@@ -134,12 +136,18 @@ interface Props {
 const CardComposer = ({ setShowComposer, submitData, list }: Props) => {
   const { register, handleSubmit } = useForm();
 
+  const wrapperRef = useRef(null);
+
+  useOnClickOutside(wrapperRef, () => {
+    setShowComposer(false);
+  });
+
   const onSubmit = handleSubmit((data) => {
     submitData(data.input, list);
   });
 
   return (
-    <CardComposerContainer>
+    <CardComposerContainer ref={wrapperRef}>
       <CardTextInputContainer onSubmit={onSubmit}>
         <CardDetailsContainer>
           <StyledTextArea

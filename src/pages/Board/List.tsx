@@ -2,7 +2,6 @@ import CardList from './CardList';
 import styled from 'styled-components';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 import { ListInterface } from '../../types';
-import AddCardForm from '../../components/AddCardForm';
 import useBoardContext from '../../hooks/useBoardContext';
 import DeleteListButton from '../../components/DeleteListButton';
 import InlineTextEditList from '../../components/InlineTextEditList';
