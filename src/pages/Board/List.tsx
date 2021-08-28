@@ -7,28 +7,53 @@ import useBoardContext from '../../hooks/useBoardContext';
 import DeleteButton from '../../components/DeleteButton';
 import EditableTextInput from '../../components/EditableTextInput';
 
+// const Wrapper = styled.div`
+//   margin: 8px;
+//   border: 1px solid lightgrey;
+//   background-color: white;
+//   border-radius: 2px;
+//   width: 220px;
+//   display: flex;
+//   flex-direction: column;
+// `;
+
 const Wrapper = styled.div`
-  margin: 8px;
-  border: 1px solid lightgrey;
-  background-color: white;
-  border-radius: 2px;
-  width: 220px;
+  background-color: #ebecf0;
+  border-radius: 3px;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
+  max-height: 100%;
+  position: relative;
+  white-space: normal;
+  width: 272px;
+  margin: 0 4px;
 `;
 
 const Title = styled.h3`
-  padding: 8px;
+  margin-left: 8px;
+  flex: 0 0 auto;
+  min-height: 20px;
+  padding-right: 36px;
+  padding: 10px 8px;
+  position: relative;
 `;
 
 type BoardItemStylesProps = {
   isDraggingOver: boolean;
 };
 
+// const Container = styled.div<BoardItemStylesProps>`
+//   padding: 8px;
+//   transition: background-color 0.2s ease;
+//   background-color: ${(props) => (props.isDraggingOver ? 'skyblue' : 'white')};
+//   flex-grow: 1;
+//   min-height: 100px;
+// `;
+
 const Container = styled.div<BoardItemStylesProps>`
   padding: 8px;
   transition: background-color 0.2s ease;
-  background-color: ${(props) => (props.isDraggingOver ? 'skyblue' : 'white')};
   flex-grow: 1;
   min-height: 100px;
 `;

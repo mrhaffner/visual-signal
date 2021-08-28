@@ -36,10 +36,9 @@ const TextInput = styled.input<InputStyleProps>`
   background: none;
   border: none;
   outline: none;
-  width: 100%;
 `;
 
-function InlineTextEditCard(props: any) {
+function EditableTextInput(props: any) {
   const [isInputActive, setIsInputActive] = useState(false);
   const [inputValue, setInputValue] = useState(props.text);
 
@@ -104,4 +103,4 @@ function InlineTextEditCard(props: any) {
   );
 }
 
-export default InlineTextEditCard;
+export default EditableTextInput;
