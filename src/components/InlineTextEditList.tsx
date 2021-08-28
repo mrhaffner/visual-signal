@@ -8,9 +8,13 @@ const Wrapper = styled.span`
   clear: both;
   color: #172b4d;
   display: block;
-  margin: 0 0 4px;
+  font-weight: 600;
+  margin: 0 0 8px;
+  font-size: 14px;
+  line-height: 24px;
   overflow: hidden;
   text-decoration: none;
+  height: 28px;
 `;
 
 interface SurfaceStyleProps {
@@ -27,18 +31,21 @@ interface InputStyleProps {
   isInputActive: boolean;
 }
 
-const TextInput = styled.input<InputStyleProps>`
+const TextInput = styled.textarea<InputStyleProps>`
   display: ${(props) => (props.isInputActive ? '' : 'none')};
   font: inherit;
   color: inherit;
   text-align: inherit;
   padding: 0;
-  background: none;
+  background-color: white;
   border: none;
   outline: none;
+  box-shadow: inset 0 0 0 2px #0079bf;
+  border-radius: 3px;
+  height: 28px;
 `;
 
-function EditableTextInput(props: any) {
+function InlineTextEditList(props: any) {
   const [isInputActive, setIsInputActive] = useState(false);
   const [inputValue, setInputValue] = useState(props.text);
 
@@ -103,4 +110,4 @@ function EditableTextInput(props: any) {
   );
 }
 
-export default EditableTextInput;
+export default InlineTextEditList;

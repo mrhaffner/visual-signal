@@ -4,8 +4,8 @@ import { Draggable, Droppable } from 'react-beautiful-dnd';
 import { ListInterface } from '../../types';
 import CreateCardForm from '../../components/CreateCardForm';
 import useBoardContext from '../../hooks/useBoardContext';
-import DeleteButton from '../../components/DeleteButton';
-import EditableTextInput from '../../components/EditableTextInput';
+import DeleteListButton from '../../components/DeleteListButton';
+import InlineTextEditList from '../../components/InlineTextEditList';
 
 // const Wrapper = styled.div`
 //   margin: 8px;
@@ -30,13 +30,14 @@ const Wrapper = styled.div`
   margin: 0 4px;
 `;
 
-const Title = styled.h3`
+const Title = styled.h2`
   margin-left: 8px;
   flex: 0 0 auto;
   min-height: 20px;
   padding-right: 36px;
   padding: 10px 8px;
   position: relative;
+  overflow: hidden;
 `;
 
 type BoardItemStylesProps = {
@@ -71,7 +72,7 @@ const List = ({ list, index }: Props) => {
       {(provided) => (
         <Wrapper {...provided.draggableProps} ref={provided.innerRef}>
           <Title {...provided.dragHandleProps}>
-            <EditableTextInput
+            <InlineTextEditList
               text={list.name}
               onSetText={(text: string) =>
                 newListName({ _id: list._id, name: text })
@@ -79,7 +80,7 @@ const List = ({ list, index }: Props) => {
             />
           </Title>
 
-          <DeleteButton handleDelete={deleteList} id={list._id} />
+          <DeleteListButton handleDelete={deleteList} id={list._id} />
           <Droppable droppableId={list._id} type="card">
             {(provided, snapshot) => (
               <Container
