@@ -99,6 +99,7 @@ const List = ({ list, index }: Props) => {
               </Container>
             )}
           </Droppable>
+          {/* This could be a component named toggle card composer */}
           {showComposer ? (
             <CardComposer
               setShowComposer={setShowComposer}

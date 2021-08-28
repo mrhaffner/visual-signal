@@ -6,6 +6,8 @@ import CreateListBoardForm from '../../components/CreateListBoardForm';
 import useBoardContext from '../../hooks/useBoardContext';
 import EditableTextInput from '../../components/EditableTextInput';
 import DeleteBoardButton from '../../components/DeleteBoardButton';
+import OpenListComposer from '../../components/OpenListComposer';
+import { useState } from 'react';
 
 const Wrapper = styled.div`
   display: flex;
@@ -21,6 +23,9 @@ const Board = () => {
     deleteBoard,
     addList,
   } = useBoardContext();
+
+  const [showComposer, setShowComposer] = useState(false);
+
   let history = useHistory();
 
   const goHome = () => {
@@ -47,6 +52,7 @@ const Board = () => {
             <Wrapper {...provided.droppableProps} ref={provided.innerRef}>
               <ListList lists={board.lists} />
               {provided.placeholder}
+              <OpenListComposer setShowComposer={setShowComposer} />
               <CreateListBoardForm buttonText="List" submitData={addList} />
             </Wrapper>
           )}
