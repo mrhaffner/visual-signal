@@ -1,12 +1,14 @@
 import styled from 'styled-components';
+import { ListInterface } from '../types';
+import { useForm } from 'react-hook-form';
 
 const CardComposerContainer = styled.div`
   padding-bottom: 8px;
-  margin: 0 4px;
-  padding: 0 4px;
+  margin: 4px;
+  padding: 4px;
 `;
 
-const CardTextInputContainer = styled.div`
+const CardTextInputContainer = styled.form`
   background-color: #fff;
   border-radius: 3px;
   box-shadow: 0 1px 0 #091e4240;
@@ -123,17 +125,32 @@ const CancelButton = styled.a`
   font-size: 26px;
 `;
 
-const CardComposer = () => {
+interface Props {
+  setShowComposer: (newState: boolean) => void;
+  submitData: (data: string, list: ListInterface) => void;
+  list: ListInterface;
+}
+
+const CardComposer = ({ setShowComposer, submitData, list }: Props) => {
+  const { register, handleSubmit } = useForm();
+
+  const onSubmit = handleSubmit((data) => {
+    submitData(data.input, list);
+  });
+
   return (
     <CardComposerContainer>
-      <CardTextInputContainer>
+      <CardTextInputContainer onSubmit={onSubmit}>
         <CardDetailsContainer>
-          <StyledTextArea placeholder="Enter a title for this card..." />
+          <StyledTextArea
+            placeholder="Enter a title for this card..."
+            {...register('input', { required: true })}
+          />
         </CardDetailsContainer>
         <div>
           <ControlsSection>
             <AddButton type="submit" value="Add card" />
-            <CancelButton />
+            <CancelButton onClick={() => setShowComposer(false)} />
           </ControlsSection>
         </div>
       </CardTextInputContainer>

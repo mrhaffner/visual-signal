@@ -8,6 +8,7 @@ import DeleteListButton from '../../components/DeleteListButton';
 import InlineTextEditList from '../../components/InlineTextEditList';
 import OpenCardComposer from '../../components/OpenCardComposer';
 import CardComposer from '../../components/CardComposer';
+import { useState } from 'react';
 
 // const Wrapper = styled.div`
 //   margin: 8px;
@@ -71,6 +72,7 @@ interface Props {
 
 const List = ({ list, index }: Props) => {
   const { deleteList, addCard, newListName } = useBoardContext();
+  const [showComposer, setShowComposer] = useState(false);
 
   return (
     <Draggable draggableId={list._id} index={index}>
@@ -98,9 +100,15 @@ const List = ({ list, index }: Props) => {
               </Container>
             )}
           </Droppable>
-          <AddCardForm buttonText="Card" submitData={addCard} list={list} />
-          <CardComposer />
-          <OpenCardComposer />
+          {showComposer ? (
+            <CardComposer
+              setShowComposer={setShowComposer}
+              submitData={addCard}
+              list={list}
+            />
+          ) : (
+            <OpenCardComposer setShowComposer={setShowComposer} />
+          )}
         </Wrapper>
       )}
     </Draggable>

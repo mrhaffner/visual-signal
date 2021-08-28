@@ -50,10 +50,14 @@ const StyledText = styled.span`
   color: #5e6c84;
 `;
 
-const OpenCardComposer = () => {
+interface Props {
+  setShowComposer: (newState: boolean) => void;
+}
+
+const OpenCardComposer = ({ setShowComposer }: Props) => {
   return (
     <CardComposerContainer>
-      <CardComposer>
+      <CardComposer onClick={() => setShowComposer(true)}>
         <PlusIcon />
         <StyledText>Add a card</StyledText>
       </CardComposer>
