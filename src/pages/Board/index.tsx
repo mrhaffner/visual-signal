@@ -11,6 +11,7 @@ import BoardHeader from './BoardHeader';
 const Wrapper = styled.div`
   display: flex;
   align-items: flex-start;
+  margin-left: 4px;
 `;
 
 const Board = () => {

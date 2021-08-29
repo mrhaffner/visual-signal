@@ -26,8 +26,9 @@ const NavLogo = styled.a`
   color: #172b4d;
   background-color: initial;
   cursor: pointer;
+  opacity: 0.5;
   &:hover {
-    color: #091e42;
+    opacity: 0.9;
   }
 `;
 
@@ -38,10 +39,7 @@ const NavImage = styled.div`
   height: 16px;
   margin: 7px 0;
   position: relative;
-  opacity: 0.5;
-  &:hover {
-    opacity: 0.9;
-  }
+
   &::before {
     content: '';
     background-image: url(https://a.trellocdn.com/prgb/dist/images/header-logo-spirit.d947df93bc055849898e.gif);
