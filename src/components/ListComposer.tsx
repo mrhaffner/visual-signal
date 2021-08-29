@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
 import useOnClickOutside from '../hooks/useOnClickOutside';
-import { useRef } from 'react';
+import useKeypress from '../hooks/useKeyPress';
+import { useRef, useEffect } from 'react';
 
 const ListWrapper = styled.div`
   background-color: #ebecf0;
@@ -126,17 +127,36 @@ interface Props {
 }
 
 const ListComposer = ({ setShowComposer, submitData }: Props) => {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, setFocus, reset } = useForm();
 
   const wrapperRef = useRef(null);
 
-  useOnClickOutside(wrapperRef, () => {
-    setShowComposer(false);
-  });
+  const enter = useKeypress('Enter');
+  const esc = useKeypress('Escape');
 
   const onSubmit = handleSubmit((data) => {
     submitData(data.input);
   });
+
+  useOnClickOutside(wrapperRef, () => {
+    onSubmit();
+    setShowComposer(false);
+  });
+
+  useEffect(() => {
+    setFocus('input');
+  }, [submitData]);
+
+  useEffect(() => {
+    if (enter) {
+      onSubmit();
+      reset();
+    }
+    if (esc) {
+      reset();
+      setShowComposer(false);
+    }
+  }, [enter, esc]);
 
   return (
     <ListWrapper ref={wrapperRef}>

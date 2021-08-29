@@ -2,7 +2,8 @@ import styled from 'styled-components';
 import { ListInterface } from '../types';
 import { useForm } from 'react-hook-form';
 import useOnClickOutside from '../hooks/useOnClickOutside';
-import { useRef } from 'react';
+import useKeypress from '../hooks/useKeyPress';
+import { useRef, useEffect } from 'react';
 
 const CardComposerContainer = styled.div`
   padding-bottom: 8px;
@@ -134,17 +135,35 @@ interface Props {
 }
 
 const CardComposer = ({ setShowComposer, submitData, list }: Props) => {
-  const { register, handleSubmit } = useForm();
-
-  const wrapperRef = useRef(null);
-
-  useOnClickOutside(wrapperRef, () => {
-    setShowComposer(false);
-  });
+  const { register, handleSubmit, setFocus, reset } = useForm();
 
   const onSubmit = handleSubmit((data) => {
     submitData(data.input, list);
   });
+
+  const wrapperRef = useRef(null);
+
+  const enter = useKeypress('Enter');
+  const esc = useKeypress('Escape');
+
+  useOnClickOutside(wrapperRef, () => {
+    onSubmit();
+    setShowComposer(false);
+  });
+
+  useEffect(() => {
+    setFocus('input');
+  }, [submitData]);
+
+  useEffect(() => {
+    if (enter) {
+      onSubmit();
+    }
+    if (esc) {
+      reset();
+      setShowComposer(false);
+    }
+  }, [enter, esc]);
 
   return (
     <CardComposerContainer ref={wrapperRef}>

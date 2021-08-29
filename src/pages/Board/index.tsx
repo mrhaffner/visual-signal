@@ -3,11 +3,11 @@ import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import ListList from './ListList';
 import useBoardContext from '../../hooks/useBoardContext';
-import EditableTextInput from '../../components/EditableTextInput';
 import DeleteBoardButton from '../../components/DeleteBoardButton';
 import OpenListComposer from '../../components/OpenListComposer';
 import { useState } from 'react';
 import ListComposer from '../../components/ListComposer';
+import BoardHeader from './BoardHeader';
 
 const Wrapper = styled.div`
   display: flex;
@@ -38,14 +38,16 @@ const Board = () => {
 
   return (
     <>
-      <EditableTextInput
-        text={board.name}
-        onSetText={(text: string) => newBoardName(text)}
-      />
-      <DeleteBoardButton
+      {/* <DeleteBoardButton
         handleDelete={deleteBoard}
         goHome={goHome}
         id={board._id}
+      /> */}
+      <BoardHeader
+        handleDelete={deleteBoard}
+        goHome={goHome}
+        text={board.name}
+        submitData={newBoardName}
       />
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="all-lists" direction="horizontal" type="list">
