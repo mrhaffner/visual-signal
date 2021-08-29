@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import CreateBoardForm from '../../components/CreateBoardForm';
 import { CREATE_BOARD } from '../../graphql/mutations/all';
 
-const BoardList = () => {
+const Boards = () => {
   const { loading, error, data, refetch } = useQuery(ALL_BOARDS);
 
   const [newBoardMutation] = useMutation(CREATE_BOARD);
@@ -45,4 +45,4 @@ const BoardList = () => {
   );
 };
 
-export default BoardList;
+export default Boards;

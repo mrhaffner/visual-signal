@@ -63,7 +63,7 @@ const NavBar = () => {
       <Nav>
         <NavContainer>
           <NavLogo>
-            <NavImageContainer to="/">
+            <NavImageContainer to="/boards">
               <NavImage />
             </NavImageContainer>
           </NavLogo>

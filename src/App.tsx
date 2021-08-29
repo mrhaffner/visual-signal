@@ -1,7 +1,7 @@
 import { Switch, Route } from 'react-router-dom';
 import BoardProvider from './providers/BoardProvider';
 import Board from './pages/Board';
-import BoardList from './pages/BoardList';
+import Boards from './pages/Boards';
 import NavBar from './components/NavBar';
 
 const App = () => (
@@ -13,8 +13,8 @@ const App = () => (
           <Board />
         </BoardProvider>
       </Route>
-      <Route path="/">
-        <BoardList />
+      <Route path="/boards">
+        <Boards />
       </Route>
     </Switch>
   </>

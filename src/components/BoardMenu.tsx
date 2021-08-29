@@ -70,13 +70,13 @@ const Text = styled.span`
 interface Props {
   handleDelete: (id: string) => void;
   id: string;
-  goHome: () => void;
+  goToBoards: () => void;
 }
 
-const BoardMenu = ({ handleDelete, id, goHome }: Props) => {
+const BoardMenu = ({ handleDelete, id, goToBoards }: Props) => {
   const handleClick = () => {
     handleDelete(id);
-    goHome();
+    goToBoards();
   };
 
   return (

@@ -29,8 +29,8 @@ const Board = () => {
 
   let history = useHistory();
 
-  const goHome = () => {
-    history.push('/');
+  const goToBoards = () => {
+    history.push('/boards');
   };
 
   if (loading || board === null) return <p>Loading...</p>;
@@ -40,7 +40,7 @@ const Board = () => {
     <>
       <BoardHeader
         handleDelete={deleteBoard}
-        goHome={goHome}
+        goToBoards={goToBoards}
         text={board.name}
         submitData={newBoardName}
         id={board._id}
