@@ -10,7 +10,7 @@ const TitleContainer = styled.div`
   font-size: 18px;
   font-weight: 700;
   line-height: 32px;
-  max-width: calc(100% - 24px);
+  /* max-width: calc(100% - 24px); */
   overflow: hidden;
   padding: 0;
   text-decoration: none;

@@ -1,10 +1,13 @@
 import styled from 'styled-components';
-import BoardTitleForm from '../../components/BoardTitle';
+import BoardMenu from '../../components/BoardMenu';
+import BoardTitleForm from '../../components/BoardTitleForm';
 
 const Wrapper = styled.div`
   height: auto;
   padding: 8px 4px 4px 8px;
   position: relative;
+  display: flex;
+  justify-content: space-between;
 `;
 
 interface Props {
@@ -12,15 +15,14 @@ interface Props {
   id: string;
   goHome: () => void;
   text: string;
-  dubmitData: (text: string) => void;
+  submitData: (text: string) => void;
 }
 
-const BoardHeader = ({ handleDelete, id, goHome, text, submitData }: any) => {
-  return (
-    <Wrapper>
-      <BoardTitleForm id={id} text={text} submitData={submitData} />
-    </Wrapper>
-  );
-};
+const BoardHeader = ({ handleDelete, id, goHome, text, submitData }: Props) => (
+  <Wrapper>
+    <BoardTitleForm id={id} text={text} submitData={submitData} />
+    <BoardMenu handleDelete={handleDelete} goHome={goHome} id={id} />
+  </Wrapper>
+);
 
 export default BoardHeader;

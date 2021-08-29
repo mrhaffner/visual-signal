@@ -48,6 +48,7 @@ const Board = () => {
         goHome={goHome}
         text={board.name}
         submitData={newBoardName}
+        id={board._id}
       />
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="all-lists" direction="horizontal" type="list">
