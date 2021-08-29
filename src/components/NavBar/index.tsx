@@ -17,41 +17,55 @@ const NavContainer = styled.div`
   align-items: center;
 `;
 
-const NavLogo = styled(Link)`
+const NavLogo = styled.a`
   display: block;
   position: relative;
   flex-shrink: 0;
   height: 30px;
+  margin-top: 1px;
+  color: #172b4d;
+  background-color: initial;
+  cursor: pointer;
+  &:hover {
+    color: #091e42;
+  }
 `;
 
-const NavImageContainer = styled.div`
+const NavImageContainer = styled(Link)``;
+
+const NavImage = styled.div`
   width: 80px;
   height: 16px;
   margin: 7px 0;
   position: relative;
   opacity: 0.5;
+  &:hover {
+    opacity: 0.9;
+  }
+  &::before {
+    content: '';
+    background-image: url(https://a.trellocdn.com/prgb/dist/images/header-logo-spirit.d947df93bc055849898e.gif);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    display: block;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+  }
 `;
 
-const NavImage = styled.div`
-  content: '';
-  background-image: url(https://a.trellocdn.com/prgb/dist/images/header-logo-spirit.d947df93bc055849898e.gif);
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center;
-  display: block;
-  position: absolute;
-  top: 0;
-  width: 100%;
-  height: 100%;
-`;
+//Loading
+//https://a.trellocdn.com/prgb/dist/images/header-logo-spirit-loading.87e1af770a49ce8e84e3.gif
 
 const NavBar = () => {
   return (
     <>
       <Nav>
         <NavContainer>
-          <NavLogo to="/">
-            <NavImageContainer>
+          <NavLogo>
+            <NavImageContainer to="/">
               <NavImage />
             </NavImageContainer>
           </NavLogo>

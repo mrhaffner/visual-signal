@@ -3,7 +3,6 @@ import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import ListList from './ListList';
 import useBoardContext from '../../hooks/useBoardContext';
-import DeleteBoardButton from '../../components/DeleteBoardButton';
 import OpenListComposer from '../../components/OpenListComposer';
 import { useState } from 'react';
 import ListComposer from '../../components/ListComposer';
@@ -38,11 +37,6 @@ const Board = () => {
 
   return (
     <>
-      {/* <DeleteBoardButton
-        handleDelete={deleteBoard}
-        goHome={goHome}
-        id={board._id}
-      /> */}
       <BoardHeader
         handleDelete={deleteBoard}
         goHome={goHome}
