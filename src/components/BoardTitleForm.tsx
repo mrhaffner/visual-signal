@@ -79,7 +79,7 @@ interface Props {
   submitData: (text: string) => void;
 }
 
-const BoardTitleForm = ({ text, submitData }: any) => {
+const BoardTitleForm = ({ text, submitData }: Props) => {
   const [showForm, setShowForm] = useState(false);
 
   const { register, handleSubmit, setFocus, reset } = useForm({

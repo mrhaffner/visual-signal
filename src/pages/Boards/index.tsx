@@ -2,9 +2,8 @@ import { useState, useEffect } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
 import { ALL_BOARDS } from '../../graphql/queries/getAllLists';
 import { BoardInterface } from '../../types';
-import { Link } from 'react-router-dom';
-import CreateBoardForm from '../../components/CreateBoardForm';
 import { CREATE_BOARD } from '../../graphql/mutations/all';
+import BoardList from './BoardList';
 
 const Boards = () => {
   const { loading, error, data, refetch } = useQuery(ALL_BOARDS);
@@ -32,15 +31,7 @@ const Boards = () => {
   return (
     <>
       <h2>Boards</h2>
-      {boardList.map((board) => {
-        const url = `/board/${board._id}`;
-        return (
-          <div key={board._id}>
-            <Link to={url}>{board.name}</Link>
-          </div>
-        );
-      })}
-      <CreateBoardForm buttonText="Board" submitData={addBoard} />
+      <BoardList addBoard={addBoard} boardList={boardList} />
     </>
   );
 };

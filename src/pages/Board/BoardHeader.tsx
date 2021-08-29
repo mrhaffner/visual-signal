@@ -26,7 +26,7 @@ const BoardHeader = ({
   submitData,
 }: Props) => (
   <Wrapper>
-    <BoardTitleForm id={id} text={text} submitData={submitData} />
+    <BoardTitleForm text={text} submitData={submitData} />
     <BoardMenu handleDelete={handleDelete} goToBoards={goToBoards} id={id} />
   </Wrapper>
 );
