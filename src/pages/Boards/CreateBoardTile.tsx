@@ -63,12 +63,14 @@ const Text = styled.p`
 `;
 
 interface Props {
-  submitData: (data: string) => void;
+  setShowCreateBoardModal: (bool: boolean) => void;
 }
 
-const CreateBoardTile = ({ submitData }: Props) => {
+const CreateBoardTile = ({ setShowCreateBoardModal }: Props) => {
+  const openModal = () => setShowCreateBoardModal(true);
+
   return (
-    <Wrapper>
+    <Wrapper onClick={openModal}>
       <Container>
         <Text>Create new board</Text>
       </Container>

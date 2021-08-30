@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
-import { useQuery, useMutation } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import { ALL_BOARDS } from '../../graphql/queries/getAllLists';
 import { BoardInterface } from '../../types';
-import { CREATE_BOARD } from '../../graphql/mutations/all';
 import BoardList from './BoardList';
 import styled from 'styled-components';
+import CreateBoardModal from './CreateBoardModal';
 
 const AllBoards = styled.div`
   /* margin: 40px 16px 0; */
@@ -33,11 +33,10 @@ const BoardsTitle = styled.h3`
 `;
 
 const Boards = () => {
-  const { loading, error, data, refetch } = useQuery(ALL_BOARDS);
-
-  const [newBoardMutation] = useMutation(CREATE_BOARD);
+  const { loading, error, data } = useQuery(ALL_BOARDS);
 
   const [boardList, setBoardList] = useState<BoardInterface[]>([]);
+  const [showCreateBoardModal, setShowCreateBoardModal] = useState(false);
 
   useEffect(() => {
     if (data) {
@@ -48,18 +47,17 @@ const Boards = () => {
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error!</div>;
 
-  const addBoard = (name: string) => {
-    newBoardMutation({
-      variables: { createBoardInput: { name } },
-    });
-    refetch();
-  };
-
   return (
     <Wrapper>
       <AllBoards>
         <BoardsTitle>YOUR BOARDS</BoardsTitle>
-        <BoardList addBoard={addBoard} boardList={boardList} />
+        <BoardList
+          boardList={boardList}
+          setShowCreateBoardModal={setShowCreateBoardModal}
+        />
+        {showCreateBoardModal && (
+          <CreateBoardModal setShowCreateBoardModal={setShowCreateBoardModal} />
+        )}
       </AllBoards>
     </Wrapper>
   );

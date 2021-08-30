@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import CreateBoardForm from '../../components/CreateBoardForm';
 import { BoardInterface } from '../../types';
 import Card from './Card';
 import CreateBoardTile from './CreateBoardTile';
@@ -15,17 +14,18 @@ const ListWrapper = styled.ul`
 
 interface Props {
   boardList: BoardInterface[];
-  addBoard: (name: string) => void;
+  setShowCreateBoardModal: (bool: boolean) => void;
 }
-const BoardList = ({ boardList, addBoard }: Props) => {
+const BoardList = ({ boardList, setShowCreateBoardModal }: Props) => {
   return (
     <ListWrapper>
       {boardList.map((board) => {
         const url = `/board/${board._id}`;
-        return <Card url={url} name={board.name}></Card>;
+        return (
+          <Card key={board.name + Math.random()} url={url} name={board.name} />
+        );
       })}
-      {/* <CreateBoardForm buttonText="Board" submitData={addBoard} /> */}
-      <CreateBoardTile submitData={addBoard} />
+      <CreateBoardTile setShowCreateBoardModal={setShowCreateBoardModal} />
     </ListWrapper>
   );
 };
