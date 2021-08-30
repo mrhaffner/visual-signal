@@ -10,14 +10,6 @@ interface BoardItemStylesProps {
   isDragging: boolean;
 }
 
-// const Wrapper = styled.div<BoardItemStylesProps>`
-//   border: 1px solid lightgrey;
-//   border-radius: 2px;
-//   padding: 8px;
-//   margin-bottom: 8px;
-//   background-color: ${(props) => (props.isDragging ? 'lightgreen' : 'white')};
-// `;
-
 const Wrapper = styled.div<BoardItemStylesProps>`
   background-color: #fff;
   border-radius: 3px;

@@ -153,7 +153,7 @@ const CardComposer = ({ setShowComposer, submitData, list }: Props) => {
 
   useEffect(() => {
     setFocus('input');
-  }, [submitData]);
+  }, [submitData, setFocus]);
 
   useEffect(() => {
     if (enter) {

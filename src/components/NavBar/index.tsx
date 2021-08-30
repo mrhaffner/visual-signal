@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Link, useLocation } from 'react-router-dom';
+import useLoadingContext from '../../hooks/useLoadingContext';
 
 interface NavProps {
   setBlue: boolean;
@@ -37,7 +38,11 @@ const NavLogoContainer = styled(Link)`
   }
 `;
 
-const NavImage = styled.div`
+interface LoadingProps {
+  isLoading: boolean;
+}
+
+const NavImage = styled.div<LoadingProps>`
   width: 80px;
   height: 16px;
   margin: 7px 0;
@@ -45,7 +50,10 @@ const NavImage = styled.div`
 
   &::before {
     content: '';
-    background-image: url(https://a.trellocdn.com/prgb/dist/images/header-logo-spirit.d947df93bc055849898e.gif);
+    background-image: ${(props) =>
+      props.isLoading
+        ? 'url(https://a.trellocdn.com/prgb/dist/images/header-logo-spirit-loading.87e1af770a49ce8e84e3.gif)'
+        : 'url(https://a.trellocdn.com/prgb/dist/images/header-logo-spirit.d947df93bc055849898e.gif)'};
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
@@ -57,19 +65,20 @@ const NavImage = styled.div`
   }
 `;
 
-//Loading
-//https://a.trellocdn.com/prgb/dist/images/header-logo-spirit-loading.87e1af770a49ce8e84e3.gif
-
 const NavBar = () => {
   let location = useLocation();
   const setBlue =
-    location.pathname == '/boards' || location.pathname == '/' ? true : false;
+    location.pathname === '/boards' || location.pathname === '/' ? true : false;
+
+  const { isLoading } = useLoadingContext();
+  console.log(isLoading);
+
   return (
     <>
       <Nav setBlue={setBlue}>
         <NavContainer>
           <NavLogoContainer to="/boards">
-            <NavImage />
+            <NavImage isLoading={isLoading} />
           </NavLogoContainer>
         </NavContainer>
       </Nav>

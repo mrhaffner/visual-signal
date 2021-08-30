@@ -145,7 +145,7 @@ const ListComposer = ({ setShowComposer, submitData }: Props) => {
 
   useEffect(() => {
     setFocus('input');
-  }, [submitData]);
+  }, [submitData, setFocus]);
 
   useEffect(() => {
     if (enter) {
@@ -156,7 +156,7 @@ const ListComposer = ({ setShowComposer, submitData }: Props) => {
       reset();
       setShowComposer(false);
     }
-  }, [enter, esc]);
+  }, [enter, esc, reset, setShowComposer, onSubmit]);
 
   return (
     <ListWrapper ref={wrapperRef}>

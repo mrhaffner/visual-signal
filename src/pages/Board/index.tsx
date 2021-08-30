@@ -4,9 +4,10 @@ import styled from 'styled-components';
 import ListList from './ListList';
 import useBoardContext from '../../hooks/useBoardContext';
 import OpenListComposer from '../../components/OpenListComposer';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import ListComposer from '../../components/ListComposer';
 import BoardHeader from './BoardHeader';
+import useLoadingContext from '../../hooks/useLoadingContext';
 
 const Wrapper = styled.div`
   display: flex;
@@ -24,6 +25,13 @@ const Board = () => {
     deleteBoard,
     addList,
   } = useBoardContext();
+  const { setIsLoading } = useLoadingContext();
+
+  useEffect(() => {
+    if (!loading) {
+      setIsLoading(false);
+    }
+  }, [loading, setIsLoading]);
 
   const [showComposer, setShowComposer] = useState(false);
 
@@ -33,7 +41,7 @@ const Board = () => {
     history.push('/boards');
   };
 
-  if (loading || board === null) return <p>Loading...</p>;
+  if (loading || board === null) return <></>;
   if (error) return <p>Error :(</p>;
 
   return (

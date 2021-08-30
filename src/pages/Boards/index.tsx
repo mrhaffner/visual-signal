@@ -5,6 +5,7 @@ import { BoardInterface } from '../../types';
 import BoardList from './BoardList';
 import styled from 'styled-components';
 import CreateBoardModal from './CreateBoardModal';
+import useLoadingContext from '../../hooks/useLoadingContext';
 
 const AllBoards = styled.div`
   /* margin: 40px 16px 0; */
@@ -34,6 +35,7 @@ const BoardsTitle = styled.h3`
 
 const Boards = () => {
   const { loading, error, data } = useQuery(ALL_BOARDS);
+  const { setIsLoading } = useLoadingContext();
 
   const [boardList, setBoardList] = useState<BoardInterface[]>([]);
   const [showCreateBoardModal, setShowCreateBoardModal] = useState(false);
@@ -44,7 +46,13 @@ const Boards = () => {
     }
   }, [data]);
 
-  if (loading) return <div>Loading...</div>;
+  useEffect(() => {
+    if (!loading) {
+      setIsLoading(false);
+    }
+  }, [loading, setIsLoading]);
+
+  if (loading) return <></>;
   if (error) return <div>Error!</div>;
 
   return (
