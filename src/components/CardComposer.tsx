@@ -55,6 +55,7 @@ const StyledTextArea = styled.textarea`
   transition-duration: 85ms;
   transition-property: background-color, border-color, box-shadow;
   transition-timing-function: ease;
+  column-count: initial !important;
 `;
 
 const ControlsSection = styled.div`
@@ -139,6 +140,7 @@ const CardComposer = ({ setShowComposer, submitData, list }: Props) => {
 
   const onSubmit = handleSubmit((data) => {
     submitData(data.input, list);
+    reset();
   });
 
   const wrapperRef = useRef(null);
@@ -153,8 +155,7 @@ const CardComposer = ({ setShowComposer, submitData, list }: Props) => {
 
   useEffect(() => {
     setFocus('input');
-    //can remove setFocus from dependency array
-  }, [submitData, setFocus]);
+  }, [submitData]);
 
   useEffect(() => {
     if (enter) {
@@ -172,7 +173,11 @@ const CardComposer = ({ setShowComposer, submitData, list }: Props) => {
         <CardDetailsContainer>
           <StyledTextArea
             placeholder="Enter a title for this card..."
+            dir="auto"
             {...register('input', { required: true })}
+            onKeyPress={(e) => {
+              if (e.key === 'Enter') e.preventDefault();
+            }}
           />
         </CardDetailsContainer>
         <div>

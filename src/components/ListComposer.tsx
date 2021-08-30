@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
 import useOnClickOutside from '../hooks/useOnClickOutside';
 import useKeypress from '../hooks/useKeyPress';
-import { useRef, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 
 const ListWrapper = styled.div`
   background-color: #ebecf0;
@@ -136,6 +136,7 @@ const ListComposer = ({ setShowComposer, submitData }: Props) => {
 
   const onSubmit = handleSubmit((data) => {
     submitData(data.input);
+    reset();
   });
 
   useOnClickOutside(wrapperRef, () => {
@@ -145,20 +146,17 @@ const ListComposer = ({ setShowComposer, submitData }: Props) => {
 
   useEffect(() => {
     setFocus('input');
-    //can remove setFocus from dependency array
-  }, [submitData, setFocus]);
+  }, [submitData]);
 
   useEffect(() => {
     if (enter) {
       onSubmit();
-      reset();
     }
     if (esc) {
       reset();
       setShowComposer(false);
     }
-    //only need enter and esc in dependency array
-  }, [enter, esc, reset, setShowComposer, onSubmit]);
+  }, [enter, esc]);
 
   return (
     <ListWrapper ref={wrapperRef}>
@@ -166,7 +164,6 @@ const ListComposer = ({ setShowComposer, submitData }: Props) => {
         <StyledInput
           type="text"
           placeholder="Enter list title..."
-          dir="auto"
           maxLength={512}
           autoComplete="off"
           {...register('input', { required: true })}
