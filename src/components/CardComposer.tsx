@@ -145,7 +145,6 @@ const CardComposer = ({ setShowComposer, submitData, list }: Props) => {
 
   const wrapperRef = useRef(null);
 
-  const enter = useKeypress('Enter');
   const esc = useKeypress('Escape');
 
   useOnClickOutside(wrapperRef, () => {
@@ -158,14 +157,18 @@ const CardComposer = ({ setShowComposer, submitData, list }: Props) => {
   }, [submitData]);
 
   useEffect(() => {
-    if (enter) {
-      onSubmit();
-    }
     if (esc) {
       reset();
       setShowComposer(false);
     }
-  }, [enter, esc]);
+  }, [esc]);
+
+  const onPressEnter = (e: any) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      onSubmit();
+    }
+  };
 
   return (
     <CardComposerContainer ref={wrapperRef}>
@@ -175,9 +178,7 @@ const CardComposer = ({ setShowComposer, submitData, list }: Props) => {
             placeholder="Enter a title for this card..."
             dir="auto"
             {...register('input', { required: true })}
-            onKeyPress={(e) => {
-              if (e.key === 'Enter') e.preventDefault();
-            }}
+            onKeyPress={(e) => onPressEnter(e)}
           />
         </CardDetailsContainer>
         <div>
