@@ -6,9 +6,9 @@ import DeleteCardButton from '../../components/DeleteCardButton';
 import InlineTextEditCard from '../../components/InlineTextEditCard';
 import useHover from '../../hooks/useHover';
 
-type BoardItemStylesProps = {
+interface BoardItemStylesProps {
   isDragging: boolean;
-};
+}
 
 // const Wrapper = styled.div<BoardItemStylesProps>`
 //   border: 1px solid lightgrey;

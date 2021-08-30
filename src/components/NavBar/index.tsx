@@ -1,8 +1,13 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
-const Nav = styled.nav`
-  background-color: rgba(0, 0, 0, 0.32);
+interface NavProps {
+  setBlue: boolean;
+}
+
+const Nav = styled.nav<NavProps>`
+  background-color: ${(props) =>
+    props.setBlue ? '#026aa7' : 'rgba(0, 0, 0, 0.32)'};
   min-height: 40px;
   max-height: 40px;
   overflow: hidden;
@@ -56,9 +61,12 @@ const NavImage = styled.div`
 //https://a.trellocdn.com/prgb/dist/images/header-logo-spirit-loading.87e1af770a49ce8e84e3.gif
 
 const NavBar = () => {
+  let location = useLocation();
+  const setBlue =
+    location.pathname == '/boards' || location.pathname == '/' ? true : false;
   return (
     <>
-      <Nav>
+      <Nav setBlue={setBlue}>
         <NavContainer>
           <NavLogoContainer to="/boards">
             <NavImage />
