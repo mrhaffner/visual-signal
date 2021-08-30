@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import CreateBoardForm from '../../components/CreateBoardForm';
 import { BoardInterface } from '../../types';
 import Card from './Card';
+import CreateBoardTile from './CreateBoardTile';
 
 const ListWrapper = styled.ul`
   display: flex;
@@ -23,7 +24,8 @@ const BoardList = ({ boardList, addBoard }: Props) => {
         const url = `/board/${board._id}`;
         return <Card url={url} name={board.name}></Card>;
       })}
-      <CreateBoardForm buttonText="Board" submitData={addBoard} />
+      {/* <CreateBoardForm buttonText="Board" submitData={addBoard} /> */}
+      <CreateBoardTile submitData={addBoard} />
     </ListWrapper>
   );
 };
