@@ -145,6 +145,7 @@ const ListComposer = ({ setShowComposer, submitData }: Props) => {
 
   useEffect(() => {
     setFocus('input');
+    //can remove setFocus from dependency array
   }, [submitData, setFocus]);
 
   useEffect(() => {
@@ -156,6 +157,7 @@ const ListComposer = ({ setShowComposer, submitData }: Props) => {
       reset();
       setShowComposer(false);
     }
+    //only need enter and esc in dependency array
   }, [enter, esc, reset, setShowComposer, onSubmit]);
 
   return (

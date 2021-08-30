@@ -153,6 +153,7 @@ const CardComposer = ({ setShowComposer, submitData, list }: Props) => {
 
   useEffect(() => {
     setFocus('input');
+    //can remove setFocus from dependency array
   }, [submitData, setFocus]);
 
   useEffect(() => {

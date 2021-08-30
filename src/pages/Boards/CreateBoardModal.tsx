@@ -207,13 +207,18 @@ const CreateBoardModal = ({ setShowCreateBoardModal }: Props) => {
 
   const history = useHistory();
 
-  const { register, handleSubmit, watch } = useForm();
+  const { register, handleSubmit, watch, setFocus } = useForm();
   const watchInput = watch('input');
 
   //may want to debounce this
   const buttonDisabled = watchInput && watchInput.length > 0 ? false : true;
 
   const wrapperRef = useRef(null);
+
+  useEffect(() => {
+    setFocus('input');
+    //can remove setFocus from dependency array
+  }, [setFocus]);
 
   useEffect(() => {
     if (data) {

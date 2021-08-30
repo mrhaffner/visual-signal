@@ -71,7 +71,6 @@ const NavBar = () => {
     location.pathname === '/boards' || location.pathname === '/' ? true : false;
 
   const { isLoading } = useLoadingContext();
-  console.log(isLoading);
 
   return (
     <>
