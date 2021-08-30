@@ -58,7 +58,7 @@ type BoardItemStylesProps = {
 const Container = styled.div<BoardItemStylesProps>`
   flex: 1 1 auto;
   margin: 0 4px;
-  min-height: 0;
+  min-height: 0.1px;
   overflow-x: hidden;
   overflow-y: auto;
   padding: 0 4px;
