@@ -17,7 +17,7 @@ const NavContainer = styled.div`
   align-items: center;
 `;
 
-const NavLogo = styled.a`
+const NavLogoContainer = styled(Link)`
   display: block;
   position: relative;
   flex-shrink: 0;
@@ -31,8 +31,6 @@ const NavLogo = styled.a`
     opacity: 0.9;
   }
 `;
-
-const NavImageContainer = styled(Link)``;
 
 const NavImage = styled.div`
   width: 80px;
@@ -62,11 +60,9 @@ const NavBar = () => {
     <>
       <Nav>
         <NavContainer>
-          <NavLogo>
-            <NavImageContainer to="/boards">
-              <NavImage />
-            </NavImageContainer>
-          </NavLogo>
+          <NavLogoContainer to="/boards">
+            <NavImage />
+          </NavLogoContainer>
         </NavContainer>
       </Nav>
     </>
