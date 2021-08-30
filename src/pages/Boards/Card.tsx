@@ -9,8 +9,11 @@ const Wrapper = styled.li`
   box-sizing: border-box;
   cursor: pointer;
   position: relative;
-
   list-style: none;
+
+  &:nth-child(4n) {
+    margin-right: 0;
+  }
 `;
 
 const Container = styled(Link)`

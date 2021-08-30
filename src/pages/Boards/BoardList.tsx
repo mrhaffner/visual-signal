@@ -21,12 +21,7 @@ const BoardList = ({ boardList, addBoard }: Props) => {
     <ListWrapper>
       {boardList.map((board) => {
         const url = `/board/${board._id}`;
-        return (
-          //   <div key={board._id}>
-          //     <Link to={url}>{board.name}</Link>
-          //   </div>
-          <Card url={url} name={board.name}></Card>
-        );
+        return <Card url={url} name={board.name}></Card>;
       })}
       <CreateBoardForm buttonText="Board" submitData={addBoard} />
     </ListWrapper>
