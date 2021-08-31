@@ -5,6 +5,7 @@ import { useEffect, useRef } from 'react';
 import { CREATE_BOARD } from '../../graphql/mutations/all';
 import { useMutation } from '@apollo/client';
 import { useHistory } from 'react-router-dom';
+import useKeyPress from '../../hooks/useKeyPress';
 
 const OverlayWrapper = styled.div`
   left: 0;
@@ -215,6 +216,10 @@ const CreateBoardModal = ({ setShowCreateBoardModal }: Props) => {
 
   const wrapperRef = useRef(null);
 
+  const esc = useKeyPress('Escape');
+
+  const closeModal = () => setShowCreateBoardModal(false);
+
   useEffect(() => {
     setFocus('input');
     //can remove setFocus from dependency array
@@ -226,11 +231,13 @@ const CreateBoardModal = ({ setShowCreateBoardModal }: Props) => {
     }
   });
 
+  useEffect(() => {
+    if (esc) closeModal();
+  }, [esc]);
+
   useOnClickOutside(wrapperRef, () => {
     setShowCreateBoardModal(false);
   });
-
-  const closeModal = () => setShowCreateBoardModal(false);
 
   const onSubmit = handleSubmit((formData) => {
     newBoardMutation({

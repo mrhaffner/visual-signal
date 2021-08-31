@@ -4,20 +4,10 @@ import { Draggable, Droppable } from 'react-beautiful-dnd';
 import { ListInterface } from '../../types';
 import useBoardContext from '../../hooks/useBoardContext';
 import DeleteListButton from '../../components/DeleteListButton';
-import InlineTextEditList from '../../components/InlineTextEditList';
 import OpenCardComposer from '../../components/OpenCardComposer';
 import CardComposer from '../../components/CardComposer';
 import { useState } from 'react';
-
-// const Wrapper = styled.div`
-//   margin: 8px;
-//   border: 1px solid lightgrey;
-//   background-color: white;
-//   border-radius: 2px;
-//   width: 220px;
-//   display: flex;
-//   flex-direction: column;
-// `;
+import ListTitleInput from '../../components/ListTitleInput';
 
 const Wrapper = styled.div`
   background-color: #ebecf0;
@@ -32,15 +22,29 @@ const Wrapper = styled.div`
   margin: 0 4px;
 `;
 
-const Title = styled.h2`
-  margin-left: 6px;
+const TitleContainer = styled.div`
+  /* margin-left: 6px; */
   flex: 0 0 auto;
   min-height: 20px;
   padding-right: 36px;
   padding: 10px 8px 0 8px;
   position: relative;
   overflow: hidden;
-  margin-bottom: -4px;
+  /* margin-bottom: -4px; */
+`;
+
+interface DragHandleProps {
+  hidden: boolean;
+}
+
+const TitleDragHandle = styled.h2<DragHandleProps>`
+  display: ${(props) => (props.hidden ? 'none' : 'block')};
+  bottom: 0;
+  cursor: pointer;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
 `;
 
 type BoardItemStylesProps = {
@@ -73,21 +77,35 @@ interface Props {
 const List = ({ list, index }: Props) => {
   const { deleteList, addCard, newListName } = useBoardContext();
   const [showComposer, setShowComposer] = useState(false);
+  const [hidden, setHidden] = useState(false);
+
+  const handleClick = () => {
+    if (!hidden) {
+      setHidden(true);
+    }
+  };
 
   return (
     <Draggable draggableId={list._id} index={index}>
       {(provided) => (
         <Wrapper {...provided.draggableProps} ref={provided.innerRef}>
-          <Title {...provided.dragHandleProps}>
-            <InlineTextEditList
-              text={list.name}
-              onSetText={(text: string) =>
-                newListName({ _id: list._id, name: text })
-              }
+          <TitleContainer>
+            <TitleDragHandle
+              {...provided.dragHandleProps}
+              hidden={hidden}
+              onClick={handleClick}
             />
-          </Title>
+            <ListTitleInput
+              hidden={hidden}
+              text={list.name}
+              submitData={newListName}
+              setHidden={setHidden}
+              listId={list._id}
+            />
 
-          <DeleteListButton handleDelete={deleteList} id={list._id} />
+            <DeleteListButton handleDelete={deleteList} id={list._id} />
+          </TitleContainer>
+
           <Droppable droppableId={list._id} type="card">
             {(provided, snapshot) => (
               <Container

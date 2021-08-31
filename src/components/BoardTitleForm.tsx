@@ -110,12 +110,12 @@ const BoardTitleForm = ({ text, submitData }: Props) => {
 
   useEffect(() => {
     // if Enter is pressed, save the text and case the editor
-    if (enter) {
+    if (enter && showForm) {
       onSubmit();
       setShowForm(false);
     }
     // if Escape is pressed, revert the text and close the editor
-    if (esc) {
+    if (esc && showForm) {
       reset({ input: text });
       setShowForm(false);
     }
