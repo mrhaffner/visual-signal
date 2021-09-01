@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import EmailInput from '../../components/EmailInput';
 import LogSignFormButton from '../../components/LogSignFormButton';
 import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 
 const TOS = styled.p`
   /* margin-top: 20px; */
@@ -13,17 +14,16 @@ const TOS = styled.p`
 `;
 
 const SignUpForm = () => {
+  const { register, handleSubmit } = useForm();
   const [disabled, setDisabled] = useState(true);
 
-  const handleSubmit = (e: any) => {
-    console.log('hi');
-
-    e.preventDefault();
+  const onSubmit = (data: any) => {
+    console.log(data);
   };
 
   return (
-    <form onSubmit={(e) => handleSubmit(e)}>
-      <EmailInput autoFocus={false} />
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <EmailInput autoFocus={false} register={register} />
       <TOS>
         By signing up, you confirm that you've read and accepted our Terms of
         Service and Privacy Policy.

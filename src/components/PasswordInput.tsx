@@ -24,7 +24,7 @@ const FormInput = styled.input`
   }
 `;
 
-const PasswordInput = () => {
+const PasswordInput = ({ register }: any) => {
   return (
     <FormInput
       type="password"
@@ -35,6 +35,7 @@ const PasswordInput = () => {
       autoCapitalize="false"
       placeholder="Enter password"
       autoComplete="current-password"
+      {...register('text', { required: true })}
     />
   );
 };
