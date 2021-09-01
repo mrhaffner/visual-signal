@@ -10,7 +10,7 @@ const LogInForm = () => {
 
   return (
     <form onSubmit={(e) => handleSubmit(e)}>
-      <EmailInput />
+      <EmailInput autoFocus={true} />
       <PasswordInput />
       <LogSignFormButton value="Log in" />
     </form>

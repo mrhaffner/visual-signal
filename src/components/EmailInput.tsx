@@ -24,7 +24,7 @@ const FormInput = styled.input`
   }
 `;
 
-const EmailInput = () => {
+const EmailInput = ({ autoFocus }: any) => {
   return (
     <FormInput
       type="email"
@@ -35,6 +35,7 @@ const EmailInput = () => {
       autoCapitalize="false"
       placeholder="Enter email"
       autoComplete="username email"
+      autoFocus={autoFocus}
     />
   );
 };

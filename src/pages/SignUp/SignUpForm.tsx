@@ -23,7 +23,7 @@ const SignUpForm = () => {
 
   return (
     <form onSubmit={(e) => handleSubmit(e)}>
-      <EmailInput />
+      <EmailInput autoFocus={false} />
       <TOS>
         By signing up, you confirm that you've read and accepted our Terms of
         Service and Privacy Policy.
