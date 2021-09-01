@@ -66,11 +66,16 @@ const NavImage = styled.div<LoadingProps>`
 `;
 
 const NavBar = () => {
+  const { isLoading } = useLoadingContext();
+
   let location = useLocation();
+
+  if (location.pathname === '/' || location.pathname === '/login') {
+    return <></>;
+  }
+
   const setBlue =
     location.pathname === '/boards' || location.pathname === '/' ? true : false;
-
-  const { isLoading } = useLoadingContext();
 
   return (
     <>
