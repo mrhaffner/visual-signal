@@ -245,6 +245,12 @@ const CreateBoardModal = ({ setShowCreateBoardModal }: Props) => {
     });
   });
 
+  const handleKeyPress = (e: any) => {
+    if (e.key === 'Enter') {
+      onSubmit();
+    }
+  };
+
   return (
     <OverlayWrapper>
       <OverlayContainer>
@@ -279,6 +285,7 @@ const CreateBoardModal = ({ setShowCreateBoardModal }: Props) => {
                   spellCheck="false"
                   type="text"
                   placeholder="Add board title"
+                  onKeyDown={(e) => handleKeyPress(e)}
                   {...register('input', { required: true })}
                 />
               </Card>
