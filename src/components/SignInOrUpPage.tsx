@@ -2,11 +2,11 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import SignInOrUpFooter from './SignInOrUpFooter';
 
-const Main = styled.div`
+const Wrapper = styled.div`
   background-color: #f9fafc;
-  position: relative;
-  flex-direction: column;
+  display: flex;
   min-height: 100vh;
+  flex-direction: column;
   justify-content: space-between;
 `;
 
@@ -86,8 +86,8 @@ const BottomLink = styled(Link)`
 
 const SignInOrUpPage = ({ bottomLink, formTitle, form }: any) => {
   return (
-    <>
-      <Main>
+    <Wrapper>
+      <div>
         <Logo src="https://d2k1ftgv7pobq7.cloudfront.net/meta/c/p/res/images/trello-header-logos/167dc7b9900a5b241b15ba21f8037cf8/trello-logo-blue.svg" />
         <MainSection>
           <MainWrapper>
@@ -101,9 +101,9 @@ const SignInOrUpPage = ({ bottomLink, formTitle, form }: any) => {
             </FormContainer>
           </MainWrapper>
         </MainSection>
-      </Main>
+      </div>
       <SignInOrUpFooter />
-    </>
+    </Wrapper>
   );
 };
 
