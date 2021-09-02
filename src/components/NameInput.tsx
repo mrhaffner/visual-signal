@@ -24,20 +24,17 @@ const FormInput = styled.input`
   }
 `;
 
-const PasswordInput = ({ register }: any) => {
+const NameInput = ({ register, autoFocus }: any) => {
   return (
     <FormInput
-      type="password"
-      name="password"
-      tabIndex={0}
+      name="name"
       autoCorrect="off"
-      spellCheck="false"
-      autoCapitalize="false"
-      placeholder="Enter password"
-      autoComplete="current-password"
-      {...register('password', { required: true })}
+      placeholder="Enter full name"
+      autoComplete="name"
+      {...register('name', { required: true })}
+      autoFocus={autoFocus}
     />
   );
 };
 
-export default PasswordInput;
+export default NameInput;

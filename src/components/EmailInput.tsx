@@ -24,7 +24,7 @@ const FormInput = styled.input`
   }
 `;
 
-const EmailInput = ({ register, autoFocus }: any) => {
+const EmailInput = ({ register, autoFocus, email }: any) => {
   return (
     <FormInput
       type="email"
@@ -36,7 +36,11 @@ const EmailInput = ({ register, autoFocus }: any) => {
       placeholder="Enter email"
       autoComplete="username email"
       autoFocus={autoFocus}
-      {...register('email', { required: true, pattern: /^\S+@\S+$/i })}
+      defaultValue={email}
+      {...register('email', {
+        required: true,
+        pattern: /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/i,
+      })}
     />
   );
 };

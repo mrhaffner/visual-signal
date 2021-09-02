@@ -8,6 +8,7 @@ import { useState, useEffect } from 'react';
 import ListComposer from '../../components/ListComposer';
 import BoardHeader from './BoardHeader';
 import useLoadingContext from '../../hooks/useLoadingContext';
+import NavBar from '../../components/NavBar';
 
 const Wrapper = styled.div`
   display: flex;
@@ -25,7 +26,9 @@ const Board = () => {
     deleteBoard,
     addList,
   } = useBoardContext();
-  const { setIsLoading } = useLoadingContext();
+  const { setIsLoading, setShowNav } = useLoadingContext();
+
+  setShowNav(true);
 
   useEffect(() => {
     if (!loading) {
@@ -46,6 +49,7 @@ const Board = () => {
 
   return (
     <>
+      <NavBar setBlue={false} isLoading={loading} />
       <BoardHeader
         handleDelete={deleteBoard}
         goToBoards={goToBoards}

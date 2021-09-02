@@ -1,7 +1,10 @@
 import SignInOrUpPage from '../../components/SignInOrUpPage';
-import SignUpForm from './SignUpForm';
+import SignUpFormInitial from './SignUpFormInitial';
+import SignUpFormFinal from './SignUpFormFinal';
+import { useParams } from 'react-router-dom';
 
 const SignUp = () => {
+  let { slug }: any = useParams();
   const linkObj = { link: '/login', text: 'Already have an account? Log In' };
   const formTitle = 'Sign up for your account';
 
@@ -9,7 +12,13 @@ const SignUp = () => {
     <SignInOrUpPage
       bottomLink={linkObj}
       formTitle={formTitle}
-      form={<SignUpForm />}
+      form={
+        slug === undefined ? (
+          <SignUpFormInitial />
+        ) : (
+          <SignUpFormFinal email={slug} />
+        )
+      }
     />
   );
 };

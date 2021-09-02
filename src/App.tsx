@@ -9,7 +9,6 @@ import LogIn from './pages/LogIn';
 
 const App = () => (
   <LoadingProvider>
-    <NavBar />
     <Switch>
       <Route path="/board/:boardId">
         <BoardProvider>
@@ -21,6 +20,9 @@ const App = () => (
       </Route>
       <Route path="/login">
         <LogIn />
+      </Route>
+      <Route path="/:slug">
+        <SignUp />
       </Route>
       <Route path="/">
         <SignUp />

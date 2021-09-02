@@ -6,6 +6,7 @@ import BoardList from './BoardList';
 import styled from 'styled-components';
 import CreateBoardModal from './CreateBoardModal';
 import useLoadingContext from '../../hooks/useLoadingContext';
+import NavBar from '../../components/NavBar';
 
 const AllBoards = styled.div`
   /* margin: 40px 16px 0; */
@@ -35,7 +36,6 @@ const BoardsTitle = styled.h3`
 
 const Boards = () => {
   const { loading, error, data } = useQuery(ALL_BOARDS);
-  const { setIsLoading } = useLoadingContext();
 
   const [boardList, setBoardList] = useState<BoardInterface[]>([]);
   const [showCreateBoardModal, setShowCreateBoardModal] = useState(false);
@@ -46,28 +46,27 @@ const Boards = () => {
     }
   }, [data]);
 
-  useEffect(() => {
-    if (!loading) {
-      setIsLoading(false);
-    }
-  }, [loading, setIsLoading]);
-
   if (loading) return <></>;
   if (error) return <div>Error!</div>;
 
   return (
-    <Wrapper>
-      <AllBoards>
-        <BoardsTitle>YOUR BOARDS</BoardsTitle>
-        <BoardList
-          boardList={boardList}
-          setShowCreateBoardModal={setShowCreateBoardModal}
-        />
-        {showCreateBoardModal && (
-          <CreateBoardModal setShowCreateBoardModal={setShowCreateBoardModal} />
-        )}
-      </AllBoards>
-    </Wrapper>
+    <>
+      <NavBar setBlue={true} isLoading={loading} />
+      <Wrapper>
+        <AllBoards>
+          <BoardsTitle>YOUR BOARDS</BoardsTitle>
+          <BoardList
+            boardList={boardList}
+            setShowCreateBoardModal={setShowCreateBoardModal}
+          />
+          {showCreateBoardModal && (
+            <CreateBoardModal
+              setShowCreateBoardModal={setShowCreateBoardModal}
+            />
+          )}
+        </AllBoards>
+      </Wrapper>
+    </>
   );
 };
 

@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 import EmailInput from '../../components/EmailInput';
-import LogSignFormButton from '../../components/LogSignFormButton';
-import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useHistory } from 'react-router-dom';
+import NameInput from '../../components/NameInput';
+import BlueFormButton from '../../components/BlueFormButton';
 
 const TOS = styled.p`
   /* margin-top: 20px; */
@@ -13,24 +14,26 @@ const TOS = styled.p`
   font-weight: 300;
 `;
 
-const SignUpForm = () => {
+const SignUpFormFinal = ({ email }: any) => {
   const { register, handleSubmit } = useForm();
-  const [disabled, setDisabled] = useState(true);
+  let history = useHistory();
 
   const onSubmit = (data: any) => {
     console.log(data);
+    // history.push(`${data.email}`);
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <EmailInput autoFocus={false} register={register} />
+      <EmailInput autoFocus={false} register={register} email={email} />
+      <NameInput autoFocus={true} register={register} />
       <TOS>
         By signing up, you confirm that you've read and accepted our Terms of
         Service and Privacy Policy.
       </TOS>
-      <LogSignFormButton value="Continue" disabled={disabled} />
+      <BlueFormButton />
     </form>
   );
 };
 
-export default SignUpForm;
+export default SignUpFormFinal;

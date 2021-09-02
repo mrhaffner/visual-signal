@@ -24,26 +24,9 @@ const SubmitButton = styled.input<StyleProps>`
   &:hover {
     background: ${(props) => (props.disabled ? '#e2e4e6' : '#61bd4f')};
   }
-  //disabled
-  /* background: #e2e4e6; */
-  /* color: hsl(0, 0%, 55%); */
-  /* cursor: default; */
-  //get rid of hover
-
-  //sign up
-  /* background-color: rgb(0, 82, 204);
-  &:hover {
-    background: var(--background-boldBrand-hover, #0065ff);
-    text-decoration: inherit;
-    transition-duration: 0s, 0.15s;
-  }
-  &:active {
-    background: var(--background-boldBrand-pressed, #0747a6);
-    transition-duration: 0s, 0s;
-  } */
 `;
 
-const LogSignFormButton = ({ value, disabled }: any) => {
+const GreenFormButton = ({ value, disabled }: any) => {
   return (
     <SubmitButton
       tabIndex={0}
@@ -54,4 +37,4 @@ const LogSignFormButton = ({ value, disabled }: any) => {
   );
 };
 
-export default LogSignFormButton;
+export default GreenFormButton;

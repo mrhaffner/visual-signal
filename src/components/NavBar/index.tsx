@@ -1,6 +1,5 @@
 import styled from 'styled-components';
-import { Link, useLocation } from 'react-router-dom';
-import useLoadingContext from '../../hooks/useLoadingContext';
+import { Link } from 'react-router-dom';
 
 interface NavProps {
   setBlue: boolean;
@@ -65,18 +64,7 @@ const NavImage = styled.div<LoadingProps>`
   }
 `;
 
-const NavBar = () => {
-  const { isLoading } = useLoadingContext();
-
-  let location = useLocation();
-
-  if (location.pathname === '/' || location.pathname === '/login') {
-    return <></>;
-  }
-
-  const setBlue =
-    location.pathname === '/boards' || location.pathname === '/' ? true : false;
-
+const NavBar = ({ isLoading, setBlue }: any) => {
   return (
     <>
       <Nav setBlue={setBlue}>

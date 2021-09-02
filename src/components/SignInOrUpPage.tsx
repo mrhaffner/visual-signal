@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import SignInOrUpFooter from './SignInOrUpFooter';
 
 const Main = styled.div`
   background-color: #f9fafc;
@@ -55,78 +56,6 @@ const Title = styled.h1`
   font-weight: bold;
 `;
 
-const FormInput = styled.input`
-  width: 100%;
-  font-size: 14px;
-  background-color: #fafbfc !important;
-  font-family: '-apple-system', BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
-    Ubuntu, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-  border: 2px solid #dfe1e6;
-  box-sizing: border-box;
-  border-radius: 3px;
-  height: 44px;
-  transition: background-color 0.2s ease-in-out 0s,
-    border-color 0.2s ease-in-out 0s;
-  background: #edeff0;
-  padding: 0.5em;
-  max-width: 400px;
-  margin: 0 0 1.2em;
-  font-weight: 300;
-  &:focus {
-    background-color: white;
-    border: 2px solid #4c9aff;
-    box-shadow: 0 0 0;
-  }
-`;
-
-const TOS = styled.p`
-  margin-top: 20px;
-  margin-bottom: 20px;
-  font-size: 12px;
-  line-height: 16px;
-  color: #5e6c84;
-  font-weight: 300;
-`;
-
-const SubmitButton = styled.input`
-  background: #5aac44;
-  color: #fff;
-  width: 100%;
-  box-shadow: none;
-  margin-bottom: 0;
-  -webkit-appearance: button;
-  cursor: pointer;
-  border-radius: 0.3em;
-  display: inline-block;
-  font-weight: bold;
-  font-size: 14px;
-  padding: 0.6em 1.3em;
-  position: relative;
-  text-decoration: none;
-  border: 0px;
-  margin: 0 0 1.2em;
-  &:hover {
-    background: #61bd4f;
-  }
-  //disabled
-  /* background: #e2e4e6; */
-  /* color: hsl(0, 0%, 55%); */
-  /* cursor: default; */
-  //get rid of hover
-
-  //sign up
-  /* background-color: rgb(0, 82, 204);
-  &:hover {
-    background: var(--background-boldBrand-hover, #0065ff);
-    text-decoration: inherit;
-    transition-duration: 0s, 0.15s;
-  }
-  &:active {
-    background: var(--background-boldBrand-pressed, #0747a6);
-    transition-duration: 0s, 0s;
-  } */
-`;
-
 const Line = styled.hr`
   margin-top: 25px;
   display: block;
@@ -157,21 +86,24 @@ const BottomLink = styled(Link)`
 
 const SignInOrUpPage = ({ bottomLink, formTitle, form }: any) => {
   return (
-    <Main>
-      <Logo src="https://d2k1ftgv7pobq7.cloudfront.net/meta/c/p/res/images/trello-header-logos/167dc7b9900a5b241b15ba21f8037cf8/trello-logo-blue.svg" />
-      <MainSection>
-        <MainWrapper>
-          <FormContainer>
-            <Title>{formTitle}</Title>
-            {form}
-            <Line />
-            <BottomFormLink>
-              <BottomLink to={bottomLink.link}>{bottomLink.text}</BottomLink>
-            </BottomFormLink>
-          </FormContainer>
-        </MainWrapper>
-      </MainSection>
-    </Main>
+    <>
+      <Main>
+        <Logo src="https://d2k1ftgv7pobq7.cloudfront.net/meta/c/p/res/images/trello-header-logos/167dc7b9900a5b241b15ba21f8037cf8/trello-logo-blue.svg" />
+        <MainSection>
+          <MainWrapper>
+            <FormContainer>
+              <Title>{formTitle}</Title>
+              {form}
+              <Line />
+              <BottomFormLink>
+                <BottomLink to={bottomLink.link}>{bottomLink.text}</BottomLink>
+              </BottomFormLink>
+            </FormContainer>
+          </MainWrapper>
+        </MainSection>
+      </Main>
+      <SignInOrUpFooter />
+    </>
   );
 };
 
