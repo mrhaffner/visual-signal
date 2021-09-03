@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import SignInOrUpFooter from './SignInOrUpFooter';
-import AtlassianBackground from './AtlassianBackground';
 
 const Wrapper = styled.div`
   background-color: #f9fafc;
