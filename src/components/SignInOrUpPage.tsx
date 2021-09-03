@@ -1,11 +1,19 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import SignInOrUpFooter from './SignInOrUpFooter';
+import AtlassianBackground from './AtlassianBackground';
 
 const Wrapper = styled.div`
   background-color: #f9fafc;
-  display: flex;
   min-height: 100vh;
+  display: flex;
+  z-index: -900;
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow: hidden;
   flex-direction: column;
   justify-content: space-between;
 `;
@@ -84,6 +92,24 @@ const BottomLink = styled(Link)`
   }
 `;
 
+const LeftImgContainer = styled.div`
+  position: absolute;
+  width: 400px;
+  bottom: -16px;
+  left: 0;
+  max-width: 30%;
+  z-index: -999;
+`;
+
+const RightImgContainer = styled.div`
+  position: absolute;
+  width: 400px;
+  bottom: -16px;
+  right: 0;
+  max-width: 30%;
+  z-index: -999;
+`;
+
 const SignInOrUpPage = ({ bottomLink, formTitle, form }: any) => {
   return (
     <Wrapper>
@@ -103,6 +129,20 @@ const SignInOrUpPage = ({ bottomLink, formTitle, form }: any) => {
         </MainSection>
       </div>
       <SignInOrUpFooter />
+      <LeftImgContainer>
+        <img
+          src={require('../assets/logo_left.svg').default}
+          width="400"
+          height="400"
+        />
+      </LeftImgContainer>
+      <RightImgContainer>
+        <img
+          src={require('../assets/logo_right.svg').default}
+          width="400"
+          height="400"
+        />
+      </RightImgContainer>
     </Wrapper>
   );
 };
