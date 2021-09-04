@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import NameInput from '../../components/NameInput';
 import BlueFormButton from '../../components/BlueFormButton';
+import PasswordRegisterInput from '../../components/PasswordRegisterInput';
 
 const TOS = styled.p`
   /* margin-top: 20px; */
@@ -27,6 +28,7 @@ const SignUpFormFinal = ({ email }: any) => {
     <form onSubmit={handleSubmit(onSubmit)}>
       <EmailInput autoFocus={false} register={register} email={email} />
       <NameInput autoFocus={true} register={register} />
+      <PasswordRegisterInput register={register} />
       <TOS>
         By signing up, you confirm that you've read and accepted our Terms of
         Service and Privacy Policy.
