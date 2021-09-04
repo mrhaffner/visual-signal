@@ -19,11 +19,21 @@ const Line = styled.hr`
 `;
 
 const Logo = styled.img`
-  margin-bottom: 20px;
-  width: 150px;
+  /* margin-bottom: 20px; */
+  margin-bottom: 8px;
+  width: 200px;
   display: inline-block;
   vertical-align: top;
   margin-top: 1px;
+`;
+
+const StyledText = styled.div`
+  font-size: 12px;
+  color: rgb(107, 119, 140);
+  text-align: center;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.42857142857143;
 `;
 
 const SignInOrUpFooter = () => {
@@ -32,9 +42,12 @@ const SignInOrUpFooter = () => {
       <div>
         <Line />
         <Logo
-          width="150"
+          width="200"
           src="https://d2k1ftgv7pobq7.cloudfront.net/meta/c/p/res/images/16006ae28f149063408d601e8c80eddc/atlassian-logo-blue-small.svg"
         />
+        <StyledText>
+          One account for Trello, Jira, Confluence and more.
+        </StyledText>
       </div>
     </Footer>
   );
