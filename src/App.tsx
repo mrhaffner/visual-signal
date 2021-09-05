@@ -2,12 +2,12 @@ import { Switch, Route } from 'react-router-dom';
 import BoardProvider from './providers/BoardProvider';
 import Board from './pages/Board';
 import Boards from './pages/Boards';
-import LoadingProvider from './providers/LoadingProvider';
+import MemberProvider from './providers/MemberProvider';
 import SignUp from './pages/SignUp';
 import LogIn from './pages/LogIn/LogIn';
 
 const App = () => (
-  <LoadingProvider>
+  <MemberProvider>
     <Switch>
       <Route path="/board/:boardId">
         <BoardProvider>
@@ -27,7 +27,7 @@ const App = () => (
         <SignUp />
       </Route>
     </Switch>
-  </LoadingProvider>
+  </MemberProvider>
 );
 
 export default App;

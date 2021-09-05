@@ -95,3 +95,42 @@ export const DELETE_CARD = gql`
     deleteCard(input: $deleteCardInput)
   }
 `;
+
+export const CREATE_MEMBER = gql`
+  mutation CreateMemberMutation($memberInput: CreateMember!) {
+    createMember(input: $memberInput) {
+      _id
+      fullName
+      password #change this
+      initials
+      username
+      idBoards
+    }
+  }
+`;
+
+export const UPDATE_MEMBER_BOARDS = gql`
+  mutation UpdateMemberBoardsMutation($boardsInput: UpdateMemberBoardInput!) {
+    updateMemberBoards(input: $boardsInput) {
+      _id
+      idBoards
+    }
+  }
+`;
+
+//obviously change this?
+export const UPDATE_MEMBER_PASSWORD = gql`
+  mutation UpdateMemberPasswordMutation(
+    $passwordInput: UpdateMemberPasswordInput!
+  ) {
+    updateMemberpassWord(input: $passwordInput) {
+      _id
+    }
+  }
+`;
+
+export const DELETE_MEMEBER = gql`
+  mutation DeleteMemberMutation($deleteMemberInput: ID!) {
+    deleteMember(_id: $deleteMemberInput)
+  }
+`;

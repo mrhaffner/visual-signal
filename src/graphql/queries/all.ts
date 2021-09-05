@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
 export const ALL_BOARDS = gql`
-  query GetAllBoard {
+  query GetAllBoards {
     allBoards {
       _id
       name
@@ -30,6 +30,15 @@ export const GET_BOARD = gql`
   }
 `;
 
+export const GET_MEMBER_BOARDS = gql`
+  query GetMember($id: ID!) {
+    getMemberBoards(_id: $id) {
+      _id
+      name
+    }
+  }
+`;
+
 export const ALL_LISTS = gql`
   query GetAllLists {
     allLists {
@@ -42,6 +51,19 @@ export const ALL_LISTS = gql`
         pos
         idList
       }
+    }
+  }
+`;
+
+export const GET_MEMBER_BY_ID = gql`
+  query GetMemberById($id: ID!) {
+    getMemberById(_id: $id) {
+      _id
+      fullName
+      password
+      initials
+      username
+      idBoards
     }
   }
 `;

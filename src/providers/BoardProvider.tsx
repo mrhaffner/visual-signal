@@ -1,5 +1,5 @@
 import { useState, useEffect, ReactNode } from 'react';
-import { GET_BOARD } from '../graphql/queries/getAllLists';
+import { GET_BOARD } from '../graphql/queries/all';
 import { useQuery, useMutation } from '@apollo/client';
 import { BoardInterface, ListInterface } from '../types';
 import { DropResult } from 'react-beautiful-dnd';

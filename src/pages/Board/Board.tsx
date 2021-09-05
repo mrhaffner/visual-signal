@@ -4,10 +4,9 @@ import styled from 'styled-components';
 import ListList from './ListList';
 import useBoardContext from '../../hooks/useBoardContext';
 import OpenListComposer from '../../components/OpenListComposer';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import ListComposer from '../../components/ListComposer';
 import BoardHeader from './BoardHeader';
-import useLoadingContext from '../../hooks/useLoadingContext';
 import NavBar from '../../components/NavBar';
 
 const Wrapper = styled.div`
@@ -26,15 +25,6 @@ const Board = () => {
     deleteBoard,
     addList,
   } = useBoardContext();
-  const { setIsLoading, setShowNav } = useLoadingContext();
-
-  setShowNav(true);
-
-  useEffect(() => {
-    if (!loading) {
-      setIsLoading(false);
-    }
-  }, [loading, setIsLoading]);
 
   const [showComposer, setShowComposer] = useState(false);
 

@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useQuery } from '@apollo/client';
-import { ALL_BOARDS } from '../../graphql/queries/getAllLists';
+import { ALL_BOARDS } from '../../graphql/queries/all';
 import { BoardInterface } from '../../types';
 import BoardList from './BoardList';
 import styled from 'styled-components';
 import CreateBoardModal from './CreateBoardModal';
-import useLoadingContext from '../../hooks/useLoadingContext';
 import NavBar from '../../components/NavBar';
 
 const AllBoards = styled.div`
