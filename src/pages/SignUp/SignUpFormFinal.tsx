@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import EmailInput from '../../components/EmailInput';
 import { useForm } from 'react-hook-form';
-import { useHistory } from 'react-router-dom';
 import NameInput from '../../components/NameInput';
 import BlueFormButton from '../../components/BlueFormButton';
 import PasswordRegisterInput from '../../components/PasswordRegisterInput';
@@ -22,7 +21,6 @@ const TOS = styled.p`
 const SignUpFormFinal = ({ email }: any) => {
   const { setMember } = useMemberContext();
   const { register, handleSubmit } = useForm();
-  let history = useHistory();
   const [createMember, { called, loading, data, error }] =
     useMutation(CREATE_MEMBER);
 
@@ -30,7 +28,6 @@ const SignUpFormFinal = ({ email }: any) => {
     if (data) {
       console.log('useEffect', data);
       setMember(data);
-      history.push('/boards');
     }
   });
 
