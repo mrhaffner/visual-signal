@@ -27,11 +27,11 @@ const FormInput = styled.input`
 const NameInput = ({ register, autoFocus }: any) => {
   return (
     <FormInput
-      name="name"
+      name="fullName"
       autoCorrect="off"
       placeholder="Enter full name"
       autoComplete="name"
-      {...register('name', { required: true })}
+      {...register('fullName', { required: true })}
       autoFocus={autoFocus}
     />
   );

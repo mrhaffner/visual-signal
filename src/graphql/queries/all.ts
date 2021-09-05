@@ -64,6 +64,7 @@ export const GET_MEMBER_BY_ID = gql`
       initials
       username
       idBoards
+      email
     }
   }
 `;

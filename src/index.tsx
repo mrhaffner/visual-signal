@@ -40,7 +40,7 @@ const client = new ApolloClient({
 ReactDOM.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
-      <Router forceRefresh={true}>
+      <Router forceRefresh={false}>
         <GlobalStyles />
         <MemberProvider>
           <App />

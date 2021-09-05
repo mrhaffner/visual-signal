@@ -5,6 +5,10 @@ import { useHistory } from 'react-router-dom';
 import NameInput from '../../components/NameInput';
 import BlueFormButton from '../../components/BlueFormButton';
 import PasswordRegisterInput from '../../components/PasswordRegisterInput';
+import useMemberContext from '../../hooks/useMemberContext';
+import { useEffect } from 'react';
+import { CREATE_MEMBER } from '../../graphql/mutations/all';
+import { useMutation } from '@apollo/client';
 
 const TOS = styled.p`
   /* margin-top: 20px; */
@@ -16,12 +20,24 @@ const TOS = styled.p`
 `;
 
 const SignUpFormFinal = ({ email }: any) => {
+  const { setMember } = useMemberContext();
   const { register, handleSubmit } = useForm();
   let history = useHistory();
+  const [createMember, { called, loading, data, error }] =
+    useMutation(CREATE_MEMBER);
 
-  const onSubmit = (data: any) => {
-    console.log(data);
-    // history.push(`${data.email}`);
+  useEffect(() => {
+    if (data) {
+      console.log('useEffect', data);
+      setMember(data);
+      history.push('/boards');
+    }
+  });
+
+  const onSubmit = (inputData: any) => {
+    const { fullName, email, password } = inputData;
+    const memberObject = { fullName, email, password };
+    createMember({ variables: { memberInput: memberObject } });
   };
 
   return (

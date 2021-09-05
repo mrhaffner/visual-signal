@@ -105,6 +105,7 @@ export const CREATE_MEMBER = gql`
       initials
       username
       idBoards
+      email
     }
   }
 `;

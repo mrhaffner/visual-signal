@@ -1,6 +1,6 @@
 import { useLazyQuery, useMutation } from '@apollo/client';
 import { useState, ReactNode, useEffect } from 'react';
-import { CREATE_MEMBER, UPDATE_MEMBER_BOARDS } from '../graphql/mutations/all';
+import { UPDATE_MEMBER_BOARDS } from '../graphql/mutations/all';
 import { GET_MEMBER_BY_ID } from '../graphql/queries/all';
 import { MemberContext } from '../hooks/useMemberContext';
 
@@ -14,7 +14,6 @@ const MemberProvider = ({ children }: Props) => {
   const [getMember, { called, loading, data, error }] =
     useLazyQuery(GET_MEMBER_BY_ID);
 
-  const [createMember] = useMutation(CREATE_MEMBER);
   const [updateMemberBoards] = useMutation(UPDATE_MEMBER_BOARDS);
 
   useEffect(() => {
@@ -26,7 +25,12 @@ const MemberProvider = ({ children }: Props) => {
 
   return (
     <MemberContext.Provider
-      value={{ member, setMember, getMember, createMember, updateMemberBoards }}
+      value={{
+        member,
+        setMember,
+        getMember,
+        updateMemberBoards,
+      }}
     >
       {children}
     </MemberContext.Provider>
