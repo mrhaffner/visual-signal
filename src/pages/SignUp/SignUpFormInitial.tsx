@@ -22,7 +22,6 @@ const SignUpFormInitial = () => {
   let history = useHistory();
 
   const onSubmit = (data: any) => {
-    console.log(data);
     history.push(`/${data.email}`);
   };
 

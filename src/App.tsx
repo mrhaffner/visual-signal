@@ -24,14 +24,12 @@ const App = () => {
         {member ? <Boards /> : <Redirect to="/login" />}
       </Route>
       <Route path="/login">
-        <LogIn />
+        {member ? <Redirect to="/boards" /> : <LogIn />}
       </Route>
       <Route path="/:slug">
-        <SignUp />
+        {member ? <Redirect to="/boards" /> : <SignUp />}
       </Route>
-      <Route path="/">
-        <SignUp />
-      </Route>
+      <Route path="/">{member ? <Redirect to="/boards" /> : <SignUp />}</Route>
     </Switch>
   );
 };
