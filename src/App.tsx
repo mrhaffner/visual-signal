@@ -1,21 +1,27 @@
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import BoardProvider from './providers/BoardProvider';
 import Board from './pages/Board';
 import Boards from './pages/Boards';
-import MemberProvider from './providers/MemberProvider';
 import SignUp from './pages/SignUp';
 import LogIn from './pages/LogIn/LogIn';
+import useMemberContext from './hooks/useMemberContext';
 
-const App = () => (
-  <MemberProvider>
+const App = () => {
+  const { member } = useMemberContext();
+
+  return (
     <Switch>
       <Route path="/board/:boardId">
-        <BoardProvider>
-          <Board />
-        </BoardProvider>
+        {member ? (
+          <BoardProvider>
+            <Board />
+          </BoardProvider>
+        ) : (
+          <Redirect to="/login" />
+        )}
       </Route>
       <Route path="/boards">
-        <Boards />
+        {member ? <Boards /> : <Redirect to="/login" />}
       </Route>
       <Route path="/login">
         <LogIn />
@@ -27,7 +33,7 @@ const App = () => (
         <SignUp />
       </Route>
     </Switch>
-  </MemberProvider>
-);
+  );
+};
 
 export default App;

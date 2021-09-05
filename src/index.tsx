@@ -7,6 +7,7 @@ import { getMainDefinition } from '@apollo/client/utilities';
 import { WebSocketLink } from '@apollo/client/link/ws';
 import { BrowserRouter as Router } from 'react-router-dom';
 import GlobalStyles from './GlobalStyles';
+import MemberProvider from './providers/MemberProvider';
 
 const httpLink = new HttpLink({
   uri: 'http://localhost:8080/graphql',
@@ -41,7 +42,9 @@ ReactDOM.render(
     <ApolloProvider client={client}>
       <Router forceRefresh={true}>
         <GlobalStyles />
-        <App />
+        <MemberProvider>
+          <App />
+        </MemberProvider>
       </Router>
     </ApolloProvider>
   </React.StrictMode>,
