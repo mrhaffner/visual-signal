@@ -263,8 +263,10 @@ const BoardProvider = ({ children }: Props) => {
 
   const newCardName = (updateObject: any) => {
     try {
+      // @ts-ignore
+      const obj = { ...updateObject, idBoard: board._id };
       updateCardNameMutation({
-        variables: { updateCardNameInput: updateObject },
+        variables: { updateCardNameInput: obj },
       });
     } catch (e) {
       console.log(e);
