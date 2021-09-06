@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useQuery } from '@apollo/client';
-import { ALL_BOARDS, GET_MEMBER_BOARDS } from '../../graphql/queries/all';
+import { GET_MEMBER_BOARDS } from '../../graphql/queries/all';
+import { BOARD_LIST_SUBSCRIPTION } from '../../graphql/subscriptions/all';
 import { BoardInterface } from '../../types';
 import BoardList from './BoardList';
 import styled from 'styled-components';
@@ -37,10 +38,24 @@ const BoardsTitle = styled.h3`
 const Boards = () => {
   const { member } = useMemberContext();
 
-  const { loading, error, data } = useQuery(GET_MEMBER_BOARDS, {
-    variables: { id: member._id },
-  });
+  const { loading, error, data, subscribeToMore } = useQuery(
+    GET_MEMBER_BOARDS,
+    {
+      variables: { id: member._id },
+    },
+  );
 
+  subscribeToMore({
+    document: BOARD_LIST_SUBSCRIPTION,
+    updateQuery: (prev, { subscriptionData }) => {
+      if (!subscriptionData.data.newBoardList) return prev;
+      const newBoardList = subscriptionData.data.newBoardList;
+
+      return Object.assign({}, prev, {
+        getMemberBoards: newBoardList, //?
+      });
+    },
+  });
   const [boardList, setBoardList] = useState<BoardInterface[]>([]);
   const [showCreateBoardModal, setShowCreateBoardModal] = useState(false);
 

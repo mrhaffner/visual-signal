@@ -26,7 +26,7 @@ import {
   updateItemPosition,
   updateItemPositionAcross,
 } from '../utlities/calculatePositionHelpers';
-import BOARD_SUBSCRIPTION from '../graphql/subscriptions/all';
+import { BOARD_SUBSCRIPTION } from '../graphql/subscriptions/all';
 import { useParams, useHistory } from 'react-router-dom';
 
 interface Props {

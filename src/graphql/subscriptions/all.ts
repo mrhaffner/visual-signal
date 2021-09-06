@@ -1,10 +1,15 @@
 import { gql } from '@apollo/client';
 
-const BOARD_SUBSCRIPTION = gql`
+export const BOARD_SUBSCRIPTION = gql`
   subscription BoardSubscription {
     newBoard {
       _id
       name
+      idMemberCreator
+      members {
+        idMember
+        memberType
+      }
       lists {
         _id
         name
@@ -21,4 +26,11 @@ const BOARD_SUBSCRIPTION = gql`
   }
 `;
 
-export default BOARD_SUBSCRIPTION;
+export const BOARD_LIST_SUBSCRIPTION = gql`
+  subscription BoardListSubscription {
+    newBoardList {
+      _id
+      name
+    }
+  }
+`;
