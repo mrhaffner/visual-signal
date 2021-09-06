@@ -27,7 +27,7 @@ import {
   updateItemPositionAcross,
 } from '../utlities/calculatePositionHelpers';
 import BOARD_SUBSCRIPTION from '../graphql/subscriptions/all';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 
 interface Props {
   children: ReactNode;
@@ -36,7 +36,7 @@ interface Props {
 const BoardProvider = ({ children }: Props) => {
   // @ts-ignore comment
   let { boardId } = useParams();
-
+  const history = useHistory();
   const { loading, error, data, subscribeToMore } = useQuery(GET_BOARD, {
     variables: { id: boardId },
   });
@@ -48,7 +48,7 @@ const BoardProvider = ({ children }: Props) => {
       const newBoard = subscriptionData.data.newBoard;
 
       return Object.assign({}, prev, {
-        getBoardById: newBoard,
+        getBoardById: newBoard, //?
       });
     },
   });
@@ -76,8 +76,10 @@ const BoardProvider = ({ children }: Props) => {
   const [deleteCardMutation] = useMutation(DELETE_CARD);
 
   useEffect(() => {
-    if (data) {
-      setBoard(data.getBoardById);
+    if (data && data.getBoardById[0]) {
+      setBoard(data.getBoardById[0]); //!!!
+    } else if (data) {
+      history.push('/boards');
     }
   }, [data]);
 
@@ -217,7 +219,6 @@ const BoardProvider = ({ children }: Props) => {
     try {
       // @ts-ignore
       const obj = { ...updateObject, idBoard: board._id };
-      console.log(obj);
 
       updateListNameMutation({
         variables: { updateListNameInput: obj },
