@@ -19,8 +19,8 @@ export const UPDATE_BOARD_NAME = gql`
 `;
 
 export const DELETE_BOARD = gql`
-  mutation DeleteBoardMutation($deleteBoardInput: ID!) {
-    deleteBoard(_id: $deleteBoardInput)
+  mutation DeleteBoardMutation($deleteBoardInput: DeleteBoardInput!) {
+    deleteBoard(input: $deleteBoardInput)
   }
 `;
 

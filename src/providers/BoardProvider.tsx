@@ -194,8 +194,12 @@ const BoardProvider = ({ children }: Props) => {
   };
 
   const deleteBoard = (id: string) => {
+    const deleteObject = {
+      idMember: member._id,
+      _id: id,
+    };
     deleteBoardMutation({
-      variables: { deleteBoardInput: id },
+      variables: { deleteBoardInput: deleteObject },
     });
   };
 
