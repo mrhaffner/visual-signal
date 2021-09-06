@@ -13,21 +13,14 @@ const Wrapper = styled.div`
 interface Props {
   handleDelete: (id: string) => void;
   id: string;
-  goToBoards: () => void;
   text: string;
   submitData: (text: string) => void;
 }
 
-const BoardHeader = ({
-  handleDelete,
-  id,
-  goToBoards,
-  text,
-  submitData,
-}: Props) => (
+const BoardHeader = ({ handleDelete, id, text, submitData }: Props) => (
   <Wrapper>
     <BoardTitleForm text={text} submitData={submitData} />
-    <BoardMenu handleDelete={handleDelete} goToBoards={goToBoards} id={id} />
+    <BoardMenu handleDelete={handleDelete} id={id} />
   </Wrapper>
 );
 

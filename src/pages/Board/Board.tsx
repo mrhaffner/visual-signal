@@ -1,5 +1,4 @@
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
-import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import ListList from './ListList';
 import useBoardContext from '../../hooks/useBoardContext';
@@ -28,12 +27,6 @@ const Board = () => {
 
   const [showComposer, setShowComposer] = useState(false);
 
-  let history = useHistory();
-
-  const goToBoards = () => {
-    history.push('/boards');
-  };
-
   if (loading || board === null) return <></>;
   if (error) return <p>Error :(</p>;
 
@@ -42,7 +35,6 @@ const Board = () => {
       <NavBar setBlue={false} isLoading={loading} />
       <BoardHeader
         handleDelete={deleteBoard}
-        goToBoards={goToBoards}
         text={board.name}
         submitData={newBoardName}
         id={board._id}
