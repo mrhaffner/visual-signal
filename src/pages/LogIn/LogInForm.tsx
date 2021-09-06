@@ -12,7 +12,7 @@ const LogInForm = () => {
 
   useEffect(() => {
     if (data && data.getMemberByEmail.password === testPassword) {
-      setMember(data);
+      setMember(data.getMemberByEmail);
     }
   });
 

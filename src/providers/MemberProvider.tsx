@@ -1,5 +1,5 @@
 import { useLazyQuery, useMutation } from '@apollo/client';
-import { useState, ReactNode, useEffect } from 'react';
+import { useState, ReactNode } from 'react';
 import { UPDATE_MEMBER_BOARDS } from '../graphql/mutations/all';
 import { GET_MEMBER_BY_EMAIL } from '../graphql/queries/all';
 import { MemberContext } from '../hooks/useMemberContext';

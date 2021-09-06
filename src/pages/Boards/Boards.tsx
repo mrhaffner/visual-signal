@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useQuery } from '@apollo/client';
-import { ALL_BOARDS } from '../../graphql/queries/all';
+import { ALL_BOARDS, GET_MEMBER_BOARDS } from '../../graphql/queries/all';
 import { BoardInterface } from '../../types';
 import BoardList from './BoardList';
 import styled from 'styled-components';
 import CreateBoardModal from './CreateBoardModal';
 import NavBar from '../../components/NavBar';
+import useMemberContext from '../../hooks/useMemberContext';
 
 const AllBoards = styled.div`
   /* margin: 40px 16px 0; */
@@ -34,14 +35,18 @@ const BoardsTitle = styled.h3`
 `;
 
 const Boards = () => {
-  const { loading, error, data } = useQuery(ALL_BOARDS);
+  const { member } = useMemberContext();
+
+  const { loading, error, data } = useQuery(GET_MEMBER_BOARDS, {
+    variables: { id: member._id },
+  });
 
   const [boardList, setBoardList] = useState<BoardInterface[]>([]);
   const [showCreateBoardModal, setShowCreateBoardModal] = useState(false);
 
   useEffect(() => {
     if (data) {
-      setBoardList(data.allBoards);
+      setBoardList(data.getMemberBoards);
     }
   }, [data]);
 

@@ -244,7 +244,7 @@ const BoardProvider = ({ children }: Props) => {
   const addCard = (input: string, list: ListInterface) => {
     if (board === null) {
       console.log(
-        "Board is null!  Don't worry, this will never actuall happen.",
+        "Board is null!  Don't worry, this will never actually happen.",
       );
       return;
     }
@@ -274,7 +274,7 @@ const BoardProvider = ({ children }: Props) => {
   const deleteCard = (cardId: string) => {
     if (board === null) {
       console.log(
-        "Board is null!  Don't worry, this will never actuall happen.",
+        "Board is null!  Don't worry, this will never actually happen.",
       );
       return;
     }
