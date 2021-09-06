@@ -24,6 +24,9 @@ const SubmitButton = styled.input<StyleProps>`
   &:hover {
     background: ${(props) => (props.disabled ? '#e2e4e6' : '#61bd4f')};
   }
+  &:focus {
+    outline: none;
+  }
 `;
 
 const GreenFormButton = ({ value, disabled }: any) => {
