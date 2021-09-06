@@ -200,10 +200,11 @@ const CreateButton = styled.button`
 `;
 
 interface Props {
+  memberId: string;
   setShowCreateBoardModal: (bool: boolean) => void;
 }
 
-const CreateBoardModal = ({ setShowCreateBoardModal }: Props) => {
+const CreateBoardModal = ({ setShowCreateBoardModal, memberId }: Props) => {
   const [newBoardMutation, { data }] = useMutation(CREATE_BOARD);
 
   const history = useHistory();
@@ -240,8 +241,9 @@ const CreateBoardModal = ({ setShowCreateBoardModal }: Props) => {
   });
 
   const onSubmit = handleSubmit((formData) => {
+    const boardObject = { name: formData.input, idMemberCreator: memberId };
     newBoardMutation({
-      variables: { createBoardInput: { name: formData.input } },
+      variables: { createBoardInput: boardObject },
     });
   });
 

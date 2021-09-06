@@ -66,6 +66,7 @@ const Boards = () => {
           {showCreateBoardModal && (
             <CreateBoardModal
               setShowCreateBoardModal={setShowCreateBoardModal}
+              memberId={member._id}
             />
           )}
         </AllBoards>
