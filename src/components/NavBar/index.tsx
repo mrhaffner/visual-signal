@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import useMemberContext from '../../hooks/useMemberContext';
 
 interface NavProps {
   setBlue: boolean;
@@ -17,6 +18,7 @@ const Nav = styled.nav<NavProps>`
 `;
 
 const NavContainer = styled.div`
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -64,14 +66,86 @@ const NavImage = styled.div<LoadingProps>`
   }
 `;
 
+const SideContainer = styled.div``;
+
+const OpenMemberMenu = styled.button`
+  border: none;
+  box-shadow: none;
+  background-color: transparent;
+  display: block;
+  height: 32px;
+  margin-right: 0;
+  position: relative;
+  width: 32px;
+  outline: 0;
+  border-radius: 3px;
+  text-decoration: none;
+  align-items: center;
+  color: #ffffff;
+  font-weight: bold;
+  line-height: 32px;
+  margin: 0 4px 0 0;
+  padding: 0;
+  white-space: nowrap;
+
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+    'Noto Sans', 'Ubuntu', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-size: 14px;
+  cursor: pointer;
+  //display: flex;
+  transition-property: background-color, border-color, box-shadow;
+  transition-duration: 85ms;
+  transition-timing-function: ease;
+`;
+
+const MemberMenuTextWrapper = styled.div`
+  position: relative;
+  line-height: 10px;
+  overflow: hidden;
+  white-space: nowrap;
+`;
+
+const MemberMenuText = styled.span`
+  height: 32px;
+  width: 32px;
+  line-height: 32px;
+  font-size: 14px;
+  align-items: center;
+  background-color: #dfe1e6;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border: 0;
+  border-radius: 100%;
+  box-sizing: border-box;
+  color: #172b4d;
+  display: inline-flex;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+    'Noto Sans', 'Ubuntu', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-weight: bold;
+  justify-content: center;
+  opacity: 1;
+  overflow: hidden;
+  white-space: nowrap;
+`;
+
 const NavBar = ({ isLoading, setBlue }: any) => {
+  const { member } = useMemberContext();
   return (
     <>
       <Nav setBlue={setBlue}>
         <NavContainer>
+          <SideContainer></SideContainer>
           <NavLogoContainer to="/boards">
             <NavImage isLoading={isLoading} />
           </NavLogoContainer>
+          <SideContainer>
+            <OpenMemberMenu>
+              <MemberMenuTextWrapper>
+                <MemberMenuText>{member.initials}</MemberMenuText>
+              </MemberMenuTextWrapper>
+            </OpenMemberMenu>
+          </SideContainer>
         </NavContainer>
       </Nav>
     </>
