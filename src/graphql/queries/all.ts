@@ -55,9 +55,9 @@ export const ALL_LISTS = gql`
   }
 `;
 
-export const GET_MEMBER_BY_ID = gql`
-  query GetMemberById($id: ID!) {
-    getMemberById(_id: $id) {
+export const GET_MEMBER_BY_EMAIL = gql`
+  query GetMemberById($email: String!) {
+    getMemberByEmail(email: $email) {
       _id
       fullName
       password

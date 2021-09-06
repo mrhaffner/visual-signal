@@ -21,13 +21,11 @@ const TOS = styled.p`
 const SignUpFormFinal = ({ email }: any) => {
   const { setMember } = useMemberContext();
   const { register, handleSubmit } = useForm();
-  const [createMember, { called, loading, data, error }] =
-    useMutation(CREATE_MEMBER);
+  const [createMember, { loading, data, error }] = useMutation(CREATE_MEMBER);
 
   useEffect(() => {
     if (data) {
-      console.log('useEffect', data);
-      setMember(data);
+      setMember(data.createMember);
     }
   });
 

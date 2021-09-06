@@ -130,7 +130,7 @@ export const UPDATE_MEMBER_PASSWORD = gql`
   }
 `;
 
-export const DELETE_MEMEBER = gql`
+export const DELETE_MEMBER = gql`
   mutation DeleteMemberMutation($deleteMemberInput: ID!) {
     deleteMember(_id: $deleteMemberInput)
   }
