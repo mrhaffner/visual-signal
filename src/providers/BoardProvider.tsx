@@ -215,8 +215,12 @@ const BoardProvider = ({ children }: Props) => {
 
   const newListName = (updateObject: any) => {
     try {
+      // @ts-ignore
+      const obj = { ...updateObject, idBoard: board._id };
+      console.log(obj);
+
       updateListNameMutation({
-        variables: { updateListNameInput: updateObject },
+        variables: { updateListNameInput: obj },
       });
     } catch (e) {
       console.log(e);

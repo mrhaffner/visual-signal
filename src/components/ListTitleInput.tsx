@@ -66,6 +66,10 @@ const ListTitleInput = ({
     }
   }, [hidden]);
 
+  useEffect(() => {
+    setKey(Math.random());
+  }, [text]);
+
   let noSubmit = false;
 
   const handleKeyPress = (e: any) => {
