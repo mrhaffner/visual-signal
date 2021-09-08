@@ -7,7 +7,6 @@ import BoardList from './BoardList';
 import styled from 'styled-components';
 import CreateBoardModal from './CreateBoardModal';
 import NavBar from '../../components/NavBar';
-import useMemberContext from '../../hooks/useMemberContext';
 
 const AllBoards = styled.div`
   /* margin: 40px 16px 0; */
@@ -36,8 +35,6 @@ const BoardsTitle = styled.h3`
 `;
 
 const Boards = () => {
-  const { member } = useMemberContext();
-
   const { loading, error, data, subscribeToMore } = useQuery(GET_MY_BOARDS);
 
   subscribeToMore({
@@ -76,7 +73,6 @@ const Boards = () => {
           {showCreateBoardModal && (
             <CreateBoardModal
               setShowCreateBoardModal={setShowCreateBoardModal}
-              memberId={member._id}
             />
           )}
         </AllBoards>
