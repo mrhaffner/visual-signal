@@ -2,18 +2,18 @@ import { createContext, useContext } from 'react';
 
 type MemberState = {
   member: any;
-  data: any;
+  memberData: any;
   setMember: (value: any) => void;
-  getMember: (value: any) => void;
   updateMemberBoards: (value: any) => void;
+  login: (value: any) => void;
 };
 
 export const MemberContext = createContext<MemberState>({
   member: null,
-  data: null,
+  memberData: null,
   setMember: () => {},
-  getMember: () => {},
   updateMemberBoards: () => {},
+  login: () => {},
 });
 
 const useMemberContext = () => useContext(MemberContext);

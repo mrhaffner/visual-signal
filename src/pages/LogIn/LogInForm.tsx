@@ -3,23 +3,13 @@ import GreenFormButton from '../../components/GreenFormButton';
 import PasswordInput from '../../components/PasswordInput';
 import { useForm } from 'react-hook-form';
 import useMemberContext from '../../hooks/useMemberContext';
-import { useEffect, useState } from 'react';
 
 const LogInForm = () => {
-  const [testPassword, setTestPassword] = useState(null);
-  const { setMember, getMember, data } = useMemberContext();
+  const { login } = useMemberContext();
   const { register, handleSubmit } = useForm();
 
-  useEffect(() => {
-    if (data && data.getMemberByEmail.password === testPassword) {
-      setMember(data.getMemberByEmail);
-    }
-  });
-
   const onSubmit = (inputData: any) => {
-    const { email, password } = inputData;
-    setTestPassword(password);
-    getMember({ variables: { email } });
+    login({ variables: { loginInput: inputData } });
   };
 
   return (

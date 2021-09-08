@@ -1,7 +1,7 @@
-import { useLazyQuery, useMutation } from '@apollo/client';
-import { useState, ReactNode } from 'react';
-import { UPDATE_MEMBER_BOARDS } from '../graphql/mutations/all';
-import { GET_MEMBER_BY_EMAIL } from '../graphql/queries/all';
+import { useMutation, useLazyQuery } from '@apollo/client';
+import { useState, ReactNode, useEffect } from 'react';
+import { LOGIN, UPDATE_MEMBER_BOARDS } from '../graphql/mutations/all';
+import { GET_MY_MEMBER_INFO } from '../graphql/queries/all';
 import { MemberContext } from '../hooks/useMemberContext';
 
 interface Props {
@@ -10,9 +10,42 @@ interface Props {
 
 const MemberProvider = ({ children }: Props) => {
   const [member, setMember] = useState(null);
+  const [token, setToken] = useState(null);
 
-  const [getMember, { called, loading, data, error }] =
-    useLazyQuery(GET_MEMBER_BY_EMAIL);
+  const [login, loginData] = useMutation(LOGIN);
+
+  const [getMemberData, memberData] = useLazyQuery(GET_MY_MEMBER_INFO);
+
+  useEffect(() => {
+    const token = localStorage.getItem('trello-member-token');
+    if (token) {
+      console.log('hi');
+
+      getMemberData();
+    }
+  }, []);
+
+  useEffect(() => {
+    if (loginData.data) {
+      const token = loginData.data.login.value;
+      //@ts-ignore
+      setToken(token);
+      localStorage.setItem('trello-member-token', token);
+    }
+  }, [loginData]);
+
+  useEffect(() => {
+    if (token) {
+      //check if token is null and refresh?
+      getMemberData();
+    }
+  }, [token]);
+
+  useEffect(() => {
+    if (memberData.data) {
+      setMember(memberData.data.getMyMemberInfo);
+    }
+  }, [memberData]);
 
   const [updateMemberBoards] = useMutation(UPDATE_MEMBER_BOARDS);
 
@@ -21,9 +54,9 @@ const MemberProvider = ({ children }: Props) => {
       value={{
         member,
         setMember,
-        getMember,
+        login,
         updateMemberBoards,
-        data,
+        memberData,
       }}
     >
       {children}

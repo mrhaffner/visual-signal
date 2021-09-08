@@ -135,3 +135,11 @@ export const DELETE_MEMBER = gql`
     deleteMember(_id: $deleteMemberInput)
   }
 `;
+
+export const LOGIN = gql`
+  mutation Login($loginInput: LoginInput!) {
+    login(input: $loginInput) {
+      value
+    }
+  }
+`;

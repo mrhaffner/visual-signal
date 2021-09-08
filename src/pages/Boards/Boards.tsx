@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useQuery } from '@apollo/client';
-import { GET_MEMBER_BOARDS } from '../../graphql/queries/all';
+import { GET_MY_BOARDS } from '../../graphql/queries/all';
 import { BOARD_LIST_SUBSCRIPTION } from '../../graphql/subscriptions/all';
 import { BoardInterface } from '../../types';
 import BoardList from './BoardList';
@@ -38,12 +38,7 @@ const BoardsTitle = styled.h3`
 const Boards = () => {
   const { member } = useMemberContext();
 
-  const { loading, error, data, subscribeToMore } = useQuery(
-    GET_MEMBER_BOARDS,
-    {
-      variables: { id: member._id },
-    },
-  );
+  const { loading, error, data, subscribeToMore } = useQuery(GET_MY_BOARDS);
 
   subscribeToMore({
     document: BOARD_LIST_SUBSCRIPTION,
@@ -61,7 +56,7 @@ const Boards = () => {
 
   useEffect(() => {
     if (data) {
-      setBoardList(data.getMemberBoards);
+      setBoardList(data.getMyBoards);
     }
   }, [data]);
 

@@ -1,13 +1,29 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
-import { split, HttpLink } from '@apollo/client';
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+  split,
+  HttpLink,
+} from '@apollo/client';
+import { setContext } from 'apollo-link-context';
 import { getMainDefinition } from '@apollo/client/utilities';
 import { WebSocketLink } from '@apollo/client/link/ws';
 import { BrowserRouter as Router } from 'react-router-dom';
 import GlobalStyles from './GlobalStyles';
 import MemberProvider from './providers/MemberProvider';
+
+const authLink = setContext((_, { headers }) => {
+  const token = localStorage.getItem('trello-member-token');
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `bearer ${token}` : null,
+    },
+  };
+});
 
 const httpLink = new HttpLink({
   uri: 'http://localhost:8080/graphql',
@@ -29,7 +45,8 @@ const splitLink = split(
     );
   },
   wsLink,
-  httpLink,
+  //@ts-ignore
+  authLink.concat(httpLink),
 );
 
 const client = new ApolloClient({

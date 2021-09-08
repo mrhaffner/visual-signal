@@ -30,9 +30,9 @@ export const GET_BOARD = gql`
   }
 `;
 
-export const GET_MEMBER_BOARDS = gql`
-  query GetMember($id: ID!) {
-    getMemberBoards(_id: $id) {
+export const GET_MY_BOARDS = gql`
+  query GetMyBoards {
+    getMyBoards {
       _id
       name
     }
@@ -61,6 +61,19 @@ export const GET_MEMBER_BY_EMAIL = gql`
       _id
       fullName
       password
+      initials
+      username
+      idBoards
+      email
+    }
+  }
+`;
+
+export const GET_MY_MEMBER_INFO = gql`
+  query GetMyMemberInfo {
+    getMyMemberInfo {
+      _id
+      fullName
       initials
       username
       idBoards
