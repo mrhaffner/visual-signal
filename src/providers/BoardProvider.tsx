@@ -183,7 +183,6 @@ const BoardProvider = ({ children }: Props) => {
       const updateObject = {
         _id: board._id,
         name: input,
-        idMember: member._id,
       };
       updateBoardNameMutation({
         variables: { updateBoardInput: updateObject },
@@ -194,12 +193,8 @@ const BoardProvider = ({ children }: Props) => {
   };
 
   const deleteBoard = (id: string) => {
-    const deleteObject = {
-      idMember: member._id,
-      _id: id,
-    };
     deleteBoardMutation({
-      variables: { deleteBoardInput: deleteObject },
+      variables: { boardId: id },
     });
   };
 
