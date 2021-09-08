@@ -28,7 +28,6 @@ import {
 } from '../utlities/calculatePositionHelpers';
 import { BOARD_SUBSCRIPTION } from '../graphql/subscriptions/all';
 import { useParams, useHistory } from 'react-router-dom';
-import useMemberContext from '../hooks/useMemberContext';
 
 interface Props {
   children: ReactNode;
@@ -38,7 +37,6 @@ const BoardProvider = ({ children }: Props) => {
   // @ts-ignore comment
   let { boardId } = useParams();
   const history = useHistory();
-  const { member } = useMemberContext();
   const { loading, error, data, subscribeToMore } = useQuery(GET_BOARD, {
     variables: { id: boardId },
   });

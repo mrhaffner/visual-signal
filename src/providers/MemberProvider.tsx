@@ -1,6 +1,10 @@
 import { useMutation, useLazyQuery } from '@apollo/client';
 import { useState, ReactNode, useEffect } from 'react';
-import { LOGIN, UPDATE_MEMBER_BOARDS } from '../graphql/mutations/all';
+import {
+  CREATE_MEMBER,
+  LOGIN,
+  UPDATE_MEMBER_BOARDS,
+} from '../graphql/mutations/all';
 import { GET_MY_MEMBER_INFO } from '../graphql/queries/all';
 import { MemberContext } from '../hooks/useMemberContext';
 
@@ -13,14 +17,13 @@ const MemberProvider = ({ children }: Props) => {
   const [token, setToken] = useState(null);
 
   const [login, loginData] = useMutation(LOGIN);
+  const [signUp, signUpData] = useMutation(CREATE_MEMBER);
 
   const [getMemberData, memberData] = useLazyQuery(GET_MY_MEMBER_INFO);
 
   useEffect(() => {
     const token = localStorage.getItem('trello-member-token');
     if (token) {
-      console.log('hi');
-
       getMemberData();
     }
   }, []);
@@ -33,6 +36,15 @@ const MemberProvider = ({ children }: Props) => {
       localStorage.setItem('trello-member-token', token);
     }
   }, [loginData]);
+
+  useEffect(() => {
+    if (signUpData.data) {
+      const token = signUpData.data.createMember.value;
+      //@ts-ignore
+      setToken(token);
+      localStorage.setItem('trello-member-token', token);
+    }
+  }, [signUpData]);
 
   useEffect(() => {
     if (token) {
@@ -55,6 +67,7 @@ const MemberProvider = ({ children }: Props) => {
         member,
         setMember,
         login,
+        signUp,
         updateMemberBoards,
         memberData,
       }}

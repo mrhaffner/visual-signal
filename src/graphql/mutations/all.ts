@@ -99,13 +99,7 @@ export const DELETE_CARD = gql`
 export const CREATE_MEMBER = gql`
   mutation CreateMemberMutation($memberInput: CreateMember!) {
     createMember(input: $memberInput) {
-      _id
-      fullName
-      password #change this
-      initials
-      username
-      idBoards
-      email
+      value
     }
   }
 `;

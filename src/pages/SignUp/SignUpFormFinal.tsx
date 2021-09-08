@@ -5,9 +5,6 @@ import NameInput from '../../components/NameInput';
 import BlueFormButton from '../../components/BlueFormButton';
 import PasswordRegisterInput from '../../components/PasswordRegisterInput';
 import useMemberContext from '../../hooks/useMemberContext';
-import { useEffect } from 'react';
-import { CREATE_MEMBER } from '../../graphql/mutations/all';
-import { useMutation } from '@apollo/client';
 
 const TOS = styled.p`
   /* margin-top: 20px; */
@@ -19,20 +16,13 @@ const TOS = styled.p`
 `;
 
 const SignUpFormFinal = ({ email }: any) => {
-  const { setMember } = useMemberContext();
+  const { signUp } = useMemberContext();
   const { register, handleSubmit } = useForm();
-  const [createMember, { loading, data, error }] = useMutation(CREATE_MEMBER);
-
-  useEffect(() => {
-    if (data) {
-      setMember(data.createMember);
-    }
-  });
 
   const onSubmit = (inputData: any) => {
     const { fullName, email, password } = inputData;
     const memberObject = { fullName, email, password };
-    createMember({ variables: { memberInput: memberObject } });
+    signUp({ variables: { memberInput: memberObject } });
   };
 
   return (
