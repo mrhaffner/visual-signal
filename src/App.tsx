@@ -21,7 +21,7 @@ const App = () => {
         )}
       </Route>
       <Route path="/boards">
-        {member ? <Boards /> : <Redirect to="/login" />}
+        {member ? <Boards /> : <Redirect to="/boards" />}
       </Route>
       <Route path="/login">
         {member ? <Redirect to="/boards" /> : <LogIn />}

@@ -7,6 +7,7 @@ import { useState } from 'react';
 import ListComposer from '../../components/ListComposer';
 import BoardHeader from './BoardHeader';
 import NavBar from '../../components/NavBar';
+import MemberMenuPopover from '../../components/MemberMenuPopover';
 
 const Wrapper = styled.div`
   display: flex;
