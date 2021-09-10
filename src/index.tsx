@@ -1,19 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import {
-  ApolloClient,
-  InMemoryCache,
-  ApolloProvider,
-  split,
-  HttpLink,
-} from '@apollo/client';
+import { ApolloClient, ApolloProvider, split, HttpLink } from '@apollo/client';
 import { setContext } from 'apollo-link-context';
 import { getMainDefinition } from '@apollo/client/utilities';
 import { WebSocketLink } from '@apollo/client/link/ws';
 import { BrowserRouter as Router } from 'react-router-dom';
 import GlobalStyles from './GlobalStyles';
 import MemberProvider from './providers/MemberProvider';
+import cache from './graphql/cache';
 
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem('trello-member-token');
@@ -51,7 +46,7 @@ const splitLink = split(
 
 const client = new ApolloClient({
   link: splitLink,
-  cache: new InMemoryCache(),
+  cache,
 });
 
 ReactDOM.render(

@@ -39,7 +39,6 @@ const BoardsTitle = styled.h3`
 const Boards = () => {
   const { member, logOut } = useMemberContext();
   const [showMenuPopover, setShowMenuPopover] = useState(false);
-  console.log('hi', member);
 
   const { loading, error, data, subscribeToMore } = useQuery(GET_MY_BOARDS);
 

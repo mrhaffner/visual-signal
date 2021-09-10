@@ -1,5 +1,6 @@
-import { useMutation, useLazyQuery } from '@apollo/client';
+import { useMutation, useLazyQuery, Cache } from '@apollo/client';
 import { useState, ReactNode, useEffect } from 'react';
+import cache from '../graphql/cache';
 import {
   CREATE_MEMBER,
   LOGIN,
@@ -38,20 +39,18 @@ const MemberProvider = ({ children }: Props) => {
   useEffect(() => {
     if (loginData.data) {
       const token = loginData.data.login.value;
-      //@ts-ignore
       setToken(token);
       localStorage.setItem('trello-member-token', token);
     }
-  }, [loginData]);
+  }, [loginData.data]);
 
   useEffect(() => {
     if (signUpData.data) {
       const token = signUpData.data.createMember.value;
-      //@ts-ignore
       setToken(token);
       localStorage.setItem('trello-member-token', token);
     }
-  }, [signUpData]);
+  }, [signUpData.data]);
 
   useEffect(() => {
     if (token) {

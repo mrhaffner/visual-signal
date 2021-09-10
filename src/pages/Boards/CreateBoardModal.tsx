@@ -227,8 +227,6 @@ const CreateBoardModal = ({ setShowCreateBoardModal }: Props) => {
 
   useEffect(() => {
     if (data) {
-      console.log(data.createBoard);
-
       history.push(`/board/${data.createBoard._id}`);
     }
   });
