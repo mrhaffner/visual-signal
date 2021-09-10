@@ -129,7 +129,7 @@ const MemberMenuText = styled.span`
   white-space: nowrap;
 `;
 
-const NavBar = ({ isLoading, setBlue, setShowMenuPopover }: any) => {
+const NavBar = ({ isLoading, setBlue, toggleMenuPopover }: any) => {
   const { member } = useMemberContext();
   return (
     <>
@@ -140,7 +140,7 @@ const NavBar = ({ isLoading, setBlue, setShowMenuPopover }: any) => {
             <NavImage isLoading={isLoading} />
           </NavLogoContainer>
           <SideContainer>
-            <OpenMemberMenu onClick={() => setShowMenuPopover(true)}>
+            <OpenMemberMenu onClick={() => toggleMenuPopover()}>
               <MemberMenuTextWrapper>
                 <MemberMenuText>{member.initials}</MemberMenuText>
               </MemberMenuTextWrapper>

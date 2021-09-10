@@ -9,6 +9,7 @@ import BoardHeader from './BoardHeader';
 import NavBar from '../../components/NavBar';
 import MemberMenuPopover from '../../components/MemberMenuPopover';
 import useMemberContext from '../../hooks/useMemberContext';
+import useToggle from '../../hooks/useToggle';
 
 const Wrapper = styled.div`
   display: flex;
@@ -28,10 +29,9 @@ const Board = () => {
   } = useBoardContext();
 
   const { member, logOut } = useMemberContext();
-  console.log(member);
 
   const [showComposer, setShowComposer] = useState(false);
-  const [showMenuPopover, setShowMenuPopover] = useState(false);
+  const [showMenuPopover, toggleMenuPopover] = useToggle();
 
   if (loading || board === null) return <></>;
   if (error) return <p>Error :(</p>;
@@ -41,7 +41,7 @@ const Board = () => {
       <NavBar
         setBlue={false}
         isLoading={loading}
-        setShowMenuPopover={setShowMenuPopover}
+        toggleMenuPopover={toggleMenuPopover}
       />
       <BoardHeader
         handleDelete={deleteBoard}
@@ -70,7 +70,7 @@ const Board = () => {
       <MemberMenuPopover
         logOut={logOut}
         showModal={showMenuPopover}
-        setShowModal={setShowMenuPopover}
+        toggleModal={toggleMenuPopover}
         initials={member.initials}
         name={member.fullName}
         email={member.email}

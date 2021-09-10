@@ -9,6 +9,7 @@ import CreateBoardModal from './CreateBoardModal';
 import NavBar from '../../components/NavBar';
 import useMemberContext from '../../hooks/useMemberContext';
 import MemberMenuPopover from '../../components/MemberMenuPopover';
+import useToggle from '../../hooks/useToggle';
 
 const AllBoards = styled.div`
   /* margin: 40px 16px 0; */
@@ -38,7 +39,7 @@ const BoardsTitle = styled.h3`
 
 const Boards = () => {
   const { member, logOut } = useMemberContext();
-  const [showMenuPopover, setShowMenuPopover] = useState(false);
+  const [showMenuPopover, toggleMenuPopover] = useToggle();
 
   const { loading, error, data, subscribeToMore } = useQuery(GET_MY_BOARDS);
 
@@ -70,7 +71,7 @@ const Boards = () => {
       <NavBar
         setBlue={true}
         isLoading={loading}
-        setShowMenuPopover={setShowMenuPopover}
+        toggleMenuPopover={toggleMenuPopover}
       />
       <Wrapper>
         <AllBoards>
@@ -89,7 +90,7 @@ const Boards = () => {
       <MemberMenuPopover
         logOut={logOut}
         showModal={showMenuPopover}
-        setShowModal={setShowMenuPopover}
+        toggleModal={toggleMenuPopover}
         initials={member.initials}
         name={member.fullName}
         email={member.email}

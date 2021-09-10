@@ -1,4 +1,7 @@
+import { useEffect, useRef } from 'react';
 import styled from 'styled-components';
+import useKeyPress from '../hooks/useKeyPress';
+import useOnClickOutside from '../hooks/useOnClickOutside';
 
 const Wrapper = styled.section`
   position: fixed;
@@ -221,7 +224,7 @@ interface Props {
   name: string;
   email: string;
   showModal: any;
-  setShowModal: any;
+  toggleModal: any;
   logOut: any;
 }
 
@@ -230,18 +233,31 @@ const MemberMenuPopover = ({
   name,
   email,
   showModal,
-  setShowModal,
+  toggleModal,
   logOut,
 }: Props) => {
+  const ref = useRef(null);
+  const esc = useKeyPress('Escape');
+
+  useOnClickOutside(ref, () => {
+    toggleModal();
+  });
+
+  useEffect(() => {
+    if (esc && showModal) {
+      toggleModal();
+    }
+  }, [esc]);
+
   if (!showModal) {
     return <></>;
   }
 
   return (
-    <Wrapper>
+    <Wrapper ref={ref}>
       <Header>
         <Title>Account</Title>
-        <CloseBtn onClick={() => setShowModal(false)}>
+        <CloseBtn onClick={() => toggleModal()}>
           <SVGWrapper>
             <SVG
               width="14"
