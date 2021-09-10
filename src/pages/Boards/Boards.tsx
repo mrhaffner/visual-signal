@@ -7,6 +7,8 @@ import BoardList from './BoardList';
 import styled from 'styled-components';
 import CreateBoardModal from './CreateBoardModal';
 import NavBar from '../../components/NavBar';
+import useMemberContext from '../../hooks/useMemberContext';
+import MemberMenuPopover from '../../components/MemberMenuPopover';
 
 const AllBoards = styled.div`
   /* margin: 40px 16px 0; */
@@ -35,6 +37,10 @@ const BoardsTitle = styled.h3`
 `;
 
 const Boards = () => {
+  const { member, logOut } = useMemberContext();
+  const [showMenuPopover, setShowMenuPopover] = useState(false);
+  console.log('hi', member);
+
   const { loading, error, data, subscribeToMore } = useQuery(GET_MY_BOARDS);
 
   subscribeToMore({
@@ -62,7 +68,11 @@ const Boards = () => {
 
   return (
     <>
-      <NavBar setBlue={true} isLoading={loading} />
+      <NavBar
+        setBlue={true}
+        isLoading={loading}
+        setShowMenuPopover={setShowMenuPopover}
+      />
       <Wrapper>
         <AllBoards>
           <BoardsTitle>YOUR BOARDS</BoardsTitle>
@@ -77,6 +87,14 @@ const Boards = () => {
           )}
         </AllBoards>
       </Wrapper>
+      <MemberMenuPopover
+        logOut={logOut}
+        showModal={showMenuPopover}
+        setShowModal={setShowMenuPopover}
+        initials={member.initials}
+        name={member.fullName}
+        email={member.email}
+      />
     </>
   );
 };

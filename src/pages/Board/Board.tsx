@@ -8,6 +8,7 @@ import ListComposer from '../../components/ListComposer';
 import BoardHeader from './BoardHeader';
 import NavBar from '../../components/NavBar';
 import MemberMenuPopover from '../../components/MemberMenuPopover';
+import useMemberContext from '../../hooks/useMemberContext';
 
 const Wrapper = styled.div`
   display: flex;
@@ -26,14 +27,22 @@ const Board = () => {
     addList,
   } = useBoardContext();
 
+  const { member, logOut } = useMemberContext();
+  console.log(member);
+
   const [showComposer, setShowComposer] = useState(false);
+  const [showMenuPopover, setShowMenuPopover] = useState(false);
 
   if (loading || board === null) return <></>;
   if (error) return <p>Error :(</p>;
 
   return (
     <>
-      <NavBar setBlue={false} isLoading={loading} />
+      <NavBar
+        setBlue={false}
+        isLoading={loading}
+        setShowMenuPopover={setShowMenuPopover}
+      />
       <BoardHeader
         handleDelete={deleteBoard}
         text={board.name}
@@ -58,6 +67,14 @@ const Board = () => {
           )}
         </Droppable>
       </DragDropContext>
+      <MemberMenuPopover
+        logOut={logOut}
+        showModal={showMenuPopover}
+        setShowModal={setShowMenuPopover}
+        initials={member.initials}
+        name={member.fullName}
+        email={member.email}
+      />
     </>
   );
 };

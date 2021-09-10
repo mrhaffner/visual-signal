@@ -21,6 +21,13 @@ const MemberProvider = ({ children }: Props) => {
 
   const [getMemberData, memberData] = useLazyQuery(GET_MY_MEMBER_INFO);
 
+  const logOut = () => {
+    localStorage.removeItem('trello-member-token');
+    setToken(null);
+    setMember(null);
+    //mutation to invalidate token?
+  };
+
   useEffect(() => {
     const token = localStorage.getItem('trello-member-token');
     if (token) {
@@ -67,6 +74,7 @@ const MemberProvider = ({ children }: Props) => {
         member,
         setMember,
         login,
+        logOut,
         signUp,
         updateMemberBoards,
         memberData,

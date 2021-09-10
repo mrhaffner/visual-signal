@@ -6,6 +6,7 @@ type MemberState = {
   setMember: (value: any) => void;
   updateMemberBoards: (value: any) => void;
   login: (value: any) => void;
+  logOut: () => void;
   signUp: (value: any) => void;
 };
 
@@ -15,6 +16,7 @@ export const MemberContext = createContext<MemberState>({
   setMember: () => {},
   updateMemberBoards: () => {},
   login: () => {},
+  logOut: () => {},
   signUp: () => {},
 });
 
