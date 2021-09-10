@@ -50,7 +50,7 @@ const Boards = () => {
       const newBoardList = subscriptionData.data.newBoardList;
 
       return Object.assign({}, prev, {
-        getMemberBoards: newBoardList, //?
+        getMyBoards: newBoardList, //?
       });
     },
   });
