@@ -43,6 +43,7 @@ const BoardProvider = ({ children }: Props) => {
 
   subscribeToMore({
     document: BOARD_SUBSCRIPTION,
+    variables: { idBoard: boardId },
     updateQuery: (prev, { subscriptionData }) => {
       if (!subscriptionData.data.newBoard) return prev;
       const newBoard = subscriptionData.data.newBoard;
