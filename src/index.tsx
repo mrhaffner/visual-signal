@@ -10,12 +10,14 @@ import GlobalStyles from './GlobalStyles';
 import MemberProvider from './providers/MemberProvider';
 import cache from './graphql/cache';
 
+const token = localStorage.getItem('trello-member-token');
+const getToken = token ? `bearer ${token}` : null;
+
 const authLink = setContext((_, { headers }) => {
-  const token = localStorage.getItem('trello-member-token');
   return {
     headers: {
       ...headers,
-      authorization: token ? `bearer ${token}` : null,
+      authorization: getToken,
     },
   };
 });
@@ -28,6 +30,9 @@ const wsLink = new WebSocketLink({
   uri: 'ws://localhost:8080/graphql',
   options: {
     reconnect: true,
+    connectionParams: {
+      authorization: getToken,
+    },
   },
 });
 
