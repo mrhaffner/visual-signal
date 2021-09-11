@@ -27,8 +27,8 @@ export const BOARD_SUBSCRIPTION = gql`
 `;
 
 export const BOARD_LIST_SUBSCRIPTION = gql`
-  subscription BoardListSubscription {
-    newBoardList {
+  subscription BoardListSubscription($memberId: ID!) {
+    newBoardList(memberId: $memberId) {
       _id
       name
     }

@@ -45,6 +45,7 @@ const Boards = () => {
 
   subscribeToMore({
     document: BOARD_LIST_SUBSCRIPTION,
+    variables: { memberId: member._id },
     updateQuery: (prev, { subscriptionData }) => {
       if (!subscriptionData.data.newBoardList) return prev;
       const newBoardList = subscriptionData.data.newBoardList;
