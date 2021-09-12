@@ -26,7 +26,10 @@ import {
   updateItemPosition,
   updateItemPositionAcross,
 } from '../utlities/calculatePositionHelpers';
-import { BOARD_SUBSCRIPTION } from '../graphql/subscriptions/all';
+import {
+  BOARD_SUBSCRIPTION,
+  BOARD_DELETED_SUBSCRIPTION,
+} from '../graphql/subscriptions/all';
 import { useParams, useHistory } from 'react-router-dom';
 
 interface Props {
@@ -50,6 +53,24 @@ const BoardProvider = ({ children }: Props) => {
 
       return Object.assign({}, prev, {
         getBoardById: newBoard, //?
+      });
+    },
+  });
+
+  subscribeToMore({
+    document: BOARD_DELETED_SUBSCRIPTION,
+    // variables: { idBoard: boardId },
+    updateQuery: (prev, { subscriptionData }) => {
+      if (!subscriptionData.data.boardDeleted) return prev;
+      // console.log(prev.getBoardById);
+
+      // const filtered = prev.getBoardById.filter(
+      //   (x: any) => x._id === subscriptionData.data.boardDeleted,
+      // );
+      // console.log(filtered);
+
+      return Object.assign({}, prev, {
+        getBoardById: [], //?
       });
     },
   });
