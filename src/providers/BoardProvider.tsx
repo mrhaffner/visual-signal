@@ -59,16 +59,9 @@ const BoardProvider = ({ children }: Props) => {
 
   subscribeToMore({
     document: BOARD_DELETED_SUBSCRIPTION,
-    // variables: { idBoard: boardId },
+    variables: { idBoards: [boardId] },
     updateQuery: (prev, { subscriptionData }) => {
       if (!subscriptionData.data.boardDeleted) return prev;
-      // console.log(prev.getBoardById);
-
-      // const filtered = prev.getBoardById.filter(
-      //   (x: any) => x._id === subscriptionData.data.boardDeleted,
-      // );
-      // console.log(filtered);
-
       return Object.assign({}, prev, {
         getBoardById: [], //?
       });

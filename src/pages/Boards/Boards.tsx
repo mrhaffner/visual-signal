@@ -46,6 +46,9 @@ const Boards = () => {
 
   const { loading, error, data, subscribeToMore } = useQuery(GET_MY_BOARDS);
 
+  const [boardList, setBoardList] = useState<BoardInterface[]>([]);
+  const [showCreateBoardModal, setShowCreateBoardModal] = useState(false);
+
   subscribeToMore({
     document: BOARD_LIST_SUBSCRIPTION,
     variables: { memberId: member._id },
@@ -61,7 +64,7 @@ const Boards = () => {
 
   subscribeToMore({
     document: BOARD_DELETED_SUBSCRIPTION,
-    // variables: { idBoard: boardId },
+    variables: { idBoards: member.idBoards },
     updateQuery: (prev, { subscriptionData }) => {
       if (!subscriptionData.data.boardDeleted) return prev;
       const filtered = prev.getMyBoards.filter(
@@ -72,9 +75,6 @@ const Boards = () => {
       });
     },
   });
-
-  const [boardList, setBoardList] = useState<BoardInterface[]>([]);
-  const [showCreateBoardModal, setShowCreateBoardModal] = useState(false);
 
   useEffect(() => {
     if (data) {

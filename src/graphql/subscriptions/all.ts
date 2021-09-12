@@ -36,7 +36,7 @@ export const BOARD_LIST_SUBSCRIPTION = gql`
 `;
 
 export const BOARD_DELETED_SUBSCRIPTION = gql`
-  subscription BoardDeletedSubscription {
-    boardDeleted
+  subscription BoardDeletedSubscription($idBoards: [ID!]!) {
+    boardDeleted(idBoards: $idBoards)
   }
 `;
