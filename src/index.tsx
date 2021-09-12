@@ -10,10 +10,9 @@ import GlobalStyles from './GlobalStyles';
 import MemberProvider from './providers/MemberProvider';
 import cache from './graphql/cache';
 
-const token = localStorage.getItem('trello-member-token');
-const getToken = token ? `bearer ${token}` : null;
-
 const authLink = setContext((_, { headers }) => {
+  const token = localStorage.getItem('trello-member-token');
+  const getToken = token ? `bearer ${token}` : null;
   return {
     headers: {
       ...headers,
@@ -31,7 +30,9 @@ const wsLink = new WebSocketLink({
   options: {
     reconnect: true,
     connectionParams: {
-      authorization: getToken,
+      authorization: localStorage.getItem('trello-member-token')
+        ? `bearer ${localStorage.getItem('trello-member-token')}`
+        : null,
     },
   },
 });

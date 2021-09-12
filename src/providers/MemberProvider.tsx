@@ -1,6 +1,5 @@
 import { useMutation, useLazyQuery, Cache } from '@apollo/client';
 import { useState, ReactNode, useEffect } from 'react';
-import cache from '../graphql/cache';
 import {
   CREATE_MEMBER,
   LOGIN,
@@ -30,8 +29,8 @@ const MemberProvider = ({ children }: Props) => {
   };
 
   useEffect(() => {
-    const token = localStorage.getItem('trello-member-token');
-    if (token) {
+    const memberToken = localStorage.getItem('trello-member-token');
+    if (memberToken) {
       getMemberData();
     }
   }, []);

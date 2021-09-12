@@ -9,6 +9,8 @@ const LogInForm = () => {
   const { register, handleSubmit } = useForm();
 
   const onSubmit = (inputData: any) => {
+    const token = localStorage.getItem('trello-member-token');
+    if (token) localStorage.removeItem('trello-member-token');
     login({ variables: { loginInput: inputData } });
   };
 
