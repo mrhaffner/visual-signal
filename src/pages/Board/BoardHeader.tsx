@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import BoardMenu from '../../components/BoardMenu';
 import BoardTitleForm from '../../components/BoardTitleForm';
+import { BoardInterface } from '../../types';
 
 const Wrapper = styled.div`
   height: auto;
@@ -64,8 +65,12 @@ const FacePile = styled.div`
   padding: 2px 8px 0 2px;
 `;
 
-const Avatar = styled.a`
-  z-index: 1;
+interface AvatarProps {
+  index: number;
+}
+
+const Avatar = styled.a<AvatarProps>`
+  z-index: ${(props) => props.index};
   float: left;
   height: 28px;
   margin: 0 0 0 -2px;
@@ -115,27 +120,33 @@ const AdminBadge = styled.span`
 
 interface Props {
   handleDelete: (id: string) => void;
-  id: string;
-  text: string;
+  board: BoardInterface;
   submitData: (text: string) => void;
 }
 
-const BoardHeader = ({ handleDelete, id, text, submitData }: Props) => (
+const BoardHeader = ({ handleDelete, board, submitData }: Props) => (
   <Wrapper>
     <LeftWrapper>
-      <BoardTitleForm text={text} submitData={submitData} />
+      <BoardTitleForm text={board.name} submitData={submitData} />
       <Divider />
       <FacePile>
-        <Avatar tabIndex={0}>
-          <Initials>MH</Initials>
-          <AdminBadge></AdminBadge>
-        </Avatar>
+        {board.members.map((x, index): any => (
+          <Avatar
+            tabIndex={0}
+            key={board._id}
+            index={board.members.map.length - index}
+          >
+            <Initials>{x.initials}</Initials>
+            {x.memberType === 'admin' ||
+              (x.memberType === 'owner' && <AdminBadge></AdminBadge>)}
+          </Avatar>
+        ))}
       </FacePile>
       <InviteBtn title="Invite to board" href="#">
         <InviteText>Invite</InviteText>
       </InviteBtn>
     </LeftWrapper>
-    <BoardMenu handleDelete={handleDelete} id={id} />
+    <BoardMenu handleDelete={handleDelete} id={board._id} />
   </Wrapper>
 );
 

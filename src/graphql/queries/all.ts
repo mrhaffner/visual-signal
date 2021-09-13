@@ -14,6 +14,13 @@ export const GET_BOARD = gql`
     getBoardById(_id: $id) {
       _id
       name
+      members {
+        idMember
+        memberType
+        fullName
+        username
+        initials
+      }
       lists {
         _id
         name

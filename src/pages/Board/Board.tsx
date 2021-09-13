@@ -35,6 +35,7 @@ const Board = () => {
 
   if (loading || board === null) return <></>;
   if (error) return <p>Error :(</p>;
+  console.log(board);
 
   return (
     <>
@@ -45,9 +46,8 @@ const Board = () => {
       />
       <BoardHeader
         handleDelete={deleteBoard}
-        text={board.name}
         submitData={newBoardName}
-        id={board._id}
+        board={board}
       />
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="all-lists" direction="horizontal" type="list">
