@@ -79,7 +79,12 @@ const Board = () => {
         email={member.email}
       />
       {modalMember && (
-        <ProfileModal member={modalMember} setModalMember={setModalMember} />
+        <ProfileModal
+          member={modalMember}
+          setModalMember={setModalMember}
+          memberCount={board.members.length}
+          myId={member._id}
+        />
       )}
     </>
   );

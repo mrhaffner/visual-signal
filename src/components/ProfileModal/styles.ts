@@ -1,10 +1,6 @@
-import { useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import useKeyPress from '../hooks/useKeyPress';
-import useOnClickOutside from '../hooks/useOnClickOutside';
-import { MemberInfo } from '../types';
 
-const Wrapper = styled.div`
+export const Wrapper = styled.div`
   left: 504px;
   top: 84px;
   background: #fff;
@@ -19,7 +15,7 @@ const Wrapper = styled.div`
   z-index: 70;
 `;
 
-const Header = styled.div`
+export const Header = styled.div`
   border-bottom-color: #0000;
   height: 30px;
   position: absolute;
@@ -31,7 +27,7 @@ const Header = styled.div`
   text-align: center;
 `;
 
-const CloseBtn = styled.a`
+export const CloseBtn = styled.a`
   color: #6b778c;
   padding: 10px 12px 10px 8px;
   position: absolute;
@@ -63,7 +59,7 @@ const CloseBtn = styled.a`
   }
 `;
 
-const ContentContainer = styled.div`
+export const ContentContainer = styled.div`
   max-height: 1281px;
   overflow-x: hidden;
   overflow-y: auto;
@@ -72,13 +68,13 @@ const ContentContainer = styled.div`
   -webkit-transform: translateZ(0);
 `;
 
-const Profile = styled.div`
+export const Profile = styled.div`
   margin: 8px 0;
   min-height: 56px;
   position: relative;
 `;
 
-const Avatar = styled.div`
+export const Avatar = styled.div`
   float: left;
   margin: 2px;
   background-color: #dfe1e6;
@@ -97,7 +93,7 @@ const Avatar = styled.div`
   }
 `;
 
-const Initials = styled.span`
+export const Initials = styled.span`
   font-weight: 700;
   height: 50px;
   left: 0;
@@ -112,11 +108,11 @@ const Initials = styled.span`
   width: 100%;
 `;
 
-const InfoContainer = styled.div`
+export const InfoContainer = styled.div`
   word-wrap: break-word;
   margin: 0 0 0 64px;
 `;
-const Title = styled.h3`
+export const Title = styled.h3`
   margin: 0 40px 0 0;
   font-size: 16px;
   line-height: 20px;
@@ -124,7 +120,7 @@ const Title = styled.h3`
   word-wrap: break-word;
 `;
 
-const TitleLink = styled.a`
+export const TitleLink = styled.a`
   text-decoration: none;
   color: #172b4d;
   font-size: 16px;
@@ -140,14 +136,14 @@ const TitleLink = styled.a`
   }
 `;
 
-const Username = styled.p`
+export const Username = styled.p`
   color: #5e6c84;
   margin-bottom: 0;
   padding-bottom: 0;
   margin: 0 0 8px;
 `;
 
-const PermissionChange = styled.a`
+export const ListButton = styled.a`
   cursor: pointer;
   display: block;
   font-weight: 400;
@@ -164,57 +160,7 @@ const PermissionChange = styled.a`
   }
 `;
 
-const PermissionLevel = styled.span`
+export const PermissionLevel = styled.span`
   color: #5e6c84;
   font-weight: 400;
 `;
-
-interface Props {
-  member: MemberInfo;
-  setModalMember: (member: MemberInfo | null) => void;
-}
-
-const ProfileModal = ({ member, setModalMember }: Props) => {
-  const ref = useRef(null);
-  const esc = useKeyPress('Escape');
-
-  useOnClickOutside(ref, () => {
-    setModalMember(null);
-  });
-
-  useEffect(() => {
-    if (esc) {
-      setModalMember(null);
-    }
-  }, [esc]);
-
-  const capitalMemberType =
-    member.memberType.toUpperCase()[0] + member.memberType.substring(1);
-
-  return (
-    <Wrapper ref={ref}>
-      <Header>
-        <CloseBtn href="#" onClick={() => setModalMember(null)}></CloseBtn>
-      </Header>
-      <ContentContainer>
-        <Profile>
-          <Avatar>
-            <Initials>{member.initials}</Initials>
-          </Avatar>
-          <InfoContainer>
-            <Title>
-              <TitleLink href="#">{member.fullName}</TitleLink>
-            </Title>
-            <Username>@{member.username}</Username>
-          </InfoContainer>
-        </Profile>
-        <PermissionChange href="#">
-          Change permissions...
-          <PermissionLevel>({capitalMemberType})</PermissionLevel>
-        </PermissionChange>
-      </ContentContainer>
-    </Wrapper>
-  );
-};
-
-export default ProfileModal;
