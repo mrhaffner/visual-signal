@@ -27,39 +27,6 @@ export const Header = styled.div`
   text-align: center;
 `;
 
-export const CloseBtn = styled.a`
-  color: #6b778c;
-  padding: 10px 12px 10px 8px;
-  position: absolute;
-  right: 0;
-  top: 0;
-  z-index: 2;
-  font-size: 16px;
-  height: 20px;
-  line-height: 20px;
-  width: 20px;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  display: inline-block;
-  font-family: trellicons;
-  font-style: normal;
-  font-weight: 400;
-  text-align: center;
-  text-decoration: none;
-  vertical-align: bottom;
-  cursor: pointer;
-  &:before {
-    content: '\\e91c';
-  }
-  &:active,
-  :hover {
-    outline: none;
-  }
-  &:hover {
-    color: #172b4d;
-  }
-`;
-
 export const ContentContainer = styled.div`
   max-height: 1281px;
   overflow-x: hidden;
@@ -119,23 +86,24 @@ export const Title = styled.h3`
   line-height: 20px;
   font-weight: 600;
   word-wrap: break-word;
+  color: #172b4d;
 `;
 
-export const TitleLink = styled.a`
-  text-decoration: none;
-  color: #172b4d;
-  font-size: 16px;
-  line-height: 20px;
-  font-weight: 600;
-  &:active,
-  :hover {
-    outline: none;
-  }
-  &:hover {
-    color: #091e42;
-    text-decoration: underline;
-  }
-`;
+// export const TitleLink = styled.a`
+//   text-decoration: none;
+//   color: #172b4d;
+//   font-size: 16px;
+//   line-height: 20px;
+//   font-weight: 600;
+//   &:active,
+//   :hover {
+//     outline: none;
+//   }
+//   &:hover {
+//     color: #091e42;
+//     text-decoration: underline;
+//   }
+// `;
 
 export const StyledText = styled.p`
   color: #5e6c84;

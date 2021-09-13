@@ -1,10 +1,10 @@
-import { StyledStandardText, LeaveRemoveBtn } from './styles';
+import { StyledStandardText, LeaveRemoveBtn } from './style';
 
 interface Props {
   leaveOrRemove: string;
 }
 
-//buttons update setModalContentType!!!
+//buttons update setPopoverContentType!!!
 const LeaveRemoveContent = ({ leaveOrRemove }: Props) => {
   const text =
     leaveOrRemove === 'remove'

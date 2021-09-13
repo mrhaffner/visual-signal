@@ -7,11 +7,12 @@ import { useState } from 'react';
 import ListComposer from '../../components/ListComposer';
 import BoardHeader from './BoardHeader';
 import NavBar from '../../components/NavBar';
-import MemberMenuPopover from '../../components/MemberMenuPopover';
+import MemberMenuPopover from '../../components/Popovers/MemberMenuPopover';
 import useMemberContext from '../../hooks/useMemberContext';
 import useToggle from '../../hooks/useToggle';
-import ProfileModal from '../../components/ProfileModal';
+import ProfilePopover from '../../components/Popovers/ProfilePopover';
 import { MemberInfo } from '../../types';
+import InvitePopover from '../../components/Popovers/InvitePopover';
 
 const Wrapper = styled.div`
   display: flex;
@@ -34,7 +35,8 @@ const Board = () => {
 
   const [showComposer, setShowComposer] = useState(false);
   const [showMenuPopover, toggleMenuPopover] = useToggle();
-  const [modalMember, setModalMember] = useState<MemberInfo | null>(null);
+  const [showInvitePopover, toggleInvitePopover] = useToggle();
+  const [popoverMember, setPopoverMember] = useState<MemberInfo | null>(null);
 
   if (loading || board === null) return <></>;
   if (error) return <p>Error :(</p>;
@@ -58,7 +60,8 @@ const Board = () => {
         handleDelete={deleteBoard}
         submitData={newBoardName}
         board={board}
-        setModalMember={setModalMember}
+        setPopoverMember={setPopoverMember}
+        toggleInvitePopover={toggleInvitePopover}
       />
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="all-lists" direction="horizontal" type="list">
@@ -80,22 +83,23 @@ const Board = () => {
       </DragDropContext>
       <MemberMenuPopover
         logOut={logOut}
-        showModal={showMenuPopover}
-        toggleModal={toggleMenuPopover}
+        showPopover={showMenuPopover}
+        togglePopover={toggleMenuPopover}
         initials={member.initials}
         name={member.fullName}
         email={member.email}
       />
-      {modalMember && (
-        <ProfileModal
-          member={modalMember}
-          setModalMember={setModalMember}
+      {popoverMember && (
+        <ProfilePopover
+          member={popoverMember}
+          setPopoverMember={setPopoverMember}
           memberCount={board.members.length}
           adminCount={adminCount}
           myId={member._id}
           myMemberLevel={myMemberLevel}
         />
       )}
+      {showInvitePopover && <InvitePopover />}
     </>
   );
 };

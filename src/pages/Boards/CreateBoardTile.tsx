@@ -67,10 +67,10 @@ interface Props {
 }
 
 const CreateBoardTile = ({ setShowCreateBoardModal }: Props) => {
-  const openModal = () => setShowCreateBoardModal(true);
+  const openPopover = () => setShowCreateBoardModal(true);
 
   return (
-    <Wrapper onClick={openModal}>
+    <Wrapper onClick={openPopover}>
       <Container>
         <Text>Create new board</Text>
       </Container>

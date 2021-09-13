@@ -1,5 +1,5 @@
 import { ThemeProvider } from 'styled-components';
-import { MemberType } from '../../types';
+import { MemberType } from '../../../types';
 
 import {
   ListButton,
@@ -7,19 +7,19 @@ import {
   ListBtnSubText,
   StyledHr,
   StyledText,
-} from './styles';
+} from './style';
 
 interface Props {
   memberLevel: MemberType;
   adminCount: number;
-  setModalContentType: (input: string) => void;
+  setPopoverContentType: (input: string) => void;
 }
 
-//buttons update setModalContentType!!!
+//buttons update setPopoverContentType!!!
 const ChangeMemberContent = ({
   memberLevel,
   adminCount,
-  setModalContentType,
+  setPopoverContentType,
 }: Props) => {
   return (
     <>

@@ -34,7 +34,7 @@ export interface CardInterface extends CommonData {
   pos: number;
 }
 
-// export enum ProfileModalContentType {
+// export enum ProfilePopoverContentType {
 //   main = 'main',
 //   levelChange = 'levelChange',
 //   leave = 'leave',

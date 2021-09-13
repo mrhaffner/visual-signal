@@ -11,7 +11,7 @@ import styled from 'styled-components';
 import CreateBoardModal from './CreateBoardModal';
 import NavBar from '../../components/NavBar';
 import useMemberContext from '../../hooks/useMemberContext';
-import MemberMenuPopover from '../../components/MemberMenuPopover';
+import MemberMenuPopover from '../../components/Popovers/MemberMenuPopover';
 import useToggle from '../../hooks/useToggle';
 
 const AllBoards = styled.div`
@@ -108,8 +108,8 @@ const Boards = () => {
       </Wrapper>
       <MemberMenuPopover
         logOut={logOut}
-        showModal={showMenuPopover}
-        toggleModal={toggleMenuPopover}
+        showPopover={showMenuPopover}
+        togglePopover={toggleMenuPopover}
         initials={member.initials}
         name={member.fullName}
         email={member.email}

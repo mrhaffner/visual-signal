@@ -1,6 +1,5 @@
 import {
   Header,
-  CloseBtn,
   ContentContainer,
   Profile,
   Avatar,
@@ -11,33 +10,34 @@ import {
   StyledText,
   ListButton,
   PermissionLevel,
-} from './styles';
-import { MemberInfo } from '../../types';
+} from './style';
+import { MemberInfo } from '../../../types';
 import { ThemeProvider } from 'styled-components';
+import { CloseBtn } from '../sharedStyles';
 
 interface Props {
   member: MemberInfo;
   memberCount: number;
   leaveOrRemove: string;
   capitalMyMemberType: string;
-  setModalMember: (member: MemberInfo | null) => void;
-  setModalContentType: (input: string) => void;
+  setPopoverMember: (member: MemberInfo | null) => void;
+  setPopoverContentType: (input: string) => void;
 }
 
-const MainModalContent = ({
+const MainPopoverContent = ({
   member,
   memberCount,
   capitalMyMemberType,
   leaveOrRemove,
-  setModalMember,
-  setModalContentType,
+  setPopoverMember,
+  setPopoverContentType,
 }: Props) => {
   const removeText =
     leaveOrRemove === 'leave' ? 'Leave board...' : 'Remove from board...';
   return (
     <>
       <Header>
-        <CloseBtn onClick={() => setModalMember(null)}></CloseBtn>
+        <CloseBtn onClick={() => setPopoverMember(null)}></CloseBtn>
       </Header>
       <ContentContainer>
         <Profile>
@@ -59,15 +59,15 @@ const MainModalContent = ({
               : { disabled: false }
           }
         >
-          <ListButton onClick={() => setModalContentType('levelChange')}>
+          <ListButton onClick={() => setPopoverContentType('levelChange')}>
             Change permissions...
             <PermissionLevel>({capitalMyMemberType})</PermissionLevel>
           </ListButton>
         </ThemeProvider>
         {(member.memberType === 'admin' || member.memberType === 'owner') &&
           memberCount > 1 && (
-            // this will setModalContentType depending on whether leaving or removing
-            <ListButton onClick={() => setModalContentType(leaveOrRemove)}>
+            // this will setPopoverContentType depending on whether leaving or removing
+            <ListButton onClick={() => setPopoverContentType(leaveOrRemove)}>
               {removeText}
             </ListButton>
           )}
@@ -76,4 +76,4 @@ const MainModalContent = ({
   );
 };
 
-export default MainModalContent;
+export default MainPopoverContent;

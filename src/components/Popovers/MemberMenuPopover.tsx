@@ -1,7 +1,8 @@
 import { useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import useKeyPress from '../hooks/useKeyPress';
-import useOnClickOutside from '../hooks/useOnClickOutside';
+import useKeyPress from '../../hooks/useKeyPress';
+import useOnClickOutside from '../../hooks/useOnClickOutside';
+import { CloseBtn } from './sharedStyles';
 
 const Wrapper = styled.section`
   position: fixed;
@@ -53,55 +54,6 @@ const Title = styled.div`
   grid-column: 1 / span 3;
   grid-row: 1;
   text-align: center;
-`;
-
-const CloseBtn = styled.button`
-  grid-column: 3;
-  grid-row: 1;
-  background: transparent;
-  border: none;
-  color: #6b778c;
-  cursor: pointer;
-  margin: 0;
-  padding: 0;
-  z-index: 2;
-  outline: none;
-  -webkit-appearance: none;
-  border-radius: 3px;
-  box-sizing: border-box;
-  display: inline-block;
-  line-height: 20px;
-  position: relative;
-  text-decoration: none;
-  &:hover {
-    color: #172b4d;
-  }
-  &:focus {
-    outline: none;
-  }
-`;
-
-const SVGWrapper = styled.span`
-  height: auto;
-  width: 10px;
-  color: currentcolor;
-  display: inline-block;
-  fill: rgb(255, 255, 255);
-  flex-shrink: 0;
-  line-height: 1;
-  cursor: pointer;
-`;
-
-const SVG = styled.svg`
-  height: 16px;
-  width: 16px;
-  max-height: 100%;
-  max-width: 100%;
-  overflow: hidden;
-  pointer-events: none;
-  vertical-align: bottom;
-  color: currentColor;
-  line-height: 1;
 `;
 
 const Main = styled.div`
@@ -223,8 +175,8 @@ interface Props {
   initials: string;
   name: string;
   email: string;
-  showModal: any;
-  toggleModal: any;
+  showPopover: any;
+  togglePopover: any;
   logOut: any;
 }
 
@@ -232,24 +184,24 @@ const MemberMenuPopover = ({
   initials,
   name,
   email,
-  showModal,
-  toggleModal,
+  showPopover,
+  togglePopover,
   logOut,
 }: Props) => {
   const ref = useRef(null);
   const esc = useKeyPress('Escape');
 
   useOnClickOutside(ref, () => {
-    toggleModal();
+    togglePopover();
   });
 
   useEffect(() => {
-    if (esc && showModal) {
-      toggleModal();
+    if (esc && showPopover) {
+      togglePopover();
     }
   }, [esc]);
 
-  if (!showModal) {
+  if (!showPopover) {
     return <></>;
   }
 
@@ -257,24 +209,7 @@ const MemberMenuPopover = ({
     <Wrapper ref={ref}>
       <Header>
         <Title>Account</Title>
-        <CloseBtn onClick={() => toggleModal()}>
-          <SVGWrapper>
-            <SVG
-              width="14"
-              height="14"
-              viewBox="0 0 14 14"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fillRule="evenodd"
-                clipRule="evenodd"
-                fill="currentColor"
-                d="M5.58579 7L0.292893 1.70711C-0.0976311 1.31658 -0.0976311 0.683418 0.292893 0.292893C0.683418 -0.0976311 1.31658 -0.0976311 1.70711 0.292893L7 5.58579L12.2929 0.292893C12.6834 -0.0976311 13.3166 -0.0976311 13.7071 0.292893C14.0976 0.683418 14.0976 1.31658 13.7071 1.70711L8.41421 7L13.7071 12.2929C14.0976 12.6834 14.0976 13.3166 13.7071 13.7071C13.3166 14.0976 12.6834 14.0976 12.2929 13.7071L7 8.41421L1.70711 13.7071C1.31658 14.0976 0.683418 14.0976 0.292893 13.7071C-0.0976311 13.3166 -0.0976311 12.6834 0.292893 12.2929L5.58579 7Z"
-              ></path>
-            </SVG>
-          </SVGWrapper>
-        </CloseBtn>
+        <CloseBtn onClick={() => togglePopover()} />
       </Header>
       <Main tabIndex={-1}>
         <nav>

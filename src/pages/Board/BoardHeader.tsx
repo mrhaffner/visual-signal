@@ -40,6 +40,7 @@ const InviteBtn = styled.a`
   position: relative;
   text-decoration: none;
   text-overflow: ellipsis;
+  user-select: none;
   &:hover {
     background-color: #00000029;
     outline: 0;
@@ -122,14 +123,16 @@ interface Props {
   handleDelete: (id: string) => void;
   board: BoardInterface;
   submitData: (text: string) => void;
-  setModalMember: (member: MemberInfo | null) => void;
+  setPopoverMember: (member: MemberInfo | null) => void;
+  toggleInvitePopover: () => void;
 }
 
 const BoardHeader = ({
   handleDelete,
   board,
   submitData,
-  setModalMember,
+  setPopoverMember,
+  toggleInvitePopover,
 }: Props) => (
   <Wrapper>
     <LeftWrapper>
@@ -141,7 +144,7 @@ const BoardHeader = ({
             tabIndex={0}
             key={board._id}
             index={board.members.map.length - index}
-            onClick={() => setModalMember(x)}
+            onClick={() => setPopoverMember(x)}
           >
             <Initials>{x.initials}</Initials>
             {x.memberType === 'admin' ||
@@ -149,7 +152,12 @@ const BoardHeader = ({
           </Avatar>
         ))}
       </FacePile>
-      <InviteBtn title="Invite to board" href="#">
+      <InviteBtn
+        title="Invite to board"
+        onClick={() => {
+          toggleInvitePopover();
+        }}
+      >
         <InviteText>Invite</InviteText>
       </InviteBtn>
     </LeftWrapper>
