@@ -1,5 +1,5 @@
 import { ThemeProvider } from 'styled-components';
-import { MemberInfo } from '../../types';
+import { MemberInfo, MemberType } from '../../types';
 
 import {
   CloseBtn,
@@ -15,11 +15,15 @@ import {
 } from './styles';
 
 interface Props {
+  memberLevel: MemberType;
+  adminCount: number;
   setModalMember: (member: MemberInfo | null) => void;
   setShowDeleteContent: (input: boolean) => void;
 }
 
 const DeleteMemberContent = ({
+  memberLevel,
+  adminCount,
   setModalMember,
   setShowDeleteContent,
 }: Props) => {
@@ -31,34 +35,42 @@ const DeleteMemberContent = ({
         <CloseBtn onClick={() => setModalMember(null)}></CloseBtn>
       </NewHeaderWrapper>
       <ContentContainer>
-        <ThemeProvider theme={{ disabled: true }}>
+        <ThemeProvider
+          theme={
+            memberLevel === 'normal' ? { disabled: false } : { disabled: true }
+          }
+        >
+          {/* buttons don't work if admin count === 1 */}
           <ListButton>
             Admin
-            {/* Conditionally display depending on current userlevel */}
-            <CheckIcon />
+            {memberLevel !== 'normal' && <CheckIcon />}
             <ListBtnSubText>
               Can view and edit cards, remove members, and change all settings
               for the board.
             </ListBtnSubText>
           </ListButton>
         </ThemeProvider>
-        <ThemeProvider theme={{ disabled: false }}>
+        <ThemeProvider
+          theme={
+            memberLevel === 'normal' ? { disabled: true } : { disabled: false }
+          }
+        >
           <ListButton>
             Normal
-            {/* Conditionally display depending on current userlevel */}
-            <CheckIcon />
+            {memberLevel === 'normal' && <CheckIcon />}
             <ListBtnSubText>
               Can view and edit cards. Can change some board settings.
             </ListBtnSubText>
           </ListButton>
         </ThemeProvider>
-        {/* Conditionally display if there is more than one admin */}
-        <>
-          <StyledHr />
-          <StyledText>
-            You can’t change roles because there must be at least one admin.
-          </StyledText>
-        </>
+        {adminCount === 1 && (
+          <>
+            <StyledHr />
+            <StyledText>
+              You can’t change roles because there must be at least one admin.
+            </StyledText>
+          </>
+        )}
       </ContentContainer>
     </>
   );

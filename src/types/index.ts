@@ -3,7 +3,7 @@ interface CommonData {
   name: string;
 }
 
-enum MemberType {
+export enum MemberType {
   normal = 'normal',
   admin = 'admin',
   owner = 'owner',

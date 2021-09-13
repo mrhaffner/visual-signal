@@ -39,6 +39,11 @@ const Board = () => {
   if (loading || board === null) return <></>;
   if (error) return <p>Error :(</p>;
 
+  const adminCount = board.members.filter(
+    (x: any) => x.memberType !== 'normal',
+  ).length;
+  console.log(adminCount);
+
   return (
     <>
       <NavBar
@@ -83,6 +88,7 @@ const Board = () => {
           member={modalMember}
           setModalMember={setModalMember}
           memberCount={board.members.length}
+          adminCount={adminCount}
           myId={member._id}
         />
       )}

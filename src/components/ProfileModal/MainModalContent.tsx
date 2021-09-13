@@ -12,11 +12,13 @@ import {
   ListButton,
   PermissionLevel,
 } from './styles';
-import { MemberInfo } from '../../types';
+import { MemberInfo, MemberType } from '../../types';
+import { ThemeProvider } from 'styled-components';
 
 interface Props {
   member: MemberInfo;
   memberCount: number;
+  memberLevel: MemberType;
   removeText: string;
   capitalMemberType: string;
   setModalMember: (member: MemberInfo | null) => void;
@@ -26,6 +28,7 @@ interface Props {
 const MainModalContent = ({
   member,
   memberCount,
+  memberLevel,
   capitalMemberType,
   removeText,
   setModalMember,
@@ -48,10 +51,16 @@ const MainModalContent = ({
             <StyledText>@{member.username}</StyledText>
           </InfoContainer>
         </Profile>
-        <ListButton onClick={() => setShowDeleteContent(true)}>
-          Change permissions...
-          <PermissionLevel>({capitalMemberType})</PermissionLevel>
-        </ListButton>
+        <ThemeProvider
+          theme={
+            memberLevel === 'normal' ? { disabled: true } : { disabled: false }
+          }
+        >
+          <ListButton onClick={() => setShowDeleteContent(true)}>
+            Change permissions...
+            <PermissionLevel>({capitalMemberType})</PermissionLevel>
+          </ListButton>
+        </ThemeProvider>
         {member.memberType === 'admin' ||
           (member.memberType === 'owner' && memberCount > 1 && (
             <ListButton>{removeText}</ListButton>
