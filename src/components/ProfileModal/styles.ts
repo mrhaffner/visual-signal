@@ -137,28 +137,11 @@ export const TitleLink = styled.a`
   }
 `;
 
-export const Username = styled.p`
+export const StyledText = styled.p`
   color: #5e6c84;
   margin-bottom: 0;
   padding-bottom: 0;
   margin: 0 0 8px;
-`;
-
-export const ListButton = styled.a`
-  cursor: pointer;
-  display: block;
-  font-weight: 400;
-  margin: 0 -12px;
-  padding: 6px 12px;
-  position: relative;
-  text-decoration: none;
-  color: #172b4d;
-  &:hover {
-    background-color: #091e420a;
-  }
-  &:active {
-    background-color: #e4f0f6;
-  }
 `;
 
 export const PermissionLevel = styled.span`
@@ -221,9 +204,32 @@ export const NewHeaderText = styled.span`
   text-align: center;
 `;
 
+export const ListButton = styled.a`
+  cursor: ${(props) => (props.theme.disabled ? 'default' : 'pointer')};
+  display: block;
+  font-weight: 400;
+  margin: 0 -12px;
+  padding: 6px 12px;
+  position: relative;
+  text-decoration: none;
+  color: ${(props) => (props.theme.disabled ? '#a5adba' : '#172b4d')};
+  &:hover {
+    background-color: ${(props) => (props.theme.disabled ? '' : '#091e420a')};
+  }
+  &:active {
+    background-color: ${(props) => (props.theme.disabled ? '' : '#e4f0f6')};
+  }
+`;
+
+ListButton.defaultProps = {
+  theme: {
+    disabled: false,
+  },
+};
+
 export const ListBtnSubText = styled.span`
   clear: both;
-  color: #5e6c84;
+  color: ${(props) => (props.theme.disabled ? '#a5adba' : '#5e6c84')};
   display: block;
   font-size: 12px;
   font-weight: 400;
@@ -231,8 +237,14 @@ export const ListBtnSubText = styled.span`
   margin-top: 4px;
 `;
 
+ListBtnSubText.defaultProps = {
+  theme: {
+    disabled: false,
+  },
+};
+
 export const CheckIcon = styled.span`
-  color: #42526e;
+  color: ${(props) => (props.theme.disabled ? '#a5adba' : '#42526e')};
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   display: inline-block;
@@ -249,4 +261,19 @@ export const CheckIcon = styled.span`
   &:before {
     content: '\\e916';
   }
+`;
+
+CheckIcon.defaultProps = {
+  theme: {
+    disabled: false,
+  },
+};
+
+export const StyledHr = styled.hr`
+  margin: 8px 0;
+  background-color: #091e4221;
+  border: 0;
+  height: 1px;
+  padding: 0;
+  width: 100%;
 `;

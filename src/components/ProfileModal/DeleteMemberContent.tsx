@@ -1,3 +1,4 @@
+import { ThemeProvider } from 'styled-components';
 import { MemberInfo } from '../../types';
 
 import {
@@ -9,6 +10,8 @@ import {
   NewHeaderText,
   CheckIcon,
   ListBtnSubText,
+  StyledHr,
+  StyledText,
 } from './styles';
 
 interface Props {
@@ -28,20 +31,34 @@ const DeleteMemberContent = ({
         <CloseBtn onClick={() => setModalMember(null)}></CloseBtn>
       </NewHeaderWrapper>
       <ContentContainer>
-        <ListButton>
-          Admin
-          <CheckIcon />
-          <ListBtnSubText>
-            Can view and edit cards, remove members, and change all settings for
-            the board.
-          </ListBtnSubText>
-        </ListButton>
-        <ListButton>
-          Normal
-          <ListBtnSubText>
-            Can view and edit cards. Can change some board settings.
-          </ListBtnSubText>
-        </ListButton>
+        <ThemeProvider theme={{ disabled: true }}>
+          <ListButton>
+            Admin
+            {/* Conditionally display depending on current userlevel */}
+            <CheckIcon />
+            <ListBtnSubText>
+              Can view and edit cards, remove members, and change all settings
+              for the board.
+            </ListBtnSubText>
+          </ListButton>
+        </ThemeProvider>
+        <ThemeProvider theme={{ disabled: false }}>
+          <ListButton>
+            Normal
+            {/* Conditionally display depending on current userlevel */}
+            <CheckIcon />
+            <ListBtnSubText>
+              Can view and edit cards. Can change some board settings.
+            </ListBtnSubText>
+          </ListButton>
+        </ThemeProvider>
+        {/* Conditionally display if there is more than one admin */}
+        <>
+          <StyledHr />
+          <StyledText>
+            You can’t change roles because there must be at least one admin.
+          </StyledText>
+        </>
       </ContentContainer>
     </>
   );

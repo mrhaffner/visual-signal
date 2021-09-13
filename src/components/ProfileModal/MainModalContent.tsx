@@ -8,7 +8,7 @@ import {
   InfoContainer,
   Title,
   TitleLink,
-  Username,
+  StyledText,
   ListButton,
   PermissionLevel,
 } from './styles';
@@ -45,7 +45,7 @@ const MainModalContent = ({
             <Title>
               <TitleLink>{member.fullName}</TitleLink>
             </Title>
-            <Username>@{member.username}</Username>
+            <StyledText>@{member.username}</StyledText>
           </InfoContainer>
         </Profile>
         <ListButton onClick={() => setShowDeleteContent(true)}>
