@@ -10,6 +10,8 @@ import NavBar from '../../components/NavBar';
 import MemberMenuPopover from '../../components/MemberMenuPopover';
 import useMemberContext from '../../hooks/useMemberContext';
 import useToggle from '../../hooks/useToggle';
+import ProfileModal from '../../components/ProfileModal';
+import { MemberInfo } from '../../types';
 
 const Wrapper = styled.div`
   display: flex;
@@ -32,10 +34,10 @@ const Board = () => {
 
   const [showComposer, setShowComposer] = useState(false);
   const [showMenuPopover, toggleMenuPopover] = useToggle();
+  const [modalMember, setModalMember] = useState<MemberInfo | null>(null);
 
   if (loading || board === null) return <></>;
   if (error) return <p>Error :(</p>;
-  console.log(board);
 
   return (
     <>
@@ -48,6 +50,7 @@ const Board = () => {
         handleDelete={deleteBoard}
         submitData={newBoardName}
         board={board}
+        setModalMember={setModalMember}
       />
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="all-lists" direction="horizontal" type="list">
@@ -75,6 +78,9 @@ const Board = () => {
         name={member.fullName}
         email={member.email}
       />
+      {modalMember && (
+        <ProfileModal member={modalMember} setModalMember={setModalMember} />
+      )}
     </>
   );
 };

@@ -9,7 +9,7 @@ enum MemberType {
   owner = 'owner',
 }
 
-interface MemberInfo {
+export interface MemberInfo {
   idMember: string;
   memberType: MemberType;
   initials: string;

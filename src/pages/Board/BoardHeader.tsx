@@ -1,8 +1,7 @@
 import styled from 'styled-components';
 import BoardMenu from '../../components/BoardMenu';
 import BoardTitleForm from '../../components/BoardTitleForm';
-import ProfileModal from '../../components/ProfileModal';
-import { BoardInterface } from '../../types';
+import { BoardInterface, MemberInfo } from '../../types';
 
 const Wrapper = styled.div`
   height: auto;
@@ -123,9 +122,15 @@ interface Props {
   handleDelete: (id: string) => void;
   board: BoardInterface;
   submitData: (text: string) => void;
+  setModalMember: (member: MemberInfo | null) => void;
 }
 
-const BoardHeader = ({ handleDelete, board, submitData }: Props) => (
+const BoardHeader = ({
+  handleDelete,
+  board,
+  submitData,
+  setModalMember,
+}: Props) => (
   <Wrapper>
     <LeftWrapper>
       <BoardTitleForm text={board.name} submitData={submitData} />
@@ -136,6 +141,7 @@ const BoardHeader = ({ handleDelete, board, submitData }: Props) => (
             tabIndex={0}
             key={board._id}
             index={board.members.map.length - index}
+            onClick={() => setModalMember(x)}
           >
             <Initials>{x.initials}</Initials>
             {x.memberType === 'admin' ||
@@ -148,7 +154,6 @@ const BoardHeader = ({ handleDelete, board, submitData }: Props) => (
       </InviteBtn>
     </LeftWrapper>
     <BoardMenu handleDelete={handleDelete} id={board._id} />
-    {/* <ProfileModal /> */}
   </Wrapper>
 );
 

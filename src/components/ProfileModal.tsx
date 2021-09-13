@@ -1,5 +1,8 @@
-import { profile } from 'console';
+import { useEffect, useRef } from 'react';
 import styled from 'styled-components';
+import useKeyPress from '../hooks/useKeyPress';
+import useOnClickOutside from '../hooks/useOnClickOutside';
+import { MemberInfo } from '../types';
 
 const Wrapper = styled.div`
   left: 504px;
@@ -166,26 +169,48 @@ const PermissionLevel = styled.span`
   font-weight: 400;
 `;
 
-const ProfileModal = () => {
+interface Props {
+  member: MemberInfo;
+  setModalMember: (member: MemberInfo | null) => void;
+}
+
+const ProfileModal = ({ member, setModalMember }: Props) => {
+  const ref = useRef(null);
+  const esc = useKeyPress('Escape');
+
+  useOnClickOutside(ref, () => {
+    setModalMember(null);
+  });
+
+  useEffect(() => {
+    if (esc) {
+      setModalMember(null);
+    }
+  }, [esc]);
+
+  const capitalMemberType =
+    member.memberType.toUpperCase()[0] + member.memberType.substring(1);
+
   return (
-    <Wrapper>
+    <Wrapper ref={ref}>
       <Header>
-        <CloseBtn href="#"></CloseBtn>
+        <CloseBtn href="#" onClick={() => setModalMember(null)}></CloseBtn>
       </Header>
       <ContentContainer>
         <Profile>
           <Avatar>
-            <Initials>MH</Initials>
+            <Initials>{member.initials}</Initials>
           </Avatar>
           <InfoContainer>
             <Title>
-              <TitleLink href="#">Matt Haffner</TitleLink>
+              <TitleLink href="#">{member.fullName}</TitleLink>
             </Title>
-            <Username>@matthaffner</Username>
+            <Username>@{member.username}</Username>
           </InfoContainer>
         </Profile>
         <PermissionChange href="#">
-          Change permissions...<PermissionLevel>(Admin)</PermissionLevel>
+          Change permissions...
+          <PermissionLevel>({capitalMemberType})</PermissionLevel>
         </PermissionChange>
       </ContentContainer>
     </Wrapper>
