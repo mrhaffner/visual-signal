@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import BoardMenu from '../../components/BoardMenu';
 import BoardTitleForm from '../../components/BoardTitleForm';
+import ProfileModal from '../../components/ProfileModal';
 import { BoardInterface } from '../../types';
 
 const Wrapper = styled.div`
@@ -147,6 +148,7 @@ const BoardHeader = ({ handleDelete, board, submitData }: Props) => (
       </InviteBtn>
     </LeftWrapper>
     <BoardMenu handleDelete={handleDelete} id={board._id} />
+    {/* <ProfileModal /> */}
   </Wrapper>
 );
 
