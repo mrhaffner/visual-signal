@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import useKeyPress from '../../hooks/useKeyPress';
 import useOnClickOutside from '../../hooks/useOnClickOutside';
-import { MemberInfo } from '../../types';
-import DeleteMemberContent from './DeleteMemberContent';
+import { MemberInfo, MemberType } from '../../types';
+import SecondaryModal from './SecondaryModal';
 import MainModalContent from './MainModalContent';
 import { Wrapper } from './styles';
 
@@ -11,6 +11,7 @@ interface Props {
   memberCount: number;
   adminCount: number;
   myId: string;
+  myMemberLevel: MemberType;
   setModalMember: (member: MemberInfo | null) => void;
 }
 
@@ -19,9 +20,11 @@ const ProfileModal = ({
   memberCount,
   myId,
   adminCount,
+  myMemberLevel,
   setModalMember,
 }: Props) => {
-  const [showDeleteContent, setShowDeleteContent] = useState(false);
+  const [modalContentType, setModalContentType] = useState('main');
+
   const ref = useRef(null);
   const esc = useKeyPress('Escape');
 
@@ -35,30 +38,30 @@ const ProfileModal = ({
     }
   }, [esc]);
 
-  const capitalMemberType = 'owner'
+  const capitalMyMemberType = 'owner'
     ? 'Admin'
-    : member.memberType.toUpperCase()[0] + member.memberType.substring(1);
+    : myMemberLevel[0] + myMemberLevel.substring(1);
 
   const removeText =
     member.idMember === myId ? 'Leave board...' : 'Remove from board...';
 
   return (
     <Wrapper ref={ref}>
-      {!showDeleteContent && (
+      {modalContentType === 'main' && (
         <MainModalContent
           member={member}
           setModalMember={setModalMember}
           memberCount={memberCount}
           removeText={removeText}
-          capitalMemberType={capitalMemberType}
-          memberLevel={member.memberType}
-          setShowDeleteContent={setShowDeleteContent}
+          capitalMyMemberType={capitalMyMemberType}
+          setModalContentType={setModalContentType}
         />
       )}
-      {showDeleteContent && (
-        <DeleteMemberContent
+      {modalContentType !== 'main' && (
+        <SecondaryModal
           setModalMember={setModalMember}
-          setShowDeleteContent={setShowDeleteContent}
+          modalContentType={modalContentType}
+          setModalContentType={setModalContentType}
           memberLevel={member.memberType}
           adminCount={adminCount}
         />

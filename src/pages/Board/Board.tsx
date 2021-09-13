@@ -40,9 +40,12 @@ const Board = () => {
   if (error) return <p>Error :(</p>;
 
   const adminCount = board.members.filter(
-    (x: any) => x.memberType !== 'normal',
+    (x: MemberInfo) => x.memberType !== 'normal',
   ).length;
-  console.log(adminCount);
+
+  const myMemberLevel = board.members.filter(
+    (x: MemberInfo) => x.idMember === member._id,
+  )[0].memberType;
 
   return (
     <>
@@ -90,6 +93,7 @@ const Board = () => {
           memberCount={board.members.length}
           adminCount={adminCount}
           myId={member._id}
+          myMemberLevel={myMemberLevel}
         />
       )}
     </>

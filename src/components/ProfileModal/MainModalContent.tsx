@@ -12,27 +12,25 @@ import {
   ListButton,
   PermissionLevel,
 } from './styles';
-import { MemberInfo, MemberType } from '../../types';
+import { MemberInfo } from '../../types';
 import { ThemeProvider } from 'styled-components';
 
 interface Props {
   member: MemberInfo;
   memberCount: number;
-  memberLevel: MemberType;
   removeText: string;
-  capitalMemberType: string;
+  capitalMyMemberType: string;
   setModalMember: (member: MemberInfo | null) => void;
-  setShowDeleteContent: (input: boolean) => void;
+  setModalContentType: (input: string) => void;
 }
 
 const MainModalContent = ({
   member,
   memberCount,
-  memberLevel,
-  capitalMemberType,
+  capitalMyMemberType,
   removeText,
   setModalMember,
-  setShowDeleteContent,
+  setModalContentType,
 }: Props) => {
   return (
     <>
@@ -53,12 +51,14 @@ const MainModalContent = ({
         </Profile>
         <ThemeProvider
           theme={
-            memberLevel === 'normal' ? { disabled: true } : { disabled: false }
+            capitalMyMemberType === 'normal'
+              ? { disabled: true }
+              : { disabled: false }
           }
         >
-          <ListButton onClick={() => setShowDeleteContent(true)}>
+          <ListButton onClick={() => setModalContentType('levelChange')}>
             Change permissions...
-            <PermissionLevel>({capitalMemberType})</PermissionLevel>
+            <PermissionLevel>({capitalMyMemberType})</PermissionLevel>
           </ListButton>
         </ThemeProvider>
         {member.memberType === 'admin' ||
