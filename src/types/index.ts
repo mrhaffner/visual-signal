@@ -33,3 +33,10 @@ export interface CardInterface extends CommonData {
   idList: string;
   pos: number;
 }
+
+// export enum ProfileModalContentType {
+//   main = 'main',
+//   levelChange = 'levelChange',
+//   leave = 'leave',
+//   remove = 'remove',
+// }

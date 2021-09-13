@@ -7,7 +7,7 @@ import {
   Initials,
   InfoContainer,
   Title,
-  TitleLink,
+  // TitleLink,
   StyledText,
   ListButton,
   PermissionLevel,
