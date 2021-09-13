@@ -277,3 +277,45 @@ export const StyledHr = styled.hr`
   padding: 0;
   width: 100%;
 `;
+
+export const StyledStandardText = styled.p`
+  margin: 0 0 8px;
+`;
+
+export const LeaveRemoveBtn = styled.input`
+  width: 100%;
+  background-color: #b04632;
+  border: none;
+  box-shadow: none;
+  color: #fff;
+  align-items: center;
+  border-radius: 3px;
+  box-sizing: border-box;
+  cursor: pointer;
+  display: inline-flex;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans,
+    Ubuntu, Droid Sans, Helvetica Neue, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  justify-content: center;
+  line-height: 20px;
+  padding: 6px 12px;
+  text-decoration: none;
+  transition-duration: 85ms;
+  transition-property: background-color, border-color, box-shadow;
+  transition-timing-function: ease;
+  text-align: center;
+  &:hover {
+    background-color: #933b27;
+    border: none;
+    box-shadow: none;
+    color: #fff;
+  }
+  &:active {
+    background-color: #6e2f1a;
+    border: none;
+    box-shadow: none;
+    color: #fff;
+    outline: 0;
+  }
+`;

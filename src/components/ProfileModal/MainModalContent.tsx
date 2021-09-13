@@ -18,7 +18,7 @@ import { ThemeProvider } from 'styled-components';
 interface Props {
   member: MemberInfo;
   memberCount: number;
-  removeText: string;
+  leaveOrRemove: string;
   capitalMyMemberType: string;
   setModalMember: (member: MemberInfo | null) => void;
   setModalContentType: (input: string) => void;
@@ -28,10 +28,12 @@ const MainModalContent = ({
   member,
   memberCount,
   capitalMyMemberType,
-  removeText,
+  leaveOrRemove,
   setModalMember,
   setModalContentType,
 }: Props) => {
+  const removeText =
+    leaveOrRemove === 'leave' ? 'Leave board...' : 'Remove from board...';
   return (
     <>
       <Header>
@@ -44,7 +46,8 @@ const MainModalContent = ({
           </Avatar>
           <InfoContainer>
             <Title>
-              <TitleLink>{member.fullName}</TitleLink>
+              {member.fullName}
+              {/* <TitleLink></TitleLink> */}
             </Title>
             <StyledText>@{member.username}</StyledText>
           </InfoContainer>
@@ -61,10 +64,13 @@ const MainModalContent = ({
             <PermissionLevel>({capitalMyMemberType})</PermissionLevel>
           </ListButton>
         </ThemeProvider>
-        {member.memberType === 'admin' ||
-          (member.memberType === 'owner' && memberCount > 1 && (
-            <ListButton>{removeText}</ListButton>
-          ))}
+        {(member.memberType === 'admin' || member.memberType === 'owner') &&
+          memberCount > 1 && (
+            // this will setModalContentType depending on whether leaving or removing
+            <ListButton onClick={() => setModalContentType(leaveOrRemove)}>
+              {removeText}
+            </ListButton>
+          )}
       </ContentContainer>
     </>
   );

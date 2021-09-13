@@ -8,6 +8,7 @@ import {
   BackButton,
   NewHeaderText,
 } from './styles';
+import LeaveRemoveContent from './LeaveRemoveContent';
 
 interface Props {
   memberLevel: MemberType;
@@ -17,7 +18,6 @@ interface Props {
   setModalContentType: (input: string) => void;
 }
 
-//update header text depending on type
 const SecondaryModal = ({
   memberLevel,
   adminCount,
@@ -39,6 +39,9 @@ const SecondaryModal = ({
             adminCount={adminCount}
             setModalContentType={setModalContentType}
           />
+        )}
+        {(modalContentType === 'leave' || modalContentType === 'remove') && (
+          <LeaveRemoveContent leaveOrRemove={modalContentType} />
         )}
       </ContentContainer>
     </>

@@ -42,8 +42,7 @@ const ProfileModal = ({
     ? 'Admin'
     : myMemberLevel[0] + myMemberLevel.substring(1);
 
-  const removeText =
-    member.idMember === myId ? 'Leave board...' : 'Remove from board...';
+  const leaveOrRemove = member.idMember === myId ? 'leave' : 'remove';
 
   return (
     <Wrapper ref={ref}>
@@ -52,7 +51,7 @@ const ProfileModal = ({
           member={member}
           setModalMember={setModalMember}
           memberCount={memberCount}
-          removeText={removeText}
+          leaveOrRemove={leaveOrRemove}
           capitalMyMemberType={capitalMyMemberType}
           setModalContentType={setModalContentType}
         />
