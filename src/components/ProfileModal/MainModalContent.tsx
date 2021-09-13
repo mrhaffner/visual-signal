@@ -20,6 +20,7 @@ interface Props {
   removeText: string;
   capitalMemberType: string;
   setModalMember: (member: MemberInfo | null) => void;
+  setShowDeleteContent: (input: boolean) => void;
 }
 
 const MainModalContent = ({
@@ -28,6 +29,7 @@ const MainModalContent = ({
   capitalMemberType,
   removeText,
   setModalMember,
+  setShowDeleteContent,
 }: Props) => {
   return (
     <>
@@ -46,7 +48,7 @@ const MainModalContent = ({
             <Username>@{member.username}</Username>
           </InfoContainer>
         </Profile>
-        <ListButton>
+        <ListButton onClick={() => setShowDeleteContent(true)}>
           Change permissions...
           <PermissionLevel>({capitalMemberType})</PermissionLevel>
         </ListButton>

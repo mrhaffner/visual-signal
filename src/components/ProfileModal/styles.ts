@@ -47,6 +47,7 @@ export const CloseBtn = styled.a`
   text-align: center;
   text-decoration: none;
   vertical-align: bottom;
+  cursor: pointer;
   &:before {
     content: '\\e91c';
   }
@@ -163,4 +164,89 @@ export const ListButton = styled.a`
 export const PermissionLevel = styled.span`
   color: #5e6c84;
   font-weight: 400;
+`;
+///////
+export const NewHeaderWrapper = styled.div`
+  height: 40px;
+  margin-bottom: 8px;
+  position: relative;
+  text-align: center;
+`;
+
+export const BackButton = styled.a`
+  color: #6b778c;
+  left: 0;
+  padding: 10px 8px 10px 12px;
+  position: absolute;
+  top: 0;
+  z-index: 2;
+  font-size: 16px;
+  height: 20px;
+  line-height: 20px;
+  width: 20px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: trellicons;
+  font-style: normal;
+  font-weight: 400;
+  text-align: center;
+  text-decoration: none;
+  vertical-align: bottom;
+  cursor: pointer;
+  &:before {
+    content: '\\e90a';
+  }
+  &:active,
+  :hover {
+    outline: none;
+  }
+  &:hover {
+    color: #172b4d;
+  }
+`;
+
+export const NewHeaderText = styled.span`
+  border-bottom: 1px solid #091e4221;
+  box-sizing: border-box;
+  color: #5e6c84;
+  display: block;
+  line-height: 40px;
+  margin: 0 12px;
+  overflow: hidden;
+  padding: 0 32px;
+  position: relative;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  z-index: 1;
+  text-align: center;
+`;
+
+export const ListBtnSubText = styled.span`
+  clear: both;
+  color: #5e6c84;
+  display: block;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  margin-top: 4px;
+`;
+
+export const CheckIcon = styled.span`
+  color: #42526e;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  display: inline-block;
+  font-family: trellicons;
+  font-style: normal;
+  font-weight: 400;
+  text-align: center;
+  text-decoration: none;
+  vertical-align: bottom;
+  font-size: 16px;
+  height: 20px;
+  line-height: 20px;
+  width: 20px;
+  &:before {
+    content: '\\e916';
+  }
 `;

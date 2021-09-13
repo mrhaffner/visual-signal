@@ -1,7 +1,9 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import useKeyPress from '../../hooks/useKeyPress';
 import useOnClickOutside from '../../hooks/useOnClickOutside';
+import useToggle from '../../hooks/useToggle';
 import { MemberInfo } from '../../types';
+import DeleteMemberContent from './DeleteMemberContent';
 import MainModalContent from './MainModalContent';
 import { Wrapper } from './styles';
 
@@ -13,6 +15,7 @@ interface Props {
 }
 
 const ProfileModal = ({ member, memberCount, myId, setModalMember }: Props) => {
+  const [showDeleteContent, setShowDeleteContent] = useState(false);
   const ref = useRef(null);
   const esc = useKeyPress('Escape');
 
@@ -35,13 +38,22 @@ const ProfileModal = ({ member, memberCount, myId, setModalMember }: Props) => {
 
   return (
     <Wrapper ref={ref}>
-      <MainModalContent
-        member={member}
-        setModalMember={setModalMember}
-        memberCount={memberCount}
-        removeText={removeText}
-        capitalMemberType={capitalMemberType}
-      />
+      {!showDeleteContent && (
+        <MainModalContent
+          member={member}
+          setModalMember={setModalMember}
+          memberCount={memberCount}
+          removeText={removeText}
+          capitalMemberType={capitalMemberType}
+          setShowDeleteContent={setShowDeleteContent}
+        />
+      )}
+      {showDeleteContent && (
+        <DeleteMemberContent
+          setModalMember={setModalMember}
+          setShowDeleteContent={setShowDeleteContent}
+        />
+      )}
     </Wrapper>
   );
 };
