@@ -43,6 +43,7 @@ const InvitePopover = ({ toggleInvitePopover }: Props) => {
     }
   }, [watchInput]);
 
+  //add email regex
   const onSubmit = handleSubmit((data) => {});
 
   return (
@@ -55,10 +56,12 @@ const InvitePopover = ({ toggleInvitePopover }: Props) => {
         <MainContent>
           {/* needs to autofocus */}
           <MemberInput
-            placeholder="Email address or name"
+            // placeholder="Email address or name"
+            placeholder="Email address"
             maxLength={512}
             autoComplete="off"
-            type="text"
+            // type="text"
+            type="email"
             autoFocus
             {...register('input', { required: true })}
           ></MemberInput>

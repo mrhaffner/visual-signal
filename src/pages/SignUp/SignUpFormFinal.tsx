@@ -20,6 +20,8 @@ const SignUpFormFinal = ({ email }: any) => {
   const { register, handleSubmit } = useForm();
 
   const onSubmit = (inputData: any) => {
+    const token = localStorage.getItem('trello-member-token');
+    if (token) localStorage.removeItem('trello-member-token');
     const { fullName, email, password } = inputData;
     const memberObject = { fullName, email, password };
     signUp({ variables: { memberInput: memberObject } });
