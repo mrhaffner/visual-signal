@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
-import useKeypress from '../hooks/useKeyPress';
-import useOnClickOutside from '../hooks/useOnClickOutside';
+import useKeypress from '../../hooks/useKeyPress';
+import useOnClickOutside from '../../hooks/useOnClickOutside';
 import styled from 'styled-components';
 
 const Wrapper = styled.span`

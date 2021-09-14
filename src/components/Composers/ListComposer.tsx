@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
-import useOnClickOutside from '../hooks/useOnClickOutside';
-import useKeypress from '../hooks/useKeyPress';
+import useOnClickOutside from '../../hooks/useOnClickOutside';
+import useKeypress from '../../hooks/useKeyPress';
 import React, { useRef, useEffect } from 'react';
 
 const ListWrapper = styled.div`

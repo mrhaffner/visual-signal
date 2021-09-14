@@ -2,8 +2,8 @@ import styled from 'styled-components';
 import { Draggable } from 'react-beautiful-dnd';
 import { CardInterface } from '../../types';
 import useBoardContext from '../../hooks/useBoardContext';
-import DeleteCardButton from '../../components/DeleteCardButton';
-import InlineTextEditCard from '../../components/InlineTextEditCard';
+import DeleteCardButton from '../../components/Buttons/DeleteCardButton';
+import InlineTextEditCard from '../../components/Inputs/InlineTextEditCard';
 import useHover from '../../hooks/useHover';
 
 interface BoardItemStylesProps {

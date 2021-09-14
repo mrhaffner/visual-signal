@@ -1,9 +1,9 @@
 import styled from 'styled-components';
-import EmailInput from '../../components/EmailInput';
+import EmailInput from '../../components/Inputs/EmailInput';
 import { useForm } from 'react-hook-form';
-import NameInput from '../../components/NameInput';
-import BlueFormButton from '../../components/BlueFormButton';
-import PasswordRegisterInput from '../../components/PasswordRegisterInput';
+import NameInput from '../../components/Inputs/NameInput';
+import BlueFormButton from '../../components/Buttons/BlueFormButton';
+import PasswordRegisterInput from '../../components/Inputs/PasswordRegisterInput';
 import useMemberContext from '../../hooks/useMemberContext';
 
 const TOS = styled.p`

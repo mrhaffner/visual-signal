@@ -1,8 +1,8 @@
 import styled from 'styled-components';
-import { ListInterface } from '../types';
+import { ListInterface } from '../../types';
 import { useForm } from 'react-hook-form';
-import useOnClickOutside from '../hooks/useOnClickOutside';
-import useKeypress from '../hooks/useKeyPress';
+import useOnClickOutside from '../../hooks/useOnClickOutside';
+import useKeypress from '../../hooks/useKeyPress';
 import { useRef, useEffect } from 'react';
 
 const CardComposerContainer = styled.div`

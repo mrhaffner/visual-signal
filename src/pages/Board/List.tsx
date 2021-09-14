@@ -3,11 +3,11 @@ import styled from 'styled-components';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 import { ListInterface } from '../../types';
 import useBoardContext from '../../hooks/useBoardContext';
-import DeleteListButton from '../../components/DeleteListButton';
-import OpenCardComposer from '../../components/OpenCardComposer';
-import CardComposer from '../../components/CardComposer';
+import DeleteListButton from '../../components/Buttons/DeleteListButton';
+import OpenCardComposer from '../../components/Composers/OpenCardComposer';
+import CardComposer from '../../components/Composers/CardComposer';
 import { useState } from 'react';
-import ListTitleInput from '../../components/ListTitleInput';
+import ListTitleInput from '../../components/Inputs/ListTitleInput';
 
 const Wrapper = styled.div`
   background-color: #ebecf0;

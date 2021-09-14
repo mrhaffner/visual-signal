@@ -1,6 +1,6 @@
-import EmailInput from '../../components/EmailInput';
-import GreenFormButton from '../../components/GreenFormButton';
-import PasswordInput from '../../components/PasswordInput';
+import EmailInput from '../../components/Inputs/EmailInput';
+import GreenFormButton from '../../components/Buttons/GreenFormButton';
+import PasswordInput from '../../components/Inputs/PasswordInput';
 import { useForm } from 'react-hook-form';
 import useMemberContext from '../../hooks/useMemberContext';
 

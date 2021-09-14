@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import EmailInput from '../../components/EmailInput';
-import GreenFormButton from '../../components/GreenFormButton';
+import EmailInput from '../../components/Inputs/EmailInput';
+import GreenFormButton from '../../components/Buttons/GreenFormButton';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';

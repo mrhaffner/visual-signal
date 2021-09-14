@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { useState, useEffect, useRef } from 'react';
-import useOnClickOutside from '../hooks/useOnClickOutside';
-import useKeypress from '../hooks/useKeyPress';
+import useOnClickOutside from '../../hooks/useOnClickOutside';
+import useKeypress from '../../hooks/useKeyPress';
 import styled from 'styled-components';
 
 const TitleContainer = styled.div`

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import BoardMenu from '../../components/BoardMenu';
-import BoardTitleForm from '../../components/BoardTitleForm';
+import BoardMenu from './BoardMenu';
+import BoardTitleForm from '../../components/Inputs/BoardTitleForm';
 import { BoardInterface, MemberInfo } from '../../types';
 
 const Wrapper = styled.div`
