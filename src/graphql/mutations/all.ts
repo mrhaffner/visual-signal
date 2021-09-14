@@ -137,3 +137,11 @@ export const LOGIN = gql`
     }
   }
 `;
+
+export const INVITE_MEMBER = gql`
+  mutation InviteMember($inviteInput: InviteMemberInput!) {
+    inviteMember(input: $inviteInput) {
+      _id
+    }
+  }
+`;

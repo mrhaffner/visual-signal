@@ -100,7 +100,10 @@ const Board = () => {
         />
       )}
       {showInvitePopover && (
-        <InvitePopover toggleInvitePopover={toggleInvitePopover} />
+        <InvitePopover
+          toggleInvitePopover={toggleInvitePopover}
+          boardId={board._id}
+        />
       )}
     </>
   );

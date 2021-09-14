@@ -1,5 +1,7 @@
+import { useMutation } from '@apollo/client';
 import { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { INVITE_MEMBER } from '../../../graphql/mutations/all';
 import useKeyPress from '../../../hooks/useKeyPress';
 import useOnClickOutside from '../../../hooks/useOnClickOutside';
 import { CloseBtn } from '../sharedStyles';
@@ -14,10 +16,13 @@ import {
 } from './style';
 
 interface Props {
+  boardId: string;
   toggleInvitePopover: () => void;
 }
 
-const InvitePopover = ({ toggleInvitePopover }: Props) => {
+const InvitePopover = ({ toggleInvitePopover, boardId }: Props) => {
+  const [invite] = useMutation(INVITE_MEMBER);
+
   const { register, handleSubmit, watch } = useForm();
   const watchInput = watch('input');
 
@@ -35,8 +40,10 @@ const InvitePopover = ({ toggleInvitePopover }: Props) => {
     }
   }, [esc]);
 
+  const regex = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/i;
+
   useEffect(() => {
-    if (watchInput) {
+    if (regex.test(watchInput) === true) {
       setDisabled(false);
     } else {
       setDisabled(true);
@@ -44,7 +51,10 @@ const InvitePopover = ({ toggleInvitePopover }: Props) => {
   }, [watchInput]);
 
   //add email regex
-  const onSubmit = handleSubmit((data) => {});
+  const onSubmit = handleSubmit((data) => {
+    invite({ variables: { inviteInput: { email: data.input, boardId } } });
+    toggleInvitePopover();
+  });
 
   return (
     <Wrapper ref={ref}>
@@ -63,7 +73,10 @@ const InvitePopover = ({ toggleInvitePopover }: Props) => {
             // type="text"
             type="email"
             autoFocus
-            {...register('input', { required: true })}
+            {...register('input', {
+              required: true,
+              pattern: regex,
+            })}
           ></MemberInput>
           <SendBtn disabled={disabled} onClick={onSubmit}>
             Send invitation
