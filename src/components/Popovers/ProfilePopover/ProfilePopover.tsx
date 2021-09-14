@@ -38,9 +38,11 @@ const ProfilePopover = ({
     }
   }, [esc]);
 
-  const capitalMyMemberType = 'owner'
-    ? 'Admin'
-    : myMemberLevel[0] + myMemberLevel.substring(1);
+  // const capitalMyMemberType = 'owner'
+  //   ? 'Admin'
+  //   : myMemberLevel[0] + myMemberLevel.substring(1);
+
+  const capitalMyMemberType = myMemberLevel === 'normal' ? 'Normal' : 'Admin';
 
   const leaveOrRemove = member.idMember === myId ? 'leave' : 'remove';
 
@@ -48,6 +50,7 @@ const ProfilePopover = ({
     <Wrapper ref={ref}>
       {popoverContentType === 'main' && (
         <MainPopoverContent
+          myId={myId}
           member={member}
           setPopoverMember={setPopoverMember}
           memberCount={memberCount}

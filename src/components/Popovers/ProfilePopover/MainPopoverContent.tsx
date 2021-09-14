@@ -16,6 +16,7 @@ import { ThemeProvider } from 'styled-components';
 import { CloseBtn } from '../sharedStyles';
 
 interface Props {
+  myId: string;
   member: MemberInfo;
   memberCount: number;
   leaveOrRemove: string;
@@ -25,6 +26,7 @@ interface Props {
 }
 
 const MainPopoverContent = ({
+  myId,
   member,
   memberCount,
   capitalMyMemberType,
@@ -54,7 +56,7 @@ const MainPopoverContent = ({
         </Profile>
         <ThemeProvider
           theme={
-            capitalMyMemberType === 'normal'
+            capitalMyMemberType === 'Normal'
               ? { disabled: true }
               : { disabled: false }
           }
@@ -64,7 +66,8 @@ const MainPopoverContent = ({
             <PermissionLevel>({capitalMyMemberType})</PermissionLevel>
           </ListButton>
         </ThemeProvider>
-        {(member.memberType === 'admin' || member.memberType === 'owner') &&
+        {/* {(member.memberType === 'admin' || member.memberType === 'owner') && */}
+        {(capitalMyMemberType === 'Admin' || member.idMember === myId) &&
           memberCount > 1 && (
             // this will setPopoverContentType depending on whether leaving or removing
             <ListButton onClick={() => setPopoverContentType(leaveOrRemove)}>
