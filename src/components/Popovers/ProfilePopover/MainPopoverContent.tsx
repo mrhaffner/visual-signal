@@ -37,6 +37,11 @@ const MainPopoverContent = ({
   setPopoverMember,
   setPopoverContentType,
 }: Props) => {
+  const handlePermissionChange = () => {
+    if (capitalMyMemberType === 'Admin') {
+      setPopoverContentType('levelChange');
+    }
+  };
   return (
     <>
       <Header>
@@ -62,12 +67,12 @@ const MainPopoverContent = ({
               : { disabled: false }
           }
         >
-          {/* neeed to disable clicking when disabled.... */}
-          <ListButton onClick={() => setPopoverContentType('levelChange')}>
+          <ListButton onClick={() => handlePermissionChange()}>
             Change permissions...
             <PermissionLevel>({capitalMyMemberType})</PermissionLevel>
           </ListButton>
         </ThemeProvider>
+        {/* perhaps this should be it's own component HandleLeaveRemove */}
         {member.idMember !== myId && capitalMyMemberType === 'Admin' && (
           <ListButton onClick={() => setPopoverContentType(leaveOrRemove)}>
             Remove from board...
