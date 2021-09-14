@@ -25,7 +25,11 @@ const ChangeMemberContent = ({
     <>
       <ThemeProvider
         theme={
-          memberLevel === 'normal' ? { disabled: false } : { disabled: true }
+          memberLevel === 'normal'
+            ? { disabled: false }
+            : adminCount > 1
+            ? { disabled: true }
+            : { disabled: false }
         }
       >
         {/* buttons don't work if admin count === 1 */}
@@ -40,7 +44,11 @@ const ChangeMemberContent = ({
       </ThemeProvider>
       <ThemeProvider
         theme={
-          memberLevel === 'normal' ? { disabled: true } : { disabled: false }
+          memberLevel === 'normal'
+            ? { disabled: true }
+            : adminCount > 1
+            ? { disabled: false }
+            : { disabled: true }
         }
       >
         <ListButton>
@@ -51,16 +59,16 @@ const ChangeMemberContent = ({
           </ListBtnSubText>
         </ListButton>
       </ThemeProvider>
-      {adminCount === 1 && (
-        //if this is the case, the Disabled list button should be inverted!
-        //!!!!!
-        <>
-          <StyledHr />
-          <StyledText>
-            You can’t change roles because there must be at least one admin.
-          </StyledText>
-        </>
-      )}
+      {/* should only run for the person who is the only admin, not for others */}
+      {(adminCount === 1 && memberLevel === 'admin') ||
+        (memberLevel === 'owner' && (
+          <>
+            <StyledHr />
+            <StyledText>
+              You can’t change roles because there must be at least one admin.
+            </StyledText>
+          </>
+        ))}
     </>
   );
 };
