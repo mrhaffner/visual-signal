@@ -142,7 +142,7 @@ const BoardHeader = ({
         {board.members.map((x, index): any => (
           <Avatar
             tabIndex={0}
-            key={board._id}
+            key={x.idMember}
             index={board.members.map.length - index}
             onClick={() => setPopoverMember(x)}
           >
