@@ -21,7 +21,6 @@ interface Props {
   member: MemberInfo;
   memberCount: number;
   adminCount: number;
-
   leaveOrRemove: string;
   capitalMyMemberType: string;
   setPopoverMember: (member: MemberInfo | null) => void;
@@ -38,8 +37,6 @@ const MainPopoverContent = ({
   setPopoverMember,
   setPopoverContentType,
 }: Props) => {
-  const removeText =
-    leaveOrRemove === 'leave' ? 'Leave board...' : 'Remove from board...';
   return (
     <>
       <Header>
@@ -65,30 +62,35 @@ const MainPopoverContent = ({
               : { disabled: false }
           }
         >
+          {/* neeed to disable clicking when disabled.... */}
           <ListButton onClick={() => setPopoverContentType('levelChange')}>
             Change permissions...
             <PermissionLevel>({capitalMyMemberType})</PermissionLevel>
           </ListButton>
         </ThemeProvider>
-        {/* {(member.memberType === 'admin' || member.memberType === 'owner') && */}
-        {((capitalMyMemberType === 'Admin' && adminCount > 1) ||
-          member.idMember === myId) &&
-          memberCount > 1 && (
-            // this will setPopoverContentType depending on whether leaving or removing
-            <ListButton onClick={() => setPopoverContentType(leaveOrRemove)}>
-              {removeText}
-            </ListButton>
-          )}
-        {capitalMyMemberType === 'Admin' && adminCount === 1 && (
-          <>
-            <StyledHr />
-            <StyledText>
-              You can’t leave because you are the only admin. To make another
-              user an admin, click their avatar, select “Change permissions…”,
-              and select “Admin”.
-            </StyledText>
-          </>
+        {member.idMember !== myId && capitalMyMemberType === 'Admin' && (
+          <ListButton onClick={() => setPopoverContentType(leaveOrRemove)}>
+            Remove from board...
+          </ListButton>
         )}
+        {member.idMember === myId && memberCount > 1 && (
+          <ListButton onClick={() => setPopoverContentType(leaveOrRemove)}>
+            Leave board...
+          </ListButton>
+        )}
+        {capitalMyMemberType === 'Admin' &&
+          adminCount === 1 &&
+          member.idMember === myId &&
+          memberCount > 1 && (
+            <>
+              <StyledHr />
+              <StyledText>
+                You can’t leave because you are the only admin. To make another
+                user an admin, click their avatar, select “Change permissions…”,
+                and select “Admin”.
+              </StyledText>
+            </>
+          )}
       </ContentContainer>
     </>
   );
