@@ -99,7 +99,9 @@ const Board = () => {
           myMemberLevel={myMemberLevel}
         />
       )}
-      {showInvitePopover && <InvitePopover />}
+      {showInvitePopover && (
+        <InvitePopover toggleInvitePopover={toggleInvitePopover} />
+      )}
     </>
   );
 };

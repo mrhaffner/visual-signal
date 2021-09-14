@@ -125,7 +125,7 @@ export const MemberInput = styled.input`
   border: 2px solid #dfe1e6;
   box-sizing: border-box;
   border-radius: 3px;
-  height: 44px;
+  height: 40px;
   /* transition: background-color 0.2s ease-in-out 0s,
     border-color 0.2s ease-in-out 0s; */
   background: #edeff0;
