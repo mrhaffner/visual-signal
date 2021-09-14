@@ -52,6 +52,8 @@ const ChangeMemberContent = ({
         </ListButton>
       </ThemeProvider>
       {adminCount === 1 && (
+        //if this is the case, the Disabled list button should be inverted!
+        //!!!!!
         <>
           <StyledHr />
           <StyledText>
