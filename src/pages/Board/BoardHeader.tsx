@@ -147,8 +147,7 @@ const BoardHeader = ({
             onClick={() => setPopoverMember(x)}
           >
             <Initials>{x.initials}</Initials>
-            {x.memberType === 'admin' ||
-              (x.memberType === 'owner' && <AdminBadge></AdminBadge>)}
+            {x.memberType === 'admin' && <AdminBadge></AdminBadge>}
           </Avatar>
         ))}
       </FacePile>
