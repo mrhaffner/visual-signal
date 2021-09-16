@@ -16,6 +16,7 @@ interface Props {
   popoverContentType: string;
   setPopoverMember: (member: MemberInfo | null) => void;
   setPopoverContentType: (input: string) => void;
+  handleRemove: () => void;
 }
 
 const SecondaryPopover = ({
@@ -24,6 +25,7 @@ const SecondaryPopover = ({
   popoverContentType,
   setPopoverMember,
   setPopoverContentType,
+  handleRemove,
 }: Props) => {
   return (
     <>
@@ -42,7 +44,10 @@ const SecondaryPopover = ({
         )}
         {(popoverContentType === 'leave' ||
           popoverContentType === 'remove') && (
-          <LeaveRemoveContent leaveOrRemove={popoverContentType} />
+          <LeaveRemoveContent
+            leaveOrRemove={popoverContentType}
+            handleRemove={handleRemove}
+          />
         )}
       </ContentContainer>
     </>

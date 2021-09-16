@@ -97,6 +97,7 @@ const Board = () => {
           adminCount={adminCount}
           myId={member._id}
           myMemberLevel={myMemberLevel}
+          boardId={board._id}
         />
       )}
       {showInvitePopover && (

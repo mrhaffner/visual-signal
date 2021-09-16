@@ -145,3 +145,9 @@ export const INVITE_MEMBER = gql`
     }
   }
 `;
+
+export const REMOVE_MEMBER_FROM_BOARD = gql`
+  mutation RemoveMemberFromBoard($removeInput: RemoveMemberInput!) {
+    removeMemberFromBoard(input: $removeInput)
+  }
+`;
