@@ -11,21 +11,20 @@ import {
 
 interface Props {
   memberLevel: MemberType;
-  adminCount: number;
+  onlyOneAdmin: boolean;
   handleMemberLevelUpdate: (input: string) => void;
 }
 
 const ChangeMemberContent = ({
   memberLevel,
-  adminCount,
+  onlyOneAdmin,
   handleMemberLevelUpdate,
 }: Props) => {
   const adminDisabled =
-    memberLevel === 'normal' ? false : adminCount > 1 ? true : false;
+    memberLevel === 'normal' ? false : onlyOneAdmin ? false : true;
   const normalDisabled =
-    memberLevel === 'normal' ? true : adminCount > 1 ? false : true;
+    memberLevel === 'normal' ? true : onlyOneAdmin ? true : false;
   const doNothing = () => {};
-  const onlyOneAdmin = adminCount === 1 && memberLevel === 'admin';
 
   return (
     <>

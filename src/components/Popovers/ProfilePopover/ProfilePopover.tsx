@@ -76,6 +76,8 @@ const ProfilePopover = ({
     setPopoverMember(null);
   };
 
+  const onlyOneAdmin = adminCount === 1 && member.memberType === 'admin';
+
   return (
     <Wrapper ref={ref}>
       {popoverContentType === 'main' && (
@@ -87,7 +89,7 @@ const ProfilePopover = ({
           leaveOrRemove={leaveOrRemove}
           capitalMyMemberType={capitalMyMemberType}
           setPopoverContentType={setPopoverContentType}
-          adminCount={adminCount}
+          onlyOneAdmin={onlyOneAdmin}
         />
       )}
       {popoverContentType !== 'main' && (
@@ -96,7 +98,7 @@ const ProfilePopover = ({
           popoverContentType={popoverContentType}
           setPopoverContentType={setPopoverContentType}
           memberLevel={member.memberType}
-          adminCount={adminCount}
+          onlyOneAdmin={onlyOneAdmin}
           handleRemove={handleRemove}
           handleMemberLevelUpdate={handleMemberLevelUpdate}
         />

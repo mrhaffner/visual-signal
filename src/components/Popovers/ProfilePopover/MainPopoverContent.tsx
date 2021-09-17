@@ -20,7 +20,7 @@ interface Props {
   myId: string;
   member: MemberInfo;
   memberCount: number;
-  adminCount: number;
+  onlyOneAdmin: boolean;
   leaveOrRemove: string;
   capitalMyMemberType: string;
   setPopoverMember: (member: MemberInfo | null) => void;
@@ -31,7 +31,7 @@ const MainPopoverContent = ({
   myId,
   member,
   memberCount,
-  adminCount,
+  onlyOneAdmin,
   capitalMyMemberType,
   leaveOrRemove,
   setPopoverMember,
@@ -42,6 +42,9 @@ const MainPopoverContent = ({
       setPopoverContentType('levelChange');
     }
   };
+  const iAmNotOnlyAdmin =
+    capitalMyMemberType !== 'Admin' ? true : onlyOneAdmin ? false : true;
+
   return (
     <>
       <Header>
@@ -78,15 +81,14 @@ const MainPopoverContent = ({
             Remove from board...
           </ListButton>
         )}
-        {member.idMember === myId && memberCount > 1 && (
+        {member.idMember === myId && memberCount > 1 && iAmNotOnlyAdmin && (
           <ListButton onClick={() => setPopoverContentType(leaveOrRemove)}>
             Leave board...
           </ListButton>
         )}
         {capitalMyMemberType === 'Admin' &&
-          adminCount === 1 &&
-          member.idMember === myId &&
-          memberCount > 1 && (
+          onlyOneAdmin &&
+          member.idMember === myId && (
             <>
               <StyledHr />
               <StyledText>

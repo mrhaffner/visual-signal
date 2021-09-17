@@ -12,7 +12,7 @@ import { CloseBtn } from '../sharedStyles';
 
 interface Props {
   memberLevel: MemberType;
-  adminCount: number;
+  onlyOneAdmin: boolean;
   popoverContentType: string;
   setPopoverMember: (member: MemberInfo | null) => void;
   setPopoverContentType: (input: string) => void;
@@ -22,7 +22,7 @@ interface Props {
 
 const SecondaryPopover = ({
   memberLevel,
-  adminCount,
+  onlyOneAdmin,
   popoverContentType,
   setPopoverMember,
   setPopoverContentType,
@@ -40,7 +40,7 @@ const SecondaryPopover = ({
         {popoverContentType === 'levelChange' && (
           <ChangeMemberContent
             memberLevel={memberLevel}
-            adminCount={adminCount}
+            onlyOneAdmin={onlyOneAdmin}
             handleMemberLevelUpdate={handleMemberLevelUpdate}
           />
         )}
