@@ -151,3 +151,9 @@ export const REMOVE_MEMBER_FROM_BOARD = gql`
     removeMemberFromBoard(input: $removeInput)
   }
 `;
+
+export const UPDATE_MEMBER_LEVEL_BOARD = gql`
+  mutation UpdateMemberLevelBoard($updateInput: UpdateMemberLevelInput!) {
+    updateMemberLevelBoard(input: $updateInput)
+  }
+`;

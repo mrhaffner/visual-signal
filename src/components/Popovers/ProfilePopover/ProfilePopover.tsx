@@ -6,7 +6,10 @@ import SecondaryPopover from './SecondaryContent';
 import MainPopoverContent from './MainPopoverContent';
 import { Wrapper } from './style';
 import { useMutation } from '@apollo/client';
-import { REMOVE_MEMBER_FROM_BOARD } from '../../../graphql/mutations/all';
+import {
+  REMOVE_MEMBER_FROM_BOARD,
+  UPDATE_MEMBER_LEVEL_BOARD,
+} from '../../../graphql/mutations/all';
 
 interface Props {
   member: MemberInfo;
@@ -61,6 +64,18 @@ const ProfilePopover = ({
     setPopoverMember(null);
   };
 
+  const [updateMemberLevel] = useMutation(UPDATE_MEMBER_LEVEL_BOARD);
+
+  const handleMemberLevelUpdate = (newLevel: string) => {
+    const inputObj = {
+      memberId: member.idMember,
+      boardId,
+      newMemberLevel: newLevel,
+    };
+    updateMemberLevel({ variables: { updateInput: inputObj } });
+    setPopoverMember(null);
+  };
+
   return (
     <Wrapper ref={ref}>
       {popoverContentType === 'main' && (
@@ -83,6 +98,7 @@ const ProfilePopover = ({
           memberLevel={member.memberType}
           adminCount={adminCount}
           handleRemove={handleRemove}
+          handleMemberLevelUpdate={handleMemberLevelUpdate}
         />
       )}
     </Wrapper>

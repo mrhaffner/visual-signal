@@ -17,6 +17,7 @@ interface Props {
   setPopoverMember: (member: MemberInfo | null) => void;
   setPopoverContentType: (input: string) => void;
   handleRemove: () => void;
+  handleMemberLevelUpdate: (input: string) => void;
 }
 
 const SecondaryPopover = ({
@@ -26,6 +27,7 @@ const SecondaryPopover = ({
   setPopoverMember,
   setPopoverContentType,
   handleRemove,
+  handleMemberLevelUpdate,
 }: Props) => {
   return (
     <>
@@ -39,7 +41,7 @@ const SecondaryPopover = ({
           <ChangeMemberContent
             memberLevel={memberLevel}
             adminCount={adminCount}
-            setPopoverContentType={setPopoverContentType}
+            handleMemberLevelUpdate={handleMemberLevelUpdate}
           />
         )}
         {(popoverContentType === 'leave' ||
