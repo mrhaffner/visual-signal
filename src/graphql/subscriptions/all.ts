@@ -9,6 +9,9 @@ export const BOARD_SUBSCRIPTION = gql`
       members {
         idMember
         memberType
+        fullName
+        username
+        initials
       }
       lists {
         _id

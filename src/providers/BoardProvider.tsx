@@ -50,7 +50,6 @@ const BoardProvider = ({ children }: Props) => {
     updateQuery: (prev, { subscriptionData }) => {
       if (!subscriptionData.data.newBoard) return prev;
       const newBoard = subscriptionData.data.newBoard;
-
       return Object.assign({}, prev, {
         getBoardById: newBoard, //?
       });
