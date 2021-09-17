@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import ListList from './ListList';
 import useBoardContext from '../../hooks/useBoardContext';
 import OpenListComposer from '../../components/Composers/OpenListComposer';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ListComposer from '../../components/Composers/ListComposer';
 import BoardHeader from './BoardHeader';
 import NavBar from '../../components/NavBar';
@@ -13,6 +13,7 @@ import useToggle from '../../hooks/useToggle';
 import ProfilePopover from '../../components/Popovers/ProfilePopover';
 import { MemberInfo } from '../../types';
 import InvitePopover from '../../components/Popovers/InvitePopover';
+import { useHistory } from 'react-router';
 
 const Wrapper = styled.div`
   display: flex;
@@ -32,22 +33,30 @@ const Board = () => {
   } = useBoardContext();
 
   const { member, logOut } = useMemberContext();
-
+  let history = useHistory();
   const [showComposer, setShowComposer] = useState(false);
   const [showMenuPopover, toggleMenuPopover] = useToggle();
   const [showInvitePopover, toggleInvitePopover] = useToggle();
   const [popoverMember, setPopoverMember] = useState<MemberInfo | null>(null);
 
+  useEffect(() => {
+    if (board) {
+      if (memberLevel.length === 0) {
+        history.push('/boards');
+      }
+    }
+  });
+
   if (loading || board === null) return <></>;
   if (error) return <p>Error :(</p>;
+
+  const memberLevel = board.members.filter(
+    (x: MemberInfo) => x.idMember === member._id,
+  );
 
   const adminCount = board.members.filter(
     (x: MemberInfo) => x.memberType !== 'normal',
   ).length;
-
-  const myMemberLevel = board.members.filter(
-    (x: MemberInfo) => x.idMember === member._id,
-  )[0].memberType;
 
   return (
     <>
@@ -96,7 +105,7 @@ const Board = () => {
           memberCount={board.members.length}
           adminCount={adminCount}
           myId={member._id}
-          myMemberLevel={myMemberLevel}
+          myMemberLevel={memberLevel[0].memberType}
           boardId={board._id}
         />
       )}
