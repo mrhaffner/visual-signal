@@ -29,15 +29,6 @@ export const BOARD_UPDATE_SUBSCRIPTION = gql`
   }
 `;
 
-export const BOARD_LIST_SUBSCRIPTION = gql`
-  subscription BoardListSubscription($memberId: ID!) {
-    newBoardList(memberId: $memberId) {
-      _id
-      name
-    }
-  }
-`;
-
 export const BOARD_DELETED_SUBSCRIPTION = gql`
   subscription BoardDeletedSubscription($idBoards: [ID!]!) {
     boardDeleted(idBoards: $idBoards)
@@ -49,6 +40,18 @@ export const REMOVE_FROM_BOARD_SUBSCRIPTION = gql`
     removeFromBoard {
       boardId
       memberId
+    }
+  }
+`;
+
+export const NEW_BOARD = gql`
+  subscription NewBoard {
+    newBoard {
+      memberId
+      boardObj {
+        _id
+        name
+      }
     }
   }
 `;

@@ -3,9 +3,9 @@ import { useQuery } from '@apollo/client';
 import { GET_MY_BOARDS } from '../../graphql/queries/all';
 import {
   BOARD_UPDATE_SUBSCRIPTION,
-  BOARD_LIST_SUBSCRIPTION,
   BOARD_DELETED_SUBSCRIPTION,
   REMOVE_FROM_BOARD_SUBSCRIPTION,
+  NEW_BOARD,
 } from '../../graphql/subscriptions/all';
 import { BoardInterface } from '../../types';
 import BoardList from './BoardList';
@@ -70,20 +70,6 @@ const Boards = () => {
     },
   });
 
-  //can get rid of ??
-  subscribeToMore({
-    document: BOARD_LIST_SUBSCRIPTION,
-    variables: { memberId: member._id },
-    updateQuery: (prev, { subscriptionData }) => {
-      if (!subscriptionData.data.newBoardList) return prev;
-      const newBoardList = subscriptionData.data.newBoardList;
-
-      return Object.assign({}, prev, {
-        getMyBoards: newBoardList, //?
-      });
-    },
-  });
-
   subscribeToMore({
     document: BOARD_DELETED_SUBSCRIPTION,
     variables: { idBoards: member.idBoards },
@@ -110,6 +96,26 @@ const Boards = () => {
 
       return Object.assign({}, prev, {
         getMyBoards: filtered, //?
+      });
+    },
+  });
+
+  subscribeToMore({
+    document: NEW_BOARD,
+    updateQuery: (prev, { subscriptionData }) => {
+      if (!subscriptionData.data.newBoard) return prev;
+
+      const board = prev.getMyBoards.filter(
+        (x: any) => x._id === subscriptionData.data.newBoard.boardObj._id,
+      );
+      if (board.length) return prev;
+      const newBoardList = [
+        ...prev.getMyBoards,
+        subscriptionData.data.newBoard.boardObj,
+      ];
+
+      return Object.assign({}, prev, {
+        getMyBoards: newBoardList, //?
       });
     },
   });
