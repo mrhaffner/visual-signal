@@ -29,6 +29,7 @@ import {
 import {
   BOARD_UPDATE_SUBSCRIPTION,
   BOARD_DELETED_SUBSCRIPTION,
+  REMOVE_FROM_BOARD_SUBSCRIPTION,
 } from '../graphql/subscriptions/all';
 import { useParams, useHistory } from 'react-router-dom';
 
@@ -50,6 +51,7 @@ const BoardProvider = ({ children }: Props) => {
     if (data && data.getBoardById[0]) {
       setBoard(data.getBoardById[0]); //!!!
     } else if (data) {
+      //force refetch?
       history.push('/boards');
     }
   }, [data]);
@@ -61,7 +63,6 @@ const BoardProvider = ({ children }: Props) => {
       const updatedBoard = subscriptionData.data.boardUpdated;
 
       if (boardId !== updatedBoard._id) return prev;
-
       return Object.assign({}, prev, {
         getBoardById: updatedBoard, //?
       });
@@ -73,6 +74,17 @@ const BoardProvider = ({ children }: Props) => {
     variables: { idBoards: [boardId] },
     updateQuery: (prev, { subscriptionData }) => {
       if (!subscriptionData.data.boardDeleted) return prev;
+      return Object.assign({}, prev, {
+        getBoardById: [],
+      });
+    },
+  });
+
+  subscribeToMore({
+    document: REMOVE_FROM_BOARD_SUBSCRIPTION,
+    updateQuery: (prev, { subscriptionData }) => {
+      if (!subscriptionData.data.removeFromBoard) return prev;
+
       return Object.assign({}, prev, {
         getBoardById: [],
       });

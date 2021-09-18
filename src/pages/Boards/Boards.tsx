@@ -5,6 +5,7 @@ import {
   BOARD_UPDATE_SUBSCRIPTION,
   BOARD_LIST_SUBSCRIPTION,
   BOARD_DELETED_SUBSCRIPTION,
+  REMOVE_FROM_BOARD_SUBSCRIPTION,
 } from '../../graphql/subscriptions/all';
 import { BoardInterface } from '../../types';
 import BoardList from './BoardList';
@@ -47,9 +48,11 @@ const Boards = () => {
 
   const { loading, error, data, subscribeToMore, refetch } =
     useQuery(GET_MY_BOARDS);
+
   useEffect(() => {
     refetch();
   }, []);
+
   const [boardList, setBoardList] = useState<BoardInterface[]>([]);
   const [showCreateBoardModal, setShowCreateBoardModal] = useState(false);
 
@@ -86,9 +89,23 @@ const Boards = () => {
     variables: { idBoards: member.idBoards },
     updateQuery: (prev, { subscriptionData }) => {
       if (!subscriptionData.data.boardDeleted) return prev;
-
       const filtered = prev.getMyBoards.filter((x: any) => {
         return x._id !== subscriptionData.data.boardDeleted;
+      });
+
+      return Object.assign({}, prev, {
+        getMyBoards: filtered, //?
+      });
+    },
+  });
+
+  subscribeToMore({
+    document: REMOVE_FROM_BOARD_SUBSCRIPTION,
+    updateQuery: (prev, { subscriptionData }) => {
+      if (!subscriptionData.data.removeFromBoard) return prev;
+
+      const filtered = prev.getMyBoards.filter((x: any) => {
+        return x._id !== subscriptionData.data.removeFromBoard.boardId;
       });
 
       return Object.assign({}, prev, {

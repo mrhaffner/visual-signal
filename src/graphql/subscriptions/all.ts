@@ -43,3 +43,12 @@ export const BOARD_DELETED_SUBSCRIPTION = gql`
     boardDeleted(idBoards: $idBoards)
   }
 `;
+
+export const REMOVE_FROM_BOARD_SUBSCRIPTION = gql`
+  subscription RemoveFromBoardSubscription {
+    removeFromBoard {
+      boardId
+      memberId
+    }
+  }
+`;
