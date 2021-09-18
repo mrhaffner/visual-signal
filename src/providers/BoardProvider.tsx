@@ -27,7 +27,7 @@ import {
   updateItemPositionAcross,
 } from '../utlities/calculatePositionHelpers';
 import {
-  BOARD_SUBSCRIPTION,
+  BOARD_UPDATE_SUBSCRIPTION,
   BOARD_DELETED_SUBSCRIPTION,
 } from '../graphql/subscriptions/all';
 import { useParams, useHistory } from 'react-router-dom';
@@ -45,13 +45,16 @@ const BoardProvider = ({ children }: Props) => {
   });
 
   subscribeToMore({
-    document: BOARD_SUBSCRIPTION,
-    variables: { idBoard: boardId },
+    document: BOARD_UPDATE_SUBSCRIPTION,
     updateQuery: (prev, { subscriptionData }) => {
-      if (!subscriptionData.data.newBoard) return prev;
-      const newBoard = subscriptionData.data.newBoard;
+      if (!subscriptionData.data.boardUpdated) return prev;
+      const updatedBoard = subscriptionData.data.boardUpdated;
+
+      if (boardId !== updatedBoard._id) return prev;
+      console.log(boardId !== updatedBoard._id);
+
       return Object.assign({}, prev, {
-        getBoardById: newBoard, //?
+        getBoardById: updatedBoard, //?
       });
     },
   });

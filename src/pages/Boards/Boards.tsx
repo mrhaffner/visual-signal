@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useQuery } from '@apollo/client';
 import { GET_MY_BOARDS } from '../../graphql/queries/all';
 import {
+  BOARD_UPDATE_SUBSCRIPTION,
   BOARD_LIST_SUBSCRIPTION,
   BOARD_DELETED_SUBSCRIPTION,
 } from '../../graphql/subscriptions/all';
@@ -49,6 +50,21 @@ const Boards = () => {
   const [boardList, setBoardList] = useState<BoardInterface[]>([]);
   const [showCreateBoardModal, setShowCreateBoardModal] = useState(false);
 
+  subscribeToMore({
+    document: BOARD_UPDATE_SUBSCRIPTION,
+    updateQuery: (prev, { subscriptionData }) => {
+      if (!subscriptionData.data.boardUpdated) return prev;
+      const updatedBoard = subscriptionData.data.boardUpdated;
+      const newBoardList = prev.getMyBoards.map((x: any) =>
+        x._id === updatedBoard._id ? { ...x, name: updatedBoard.name } : x,
+      );
+      return Object.assign({}, prev, {
+        getMyBoards: newBoardList, //?
+      });
+    },
+  });
+
+  //can get rid of ??
   subscribeToMore({
     document: BOARD_LIST_SUBSCRIPTION,
     variables: { memberId: member._id },

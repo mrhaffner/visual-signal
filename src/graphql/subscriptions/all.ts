@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client';
 
-export const BOARD_SUBSCRIPTION = gql`
-  subscription BoardSubscription($idBoard: ID!) {
-    newBoard(idBoard: $idBoard) {
+export const BOARD_UPDATE_SUBSCRIPTION = gql`
+  subscription BoardUpdateSubscription {
+    boardUpdated {
       _id
       name
       idMemberCreator
