@@ -45,8 +45,11 @@ const Boards = () => {
   const { member, logOut } = useMemberContext();
   const [showMenuPopover, toggleMenuPopover] = useToggle();
 
-  const { loading, error, data, subscribeToMore } = useQuery(GET_MY_BOARDS);
-
+  const { loading, error, data, subscribeToMore, refetch } =
+    useQuery(GET_MY_BOARDS);
+  useEffect(() => {
+    refetch();
+  }, []);
   const [boardList, setBoardList] = useState<BoardInterface[]>([]);
   const [showCreateBoardModal, setShowCreateBoardModal] = useState(false);
 
@@ -83,9 +86,11 @@ const Boards = () => {
     variables: { idBoards: member.idBoards },
     updateQuery: (prev, { subscriptionData }) => {
       if (!subscriptionData.data.boardDeleted) return prev;
-      const filtered = prev.getMyBoards.filter(
-        (x: any) => x._id !== subscriptionData.data.boardDeleted,
-      );
+
+      const filtered = prev.getMyBoards.filter((x: any) => {
+        return x._id !== subscriptionData.data.boardDeleted;
+      });
+
       return Object.assign({}, prev, {
         getMyBoards: filtered, //?
       });

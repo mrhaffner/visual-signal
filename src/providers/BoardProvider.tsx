@@ -44,6 +44,16 @@ const BoardProvider = ({ children }: Props) => {
     variables: { id: boardId },
   });
 
+  const [board, setBoard] = useState<BoardInterface | null>(null);
+
+  useEffect(() => {
+    if (data && data.getBoardById[0]) {
+      setBoard(data.getBoardById[0]); //!!!
+    } else if (data) {
+      history.push('/boards');
+    }
+  }, [data]);
+
   subscribeToMore({
     document: BOARD_UPDATE_SUBSCRIPTION,
     updateQuery: (prev, { subscriptionData }) => {
@@ -51,7 +61,6 @@ const BoardProvider = ({ children }: Props) => {
       const updatedBoard = subscriptionData.data.boardUpdated;
 
       if (boardId !== updatedBoard._id) return prev;
-      console.log(boardId !== updatedBoard._id);
 
       return Object.assign({}, prev, {
         getBoardById: updatedBoard, //?
@@ -65,12 +74,10 @@ const BoardProvider = ({ children }: Props) => {
     updateQuery: (prev, { subscriptionData }) => {
       if (!subscriptionData.data.boardDeleted) return prev;
       return Object.assign({}, prev, {
-        getBoardById: [], //?
+        getBoardById: [],
       });
     },
   });
-
-  const [board, setBoard] = useState<BoardInterface | null>(null);
 
   const [updateBoardNameMutation] = useMutation(UPDATE_BOARD_NAME);
 
@@ -91,14 +98,6 @@ const BoardProvider = ({ children }: Props) => {
   const [updateCardNameMutation] = useMutation(UPDATE_CARD_NAME);
 
   const [deleteCardMutation] = useMutation(DELETE_CARD);
-
-  useEffect(() => {
-    if (data && data.getBoardById[0]) {
-      setBoard(data.getBoardById[0]); //!!!
-    } else if (data) {
-      history.push('/boards');
-    }
-  }, [data]);
 
   const onDragEnd = (result: DropResult) => {
     if (board === null) {
