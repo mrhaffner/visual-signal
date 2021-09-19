@@ -5,7 +5,7 @@ interface PositionProps {
 }
 
 export const Wrapper = styled.div<PositionProps>`
-  left: ${(props) => props.left + ' px'};
+  left: ${(props) => props.left + 'px'};
   top: 86px;
   background: #fff;
   border-radius: 3px;

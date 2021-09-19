@@ -39,6 +39,7 @@ const Board = () => {
   const [showInvitePopover, toggleInvitePopover] = useToggle();
   const [popoverMember, setPopoverMember] = useState<MemberInfo | null>(null);
   const [inviteBtnPosition, setInviteBtnPosition] = useState('0px');
+  const [facePilePosition, setFacePilePosition] = useState(0);
 
   useEffect(() => {
     if (board) {
@@ -73,6 +74,7 @@ const Board = () => {
         board={board}
         setPopoverMember={setPopoverMember}
         toggleInvitePopover={toggleInvitePopover}
+        setFacePilePosition={setFacePilePosition}
       />
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="all-lists" direction="horizontal" type="list">
@@ -102,6 +104,7 @@ const Board = () => {
       />
       {popoverMember && (
         <ProfilePopover
+          facePilePosition={facePilePosition}
           member={popoverMember}
           setPopoverMember={setPopoverMember}
           memberCount={board.members.length}

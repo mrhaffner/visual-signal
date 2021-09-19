@@ -18,6 +18,7 @@ interface Props {
   myId: string;
   myMemberLevel: MemberType;
   boardId: string;
+  facePilePosition: number;
   setPopoverMember: (member: MemberInfo | null) => void;
 }
 
@@ -28,6 +29,7 @@ const ProfilePopover = ({
   adminCount,
   myMemberLevel,
   boardId,
+  facePilePosition,
   setPopoverMember,
 }: Props) => {
   const [popoverContentType, setPopoverContentType] = useState('main');
@@ -79,7 +81,7 @@ const ProfilePopover = ({
   const onlyOneAdmin = adminCount === 1 && member.memberType === 'admin';
 
   return (
-    <Wrapper ref={ref} left={10}>
+    <Wrapper ref={ref} left={facePilePosition}>
       {popoverContentType === 'main' && (
         <MainPopoverContent
           myId={myId}

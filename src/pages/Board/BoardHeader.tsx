@@ -127,6 +127,7 @@ interface Props {
   setPopoverMember: (member: MemberInfo | null) => void;
   toggleInvitePopover: () => void;
   setInviteBtnPosition: (input: string) => void;
+  setFacePilePosition: (input: number) => void;
 }
 
 const BoardHeader = ({
@@ -136,8 +137,10 @@ const BoardHeader = ({
   setPopoverMember,
   toggleInvitePopover,
   setInviteBtnPosition,
+  setFacePilePosition,
 }: Props) => {
-  const inviteBtnRef = useRef(0);
+  const inviteBtnRef = useRef('0px');
+  const facePileRef = useRef(0);
 
   useEffect(() => {
     if (inviteBtnRef) {
@@ -146,18 +149,31 @@ const BoardHeader = ({
     }
   }, [inviteBtnRef]);
 
+  const handleAvatarClick = (x: MemberInfo | null, idx: number) => {
+    //can you check if this is already open and do nothing on click?
+    setPopoverMember(x);
+    //@ts-ignore
+    setFacePilePosition(facePileRef.current.offsetLeft + idx * 28);
+  };
+
   return (
     <Wrapper>
       <LeftWrapper>
         <BoardTitleForm text={board.name} submitData={submitData} />
         <Divider />
-        <FacePile>
+        {/* @ts-ignore */}
+        <FacePile ref={facePileRef}>
           {board.members.map((x, index): any => (
             <Avatar
+              ref={(el) => {
+                if (!el) return;
+
+                console.log(el.getBoundingClientRect().width); // prints 200px
+              }}
               tabIndex={0}
               key={x.idMember}
               index={board.members.map.length - index}
-              onClick={() => setPopoverMember(x)}
+              onClick={() => handleAvatarClick(x, index)}
             >
               <Initials>{x.initials}</Initials>
               {x.memberType === 'admin' && <AdminBadge></AdminBadge>}
