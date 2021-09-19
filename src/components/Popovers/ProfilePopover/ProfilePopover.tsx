@@ -79,7 +79,7 @@ const ProfilePopover = ({
   const onlyOneAdmin = adminCount === 1 && member.memberType === 'admin';
 
   return (
-    <Wrapper ref={ref}>
+    <Wrapper ref={ref} left={10}>
       {popoverContentType === 'main' && (
         <MainPopoverContent
           myId={myId}

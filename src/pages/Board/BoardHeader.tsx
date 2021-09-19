@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import BoardMenu from './BoardMenu';
 import BoardTitleForm from '../../components/Inputs/BoardTitleForm';
 import { BoardInterface, MemberInfo } from '../../types';
+import { useEffect, useRef } from 'react';
 
 const Wrapper = styled.div`
   height: auto;
@@ -125,6 +126,7 @@ interface Props {
   submitData: (text: string) => void;
   setPopoverMember: (member: MemberInfo | null) => void;
   toggleInvitePopover: () => void;
+  setInviteBtnPosition: (input: string) => void;
 }
 
 const BoardHeader = ({
@@ -133,35 +135,49 @@ const BoardHeader = ({
   submitData,
   setPopoverMember,
   toggleInvitePopover,
-}: Props) => (
-  <Wrapper>
-    <LeftWrapper>
-      <BoardTitleForm text={board.name} submitData={submitData} />
-      <Divider />
-      <FacePile>
-        {board.members.map((x, index): any => (
-          <Avatar
-            tabIndex={0}
-            key={x.idMember}
-            index={board.members.map.length - index}
-            onClick={() => setPopoverMember(x)}
-          >
-            <Initials>{x.initials}</Initials>
-            {x.memberType === 'admin' && <AdminBadge></AdminBadge>}
-          </Avatar>
-        ))}
-      </FacePile>
-      <InviteBtn
-        title="Invite to board"
-        onClick={() => {
-          toggleInvitePopover();
-        }}
-      >
-        <InviteText>Invite</InviteText>
-      </InviteBtn>
-    </LeftWrapper>
-    <BoardMenu handleDelete={handleDelete} id={board._id} />
-  </Wrapper>
-);
+  setInviteBtnPosition,
+}: Props) => {
+  const inviteBtnRef = useRef(0);
+
+  useEffect(() => {
+    if (inviteBtnRef) {
+      //@ts-ignore
+      setInviteBtnPosition(`${inviteBtnRef.current.offsetLeft}px`);
+    }
+  }, [inviteBtnRef]);
+
+  return (
+    <Wrapper>
+      <LeftWrapper>
+        <BoardTitleForm text={board.name} submitData={submitData} />
+        <Divider />
+        <FacePile>
+          {board.members.map((x, index): any => (
+            <Avatar
+              tabIndex={0}
+              key={x.idMember}
+              index={board.members.map.length - index}
+              onClick={() => setPopoverMember(x)}
+            >
+              <Initials>{x.initials}</Initials>
+              {x.memberType === 'admin' && <AdminBadge></AdminBadge>}
+            </Avatar>
+          ))}
+        </FacePile>
+        <InviteBtn
+          title="Invite to board"
+          onClick={() => {
+            toggleInvitePopover();
+          }}
+          //@ts-ignore
+          ref={inviteBtnRef}
+        >
+          <InviteText>Invite</InviteText>
+        </InviteBtn>
+      </LeftWrapper>
+      <BoardMenu handleDelete={handleDelete} id={board._id} />
+    </Wrapper>
+  );
+};
 
 export default BoardHeader;

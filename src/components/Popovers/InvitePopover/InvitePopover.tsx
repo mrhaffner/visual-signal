@@ -18,9 +18,14 @@ import {
 interface Props {
   boardId: string;
   toggleInvitePopover: () => void;
+  inviteBtnPosition: string;
 }
 
-const InvitePopover = ({ toggleInvitePopover, boardId }: Props) => {
+const InvitePopover = ({
+  toggleInvitePopover,
+  boardId,
+  inviteBtnPosition,
+}: Props) => {
   const [invite] = useMutation(INVITE_MEMBER);
 
   const { register, handleSubmit, watch } = useForm();
@@ -55,9 +60,10 @@ const InvitePopover = ({ toggleInvitePopover, boardId }: Props) => {
     invite({ variables: { inviteInput: { email: data.input, boardId } } });
     toggleInvitePopover();
   });
+  console.log(inviteBtnPosition);
 
   return (
-    <Wrapper ref={ref}>
+    <Wrapper ref={ref} left={inviteBtnPosition}>
       <Header>
         <Title>Invite to board</Title>
         <CloseBtn onClick={() => toggleInvitePopover()} />
