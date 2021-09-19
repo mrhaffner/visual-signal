@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 
 interface PositionProps {
-  left: string;
+  left: number;
 }
 export const Wrapper = styled.div<PositionProps>`
-  left: ${(props) => props.left};
+  left: ${(props) => props.left + 'px'};
   top: 86px;
   overflow: visible;
   width: 304px;

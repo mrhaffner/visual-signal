@@ -126,7 +126,7 @@ interface Props {
   submitData: (text: string) => void;
   setPopoverMember: (member: MemberInfo | null) => void;
   toggleInvitePopover: () => void;
-  setInviteBtnPosition: (input: string) => void;
+  setInviteBtnPosition: (input: number) => void;
   setFacePilePosition: (input: number) => void;
 }
 
@@ -139,13 +139,13 @@ const BoardHeader = ({
   setInviteBtnPosition,
   setFacePilePosition,
 }: Props) => {
-  const inviteBtnRef = useRef('0px');
+  const inviteBtnRef = useRef(0);
   const facePileRef = useRef(0);
 
   useEffect(() => {
     if (inviteBtnRef) {
       //@ts-ignore
-      setInviteBtnPosition(`${inviteBtnRef.current.offsetLeft}px`);
+      setInviteBtnPosition(inviteBtnRef.current.offsetLeft);
     }
   }, [inviteBtnRef]);
 
@@ -165,11 +165,6 @@ const BoardHeader = ({
         <FacePile ref={facePileRef}>
           {board.members.map((x, index): any => (
             <Avatar
-              ref={(el) => {
-                if (!el) return;
-
-                console.log(el.getBoundingClientRect().width); // prints 200px
-              }}
               tabIndex={0}
               key={x.idMember}
               index={board.members.map.length - index}

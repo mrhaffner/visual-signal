@@ -38,7 +38,7 @@ const Board = () => {
   const [showMenuPopover, toggleMenuPopover] = useToggle();
   const [showInvitePopover, toggleInvitePopover] = useToggle();
   const [popoverMember, setPopoverMember] = useState<MemberInfo | null>(null);
-  const [inviteBtnPosition, setInviteBtnPosition] = useState('0px');
+  const [inviteBtnPosition, setInviteBtnPosition] = useState(0);
   const [facePilePosition, setFacePilePosition] = useState(0);
 
   useEffect(() => {

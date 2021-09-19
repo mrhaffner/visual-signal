@@ -18,7 +18,7 @@ import {
 interface Props {
   boardId: string;
   toggleInvitePopover: () => void;
-  inviteBtnPosition: string;
+  inviteBtnPosition: number;
 }
 
 const InvitePopover = ({
@@ -60,7 +60,6 @@ const InvitePopover = ({
     invite({ variables: { inviteInput: { email: data.input, boardId } } });
     toggleInvitePopover();
   });
-  console.log(inviteBtnPosition);
 
   return (
     <Wrapper ref={ref} left={inviteBtnPosition}>
