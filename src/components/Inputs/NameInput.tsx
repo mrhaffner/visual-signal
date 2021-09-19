@@ -11,7 +11,7 @@ const FormInput = styled.input<FormInputProps>`
   font-family: '-apple-system', BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
     Ubuntu, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   border: 2px solid #dfe1e6;
-  border-color: ${(props) => (props.submittedEmpty ? '#DE350B' : '')};
+  border-color: ${(props) => (props.submittedEmpty ? '#DE350B' : '#dfe1e6')};
   box-sizing: border-box;
   border-radius: 3px;
   height: 44px;
@@ -29,9 +29,10 @@ const FormInput = styled.input<FormInputProps>`
   }
 `;
 
-const NameInput = ({ register, autoFocus }: any) => {
+const NameInput = ({ register, autoFocus, submittedEmpty }: any) => {
   return (
     <FormInput
+      submittedEmpty={submittedEmpty}
       name="fullName"
       autoCorrect="off"
       placeholder="Enter full name"

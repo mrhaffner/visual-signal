@@ -21,8 +21,12 @@ const SignUpFormFinal = ({ email }: any) => {
   const {
     register,
     handleSubmit,
-    formState: { isValid },
-  } = useForm({ reValidateMode: 'onChange' });
+    formState: { errors },
+  } = useForm({
+    reValidateMode: 'onChange',
+  });
+  console.log(errors);
+
   const onSubmit = (inputData: any) => {
     const token = localStorage.getItem('trello-member-token');
     if (token) localStorage.removeItem('trello-member-token');
@@ -33,12 +37,27 @@ const SignUpFormFinal = ({ email }: any) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <EmailInput autoFocus={false} register={register} email={email} />
-      {/* <InputErrorField type="email address" /> */}
-      <NameInput autoFocus={true} register={register} />
-      {/* <InputErrorField type="name" /> */}
-      <PasswordRegisterInput register={register} />
-      {/* <InputErrorField type="password" /> */}
+      <EmailInput
+        autoFocus={false}
+        register={register}
+        email={email}
+        submittedEmpty={errors.email ? true : false}
+      />
+
+      {/* position absolute? */}
+      {errors.email && <InputErrorField type="email address" />}
+
+      <NameInput
+        autoFocus={true}
+        register={register}
+        submittedEmpty={errors.fullName ? true : false}
+      />
+      {errors.fullName && <InputErrorField type="name" />}
+      <PasswordRegisterInput
+        register={register}
+        submittedEmpty={errors.password ? true : false}
+      />
+      {errors.password && <InputErrorField type="password" />}
       <TOS>
         By signing up, you confirm that you've read and accepted our Terms of
         Service and Privacy Policy.

@@ -11,7 +11,8 @@ const FormInput = styled.input<FormInputProps>`
   font-family: '-apple-system', BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
     Ubuntu, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   border: 2px solid #dfe1e6;
-  border-color: ${(props) => (props.submittedEmpty ? '#DE350B' : '')};
+  /* border-color: ${(props) =>
+    props.submittedEmpty ? '#DE350B' : '#dfe1e6'}; */
   box-sizing: border-box;
   border-radius: 3px;
   height: 44px;
@@ -29,9 +30,11 @@ const FormInput = styled.input<FormInputProps>`
   }
 `;
 
-const PasswordInput = ({ register }: any) => {
+const PasswordInput = ({ register, submittedEmpty }: any) => {
+  console.log(submittedEmpty);
   return (
     <FormInput
+      // submittedEmpty={submittedEmpty}
       type="password"
       name="password"
       tabIndex={0}

@@ -7,11 +7,12 @@ const Wrapper = styled.div`
   font-weight: normal;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
     Ubuntu, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-  color: var(--text-danger, #de350b);
   margin-top: 4px;
   display: flex;
-  margin: 0;
+  /* margin: 0; */
+  margin-top: -16px;
   padding: 0;
+  position: absolute;
 `;
 
 const Container = styled.span`
@@ -19,9 +20,6 @@ const Container = styled.span`
   font-style: inherit;
   line-height: 1.33333;
   font-weight: normal;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
-    Ubuntu, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-  color: var(--text-danger, #de350b);
   display: flex;
 `;
 
@@ -31,8 +29,6 @@ const Logo = styled.span`
   line-height: 1;
   width: 16px;
   height: 16px;
-  --icon-primary-color: currentColor;
-  --icon-secondary-color: #ffffff;
 `;
 
 const SVG = styled.svg`
