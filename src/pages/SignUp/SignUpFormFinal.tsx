@@ -25,7 +25,6 @@ const SignUpFormFinal = ({ email }: any) => {
   } = useForm({
     reValidateMode: 'onChange',
   });
-  console.log(errors);
 
   const onSubmit = (inputData: any) => {
     const token = localStorage.getItem('trello-member-token');
@@ -43,21 +42,18 @@ const SignUpFormFinal = ({ email }: any) => {
         email={email}
         submittedEmpty={errors.email ? true : false}
       />
-
-      {/* position absolute? */}
-      {errors.email && <InputErrorField type="email address" />}
-
+      {errors.email && <InputErrorField type="an email address" />}
       <NameInput
         autoFocus={true}
         register={register}
         submittedEmpty={errors.fullName ? true : false}
       />
-      {errors.fullName && <InputErrorField type="name" />}
+      {errors.fullName && <InputErrorField type="a name" />}
       <PasswordRegisterInput
         register={register}
         submittedEmpty={errors.password ? true : false}
       />
-      {errors.password && <InputErrorField type="password" />}
+      {errors.password && <InputErrorField type="a password" />}
       <TOS>
         By signing up, you confirm that you've read and accepted our Terms of
         Service and Privacy Policy.

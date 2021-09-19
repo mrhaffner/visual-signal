@@ -68,7 +68,7 @@ const InputErrorField = ({ type }: Props) => {
             </g>
           </SVG>
         </Logo>
-        <StyledText>Please enter an {type}</StyledText>
+        <StyledText>Please enter {type}</StyledText>
       </Container>
     </Wrapper>
   );
