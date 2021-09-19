@@ -1,12 +1,17 @@
 import styled from 'styled-components';
 
-const FormInput = styled.input`
+interface FormInputProps {
+  submittedEmpty: boolean;
+}
+
+const FormInput = styled.input<FormInputProps>`
   width: 100%;
   font-size: 14px;
   background-color: #fafbfc !important;
   font-family: '-apple-system', BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
     Ubuntu, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   border: 2px solid #dfe1e6;
+  border-color: ${(props) => (props.submittedEmpty ? '#DE350B' : '')};
   box-sizing: border-box;
   border-radius: 3px;
   height: 44px;
@@ -31,7 +36,7 @@ const NameInput = ({ register, autoFocus }: any) => {
       autoCorrect="off"
       placeholder="Enter full name"
       autoComplete="name"
-      {...register('fullName', { required: true })}
+      {...register('fullName', { required: true, minLength: 3, maxLength: 24 })}
       autoFocus={autoFocus}
     />
   );

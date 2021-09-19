@@ -5,6 +5,7 @@ import NameInput from '../../components/Inputs/NameInput';
 import BlueFormButton from '../../components/Buttons/BlueFormButton';
 import PasswordRegisterInput from '../../components/Inputs/PasswordRegisterInput';
 import useMemberContext from '../../hooks/useMemberContext';
+import InputErrorField from '../../components/Inputs/InputErrorField';
 
 const TOS = styled.p`
   /* margin-top: 20px; */
@@ -17,8 +18,11 @@ const TOS = styled.p`
 
 const SignUpFormFinal = ({ email }: any) => {
   const { signUp } = useMemberContext();
-  const { register, handleSubmit } = useForm();
-
+  const {
+    register,
+    handleSubmit,
+    formState: { isValid },
+  } = useForm({ reValidateMode: 'onChange' });
   const onSubmit = (inputData: any) => {
     const token = localStorage.getItem('trello-member-token');
     if (token) localStorage.removeItem('trello-member-token');
@@ -30,8 +34,11 @@ const SignUpFormFinal = ({ email }: any) => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <EmailInput autoFocus={false} register={register} email={email} />
+      {/* <InputErrorField type="email address" /> */}
       <NameInput autoFocus={true} register={register} />
+      {/* <InputErrorField type="name" /> */}
       <PasswordRegisterInput register={register} />
+      {/* <InputErrorField type="password" /> */}
       <TOS>
         By signing up, you confirm that you've read and accepted our Terms of
         Service and Privacy Policy.
