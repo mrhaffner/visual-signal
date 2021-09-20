@@ -67,7 +67,6 @@ export const GET_MEMBER_BY_EMAIL = gql`
     getMemberByEmail(email: $email) {
       _id
       fullName
-      password
       initials
       username
       idBoards
