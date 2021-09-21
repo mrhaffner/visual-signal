@@ -25,6 +25,8 @@ const MemberProvider = ({ children }: Props) => {
     localStorage.removeItem('trello-member-token');
     setToken(null);
     setMember(null);
+    //@ts-ignore
+    memberData.client.resetStore();
     //mutation to invalidate token?
   };
 

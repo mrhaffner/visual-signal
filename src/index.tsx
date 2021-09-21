@@ -45,6 +45,7 @@ const splitLink = split(
       definition.operation === 'subscription'
     );
   },
+  //@ts-ignore
   wsLink,
   //@ts-ignore
   authLink.concat(httpLink),
