@@ -1,4 +1,4 @@
-import { useMutation, useLazyQuery, Cache } from '@apollo/client';
+import { useMutation, useLazyQuery } from '@apollo/client';
 import { useState, ReactNode, useEffect } from 'react';
 import {
   CREATE_MEMBER,
@@ -25,8 +25,6 @@ const MemberProvider = ({ children }: Props) => {
     localStorage.removeItem('trello-member-token');
     setToken(null);
     setMember(null);
-    //@ts-ignore
-    memberData.client.resetStore();
     //mutation to invalidate token?
   };
 

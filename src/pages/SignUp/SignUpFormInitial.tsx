@@ -4,6 +4,9 @@ import GreenFormButton from '../../components/Buttons/GreenFormButton';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
+import { useLazyQuery } from '@apollo/client';
+import { VALIDATE_EMAIL } from '../../graphql/queries/all';
+import InputErrorField from '../../components/Inputs/InputErrorField';
 
 const TOS = styled.p`
   /* margin-top: 20px; */
@@ -15,6 +18,9 @@ const TOS = styled.p`
 `;
 
 const SignUpFormInitial = () => {
+  const [validateEmail, { data }] = useLazyQuery(VALIDATE_EMAIL);
+  const [email, setEmail] = useState(null);
+
   const { register, handleSubmit, watch } = useForm();
   const watchEmail = watch('email');
 
@@ -22,8 +28,19 @@ const SignUpFormInitial = () => {
   let history = useHistory();
 
   const onSubmit = (data: any) => {
-    history.push(`/${data.email}`);
+    const { email } = data;
+    validateEmail({ variables: { email } });
+    setEmail(email);
   };
+
+  useEffect(() => {
+    if (data && data.validateEmail) {
+      console.log(data);
+      console.log(data.validateEmail);
+      console.log(data && data.validateEmail === false);
+      history.push(`/${email}`);
+    }
+  }, [data]);
 
   const regex = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/i;
 
@@ -38,6 +55,9 @@ const SignUpFormInitial = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <EmailInput autoFocus={false} register={register} email="" />
+      {data && data.validateEmail === false && (
+        <InputErrorField text="Email address already in use" />
+      )}
       <TOS>
         By signing up, you confirm that you've read and accepted our Terms of
         Service and Privacy Policy.

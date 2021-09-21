@@ -50,10 +50,10 @@ const StyledText = styled.span`
 `;
 
 interface Props {
-  type: string;
+  text: string;
 }
 
-const InputErrorField = ({ type }: Props) => {
+const InputErrorField = ({ text }: Props) => {
   return (
     <Wrapper>
       <Container>
@@ -68,7 +68,7 @@ const InputErrorField = ({ type }: Props) => {
             </g>
           </SVG>
         </Logo>
-        <StyledText>Please enter {type}</StyledText>
+        <StyledText>{text}</StyledText>
       </Container>
     </Wrapper>
   );

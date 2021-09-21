@@ -28,12 +28,12 @@ const LogInForm = () => {
         register={register}
         submittedEmpty={errors.email ? true : false}
       />
-      {errors.email && <InputErrorField type="an email address" />}
+      {errors.email && <InputErrorField text="Please enter an email address" />}
       <PasswordInput
         register={register}
         submittedEmpty={errors.password ? true : false}
       />
-      {errors.password && <InputErrorField type="a password" />}
+      {errors.password && <InputErrorField text="Please enter a password" />}
       <GreenFormButton value="Log in" disabled={false} />
     </form>
   );

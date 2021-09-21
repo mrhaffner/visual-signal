@@ -87,3 +87,9 @@ export const GET_MY_MEMBER_INFO = gql`
     }
   }
 `;
+
+export const VALIDATE_EMAIL = gql`
+  query ValidateEmail($email: String!) {
+    validateEmail(email: $email)
+  }
+`;
