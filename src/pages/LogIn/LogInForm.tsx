@@ -6,7 +6,7 @@ import useMemberContext from '../../hooks/useMemberContext';
 import InputErrorField from '../../components/Inputs/InputErrorField';
 
 const LogInForm = () => {
-  const { login } = useMemberContext();
+  const { login, loginData } = useMemberContext();
   const {
     register,
     handleSubmit,
@@ -20,6 +20,7 @@ const LogInForm = () => {
     if (token) localStorage.removeItem('trello-member-token');
     login({ variables: { loginInput: inputData } });
   };
+  console.log(errors.password);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -33,7 +34,13 @@ const LogInForm = () => {
         register={register}
         submittedEmpty={errors.password ? true : false}
       />
-      {errors.password && <InputErrorField text="Please enter a password" />}
+      {errors.password?.type === 'required' && loginData?.login !== null && (
+        <InputErrorField text="Please enter a password" />
+      )}
+      {loginData?.login === null && (
+        <InputErrorField text="Invalid credentials" />
+      )}
+
       <GreenFormButton value="Log in" disabled={false} />
     </form>
   );

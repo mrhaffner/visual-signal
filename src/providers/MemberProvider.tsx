@@ -16,7 +16,7 @@ const MemberProvider = ({ children }: Props) => {
   const [member, setMember] = useState(null);
   const [token, setToken] = useState(null);
 
-  const [login, loginData] = useMutation(LOGIN);
+  const [login, { data: loginData }] = useMutation(LOGIN);
   const [signUp, signUpData] = useMutation(CREATE_MEMBER);
 
   const [memberFound, setMemberFound] = useState(null);
@@ -41,15 +41,16 @@ const MemberProvider = ({ children }: Props) => {
       setMemberFound(false); //
     }
   }, []);
+  console.log(loginData?.login);
 
   useEffect(() => {
-    if (loginData.data) {
-      const token = loginData.data.login.value;
+    if (loginData?.login) {
+      const token = loginData.login.value;
       setToken(token);
       localStorage.setItem('trello-member-token', token);
       window.location.reload();
     }
-  }, [loginData.data]);
+  }, [loginData]);
 
   useEffect(() => {
     if (signUpData.data) {
@@ -78,8 +79,6 @@ const MemberProvider = ({ children }: Props) => {
 
   useEffect(() => {
     if (memberError) {
-      console.log(memberError);
-
       localStorage.removeItem('trello-member-token');
       //@ts-ignore
       setMemberFound(false); //
@@ -99,6 +98,7 @@ const MemberProvider = ({ children }: Props) => {
         updateMemberBoards,
         memberData,
         memberFound,
+        loginData,
       }}
     >
       {children}
