@@ -78,6 +78,9 @@ const MemberProvider = ({ children }: Props) => {
 
   useEffect(() => {
     if (memberError) {
+      console.log(memberError);
+
+      localStorage.removeItem('trello-member-token');
       //@ts-ignore
       setMemberFound(false); //
     }
