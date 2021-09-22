@@ -47,6 +47,7 @@ const MemberProvider = ({ children }: Props) => {
       const token = loginData.data.login.value;
       setToken(token);
       localStorage.setItem('trello-member-token', token);
+      window.location.reload();
     }
   }, [loginData.data]);
 
@@ -55,6 +56,8 @@ const MemberProvider = ({ children }: Props) => {
       const token = signUpData.data.createMember.value;
       setToken(token);
       localStorage.setItem('trello-member-token', token);
+      window.location.reload();
+      //do i need to add this on logout? probably not
     }
   }, [signUpData.data]);
 
