@@ -6,6 +6,9 @@ import BlueFormButton from '../../components/Buttons/BlueFormButton';
 import PasswordRegisterInput from '../../components/Inputs/PasswordRegisterInput';
 import useMemberContext from '../../hooks/useMemberContext';
 import InputErrorField from '../../components/Inputs/InputErrorField';
+import { useEffect, useState } from 'react';
+import { useLazyQuery } from '@apollo/client';
+import { VALIDATE_EMAIL } from '../../graphql/queries/all';
 
 const TOS = styled.p`
   /* margin-top: 20px; */
@@ -17,6 +20,11 @@ const TOS = styled.p`
 `;
 
 const SignUpFormFinal = ({ email }: any) => {
+  const [validateEmail, { data, loading }] = useLazyQuery(VALIDATE_EMAIL);
+  const [signUpParams, setSignUpParams] = useState(null);
+  const [showNonUniqueEmailError, setShowNonUniqueEmailError] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+
   const { signUp } = useMemberContext();
   const {
     register,
@@ -30,9 +38,30 @@ const SignUpFormFinal = ({ email }: any) => {
     const token = localStorage.getItem('trello-member-token');
     if (token) localStorage.removeItem('trello-member-token');
     const { fullName, email, password } = inputData;
-    const memberObject = { fullName, email, password };
-    signUp({ variables: { memberInput: memberObject } });
+    validateEmail({ variables: { email } });
+    setSubmitted(true);
+    //@ts-ignore
+    setSignUpParams({ fullName, email, password });
   };
+
+  useEffect(() => {
+    if (data && data.validateEmail) {
+      signUp({ variables: { memberInput: signUpParams } });
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (data && data.validateEmail === false && !loading) {
+      setShowNonUniqueEmailError(true);
+      setSubmitted(false);
+    }
+  }, [data, submitted, loading]);
+
+  useEffect(() => {
+    if (errors.email) {
+      setShowNonUniqueEmailError(false);
+    }
+  }, [errors.email]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -42,6 +71,9 @@ const SignUpFormFinal = ({ email }: any) => {
         email={email}
         submittedEmpty={errors.email ? true : false}
       />
+      {showNonUniqueEmailError && (
+        <InputErrorField text="Email address already in use" />
+      )}
       {errors.email && <InputErrorField text="Please enter an email address" />}
       <NameInput
         autoFocus={true}

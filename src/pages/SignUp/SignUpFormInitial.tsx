@@ -35,9 +35,6 @@ const SignUpFormInitial = () => {
 
   useEffect(() => {
     if (data && data.validateEmail) {
-      console.log(data);
-      console.log(data.validateEmail);
-      console.log(data && data.validateEmail === false);
       history.push(`/${email}`);
     }
   }, [data]);
