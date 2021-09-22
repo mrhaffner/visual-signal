@@ -19,19 +19,26 @@ const MemberProvider = ({ children }: Props) => {
   const [login, loginData] = useMutation(LOGIN);
   const [signUp, signUpData] = useMutation(CREATE_MEMBER);
 
-  const [getMemberData, memberData] = useLazyQuery(GET_MY_MEMBER_INFO);
+  const [memberFound, setMemberFound] = useState(null);
+
+  const [getMemberData, { data: memberData, error: memberError }] =
+    useLazyQuery(GET_MY_MEMBER_INFO);
 
   const logOut = () => {
     localStorage.removeItem('trello-member-token');
     setToken(null);
-    setMember(null);
-    //mutation to invalidate token?
+    setMember(null); //
+    //@ts-ignore
+    setMemberFound(false); //
   };
 
   useEffect(() => {
     const memberToken = localStorage.getItem('trello-member-token');
     if (memberToken) {
       getMemberData();
+    } else {
+      //@ts-ignore
+      setMemberFound(false); //
     }
   }, []);
 
@@ -59,10 +66,19 @@ const MemberProvider = ({ children }: Props) => {
   }, [token]);
 
   useEffect(() => {
-    if (memberData.data) {
-      setMember(memberData.data.getMyMemberInfo);
+    if (memberData) {
+      setMember(memberData.getMyMemberInfo);
+      //@ts-ignore
+      setMemberFound(true); //
     }
   }, [memberData]);
+
+  useEffect(() => {
+    if (memberError) {
+      //@ts-ignore
+      setMemberFound(false); //
+    }
+  }, [memberError]);
 
   const [updateMemberBoards] = useMutation(UPDATE_MEMBER_BOARDS);
 
@@ -76,6 +92,7 @@ const MemberProvider = ({ children }: Props) => {
         signUp,
         updateMemberBoards,
         memberData,
+        memberFound,
       }}
     >
       {children}
