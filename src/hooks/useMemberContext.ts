@@ -10,6 +10,7 @@ type MemberState = {
   signUp: (value: any) => void;
   memberFound: any;
   loginData: any;
+  setMemberFound: any;
 };
 
 export const MemberContext = createContext<MemberState>({
@@ -22,6 +23,7 @@ export const MemberContext = createContext<MemberState>({
   logOut: () => {},
   signUp: () => {},
   loginData: null,
+  setMemberFound: null,
 });
 
 const useMemberContext = () => useContext(MemberContext);

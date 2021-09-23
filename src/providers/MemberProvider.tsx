@@ -41,7 +41,6 @@ const MemberProvider = ({ children }: Props) => {
       setMemberFound(false); //
     }
   }, []);
-  console.log(loginData?.login);
 
   useEffect(() => {
     if (loginData?.login) {
@@ -99,6 +98,7 @@ const MemberProvider = ({ children }: Props) => {
         memberData,
         memberFound,
         loginData,
+        setMemberFound,
       }}
     >
       {children}

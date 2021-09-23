@@ -32,7 +32,7 @@ const Board = () => {
     addList,
   } = useBoardContext();
 
-  const { member, logOut } = useMemberContext();
+  const { member, logOut, setMemberFound } = useMemberContext();
   let history = useHistory();
   const [showComposer, setShowComposer] = useState(false);
   const [showMenuPopover, toggleMenuPopover] = useToggle();
@@ -40,6 +40,7 @@ const Board = () => {
   const [popoverMember, setPopoverMember] = useState<MemberInfo | null>(null);
   const [inviteBtnPosition, setInviteBtnPosition] = useState(0);
   const [facePilePosition, setFacePilePosition] = useState(0);
+  const [enteredLoading, setEnteredLoading] = useState(false);
 
   useEffect(() => {
     if (board) {
@@ -48,8 +49,23 @@ const Board = () => {
       }
     }
   });
+  // useEffect(() => {
+  //   if (enteredLoading && !loading && !board) {
+  //     console.log(enteredLoading, loading, board);
+
+  //     // setMemberFound(false);
+  //   }
+  // }, [loading, enteredLoading]);
+
+  // useEffect(() => {
+  //   if (loading) setEnteredLoading(true);
+  // }, [loading]);
+  useEffect(() => {
+    if (error) setMemberFound(false);
+  }, [error]);
 
   if (loading || board === null) return <></>;
+
   if (error) return <p>Error :(</p>;
 
   const memberLevel = board.members.filter(

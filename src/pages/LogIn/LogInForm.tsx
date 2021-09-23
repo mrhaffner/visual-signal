@@ -20,7 +20,6 @@ const LogInForm = () => {
     if (token) localStorage.removeItem('trello-member-token');
     login({ variables: { loginInput: inputData } });
   };
-  console.log(errors.password);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

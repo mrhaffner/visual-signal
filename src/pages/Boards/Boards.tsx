@@ -43,7 +43,7 @@ const BoardsTitle = styled.h3`
 `;
 
 const Boards = () => {
-  const { member, logOut } = useMemberContext();
+  const { member, logOut, setMemberFound } = useMemberContext();
   const [showMenuPopover, toggleMenuPopover] = useToggle();
 
   const { loading, error, data, subscribeToMore, refetch } =
@@ -127,7 +127,11 @@ const Boards = () => {
   }, [data]);
 
   if (loading) return <></>;
-  if (error) return <div>Error!</div>;
+  if (error) {
+    setMemberFound(false);
+  }
+
+  // if (error) return <div>Error!</div>;
 
   return (
     <>
