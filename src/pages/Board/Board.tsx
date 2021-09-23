@@ -40,7 +40,6 @@ const Board = () => {
   const [popoverMember, setPopoverMember] = useState<MemberInfo | null>(null);
   const [inviteBtnPosition, setInviteBtnPosition] = useState(0);
   const [facePilePosition, setFacePilePosition] = useState(0);
-  const [enteredLoading, setEnteredLoading] = useState(false);
 
   useEffect(() => {
     if (board) {
@@ -49,17 +48,7 @@ const Board = () => {
       }
     }
   });
-  // useEffect(() => {
-  //   if (enteredLoading && !loading && !board) {
-  //     console.log(enteredLoading, loading, board);
 
-  //     // setMemberFound(false);
-  //   }
-  // }, [loading, enteredLoading]);
-
-  // useEffect(() => {
-  //   if (loading) setEnteredLoading(true);
-  // }, [loading]);
   useEffect(() => {
     if (error) setMemberFound(false);
   }, [error]);

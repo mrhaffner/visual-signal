@@ -121,15 +121,18 @@ const Boards = () => {
   });
 
   useEffect(() => {
+    if (error) {
+      setMemberFound(false);
+    }
+  }, [error]);
+
+  useEffect(() => {
     if (data) {
       setBoardList(data.getMyBoards);
     }
   }, [data]);
 
-  if (loading) return <></>;
-  if (error) {
-    setMemberFound(false);
-  }
+  // if (loading) return <></>;
 
   // if (error) return <div>Error!</div>;
 
