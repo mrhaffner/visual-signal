@@ -6,6 +6,7 @@ import { CREATE_BOARD } from '../../graphql/mutations/all';
 import { useMutation } from '@apollo/client';
 import { useHistory } from 'react-router-dom';
 import useKeyPress from '../../hooks/useKeyPress';
+import useMemberContext from '../../hooks/useMemberContext';
 
 const OverlayWrapper = styled.div`
   left: 0;
@@ -204,7 +205,12 @@ interface Props {
 }
 
 const CreateBoardModal = ({ setShowCreateBoardModal }: Props) => {
-  const [newBoardMutation, { data }] = useMutation(CREATE_BOARD);
+  const { setMemberFound } = useMemberContext();
+  const [newBoardMutation, { data }] = useMutation(CREATE_BOARD, {
+    onError: (error) => {
+      setMemberFound(false);
+    },
+  });
 
   const history = useHistory();
 
