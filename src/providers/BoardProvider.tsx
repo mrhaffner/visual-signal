@@ -32,6 +32,7 @@ import {
   REMOVE_FROM_BOARD_SUBSCRIPTION,
 } from '../graphql/subscriptions/all';
 import { useParams, useHistory } from 'react-router-dom';
+import useMemberContext from '../hooks/useMemberContext';
 
 interface Props {
   children: ReactNode;
@@ -44,6 +45,8 @@ const BoardProvider = ({ children }: Props) => {
   const { loading, error, data, subscribeToMore } = useQuery(GET_BOARD, {
     variables: { id: boardId },
   });
+
+  const { setMemberFound } = useMemberContext();
 
   const [board, setBoard] = useState<BoardInterface | null>(null);
 
@@ -91,25 +94,65 @@ const BoardProvider = ({ children }: Props) => {
     },
   });
 
-  const [updateBoardNameMutation] = useMutation(UPDATE_BOARD_NAME);
+  const [updateBoardNameMutation] = useMutation(UPDATE_BOARD_NAME, {
+    onError: () => {
+      setMemberFound(false);
+    },
+  });
 
-  const [deleteBoardMutation] = useMutation(DELETE_BOARD);
+  const [deleteBoardMutation] = useMutation(DELETE_BOARD, {
+    onError: () => {
+      setMemberFound(false);
+    },
+  });
 
-  const [newListMutation] = useMutation(CREATE_LIST);
+  const [newListMutation] = useMutation(CREATE_LIST, {
+    onError: () => {
+      setMemberFound(false);
+    },
+  });
 
-  const [updateListPosMutation] = useMutation(UPDATE_LIST_POS);
+  const [updateListPosMutation] = useMutation(UPDATE_LIST_POS, {
+    onError: () => {
+      setMemberFound(false);
+    },
+  });
 
-  const [updateListNameMutation] = useMutation(UPDATE_LIST_NAME);
+  const [updateListNameMutation] = useMutation(UPDATE_LIST_NAME, {
+    onError: () => {
+      setMemberFound(false);
+    },
+  });
 
-  const [deleteListMutation] = useMutation(DELETE_LIST);
+  const [deleteListMutation] = useMutation(DELETE_LIST, {
+    onError: () => {
+      setMemberFound(false);
+    },
+  });
 
-  const [newCardMutation] = useMutation(CREATE_CARD);
+  const [newCardMutation] = useMutation(CREATE_CARD, {
+    onError: () => {
+      setMemberFound(false);
+    },
+  });
 
-  const [updateCardPosMutation] = useMutation(UPDATE_CARD_POS);
+  const [updateCardPosMutation] = useMutation(UPDATE_CARD_POS, {
+    onError: () => {
+      setMemberFound(false);
+    },
+  });
 
-  const [updateCardNameMutation] = useMutation(UPDATE_CARD_NAME);
+  const [updateCardNameMutation] = useMutation(UPDATE_CARD_NAME, {
+    onError: () => {
+      setMemberFound(false);
+    },
+  });
 
-  const [deleteCardMutation] = useMutation(DELETE_CARD);
+  const [deleteCardMutation] = useMutation(DELETE_CARD, {
+    onError: () => {
+      setMemberFound(false);
+    },
+  });
 
   const onDragEnd = (result: DropResult) => {
     if (board === null) {

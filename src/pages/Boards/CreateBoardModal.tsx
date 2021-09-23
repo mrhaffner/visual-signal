@@ -207,7 +207,7 @@ interface Props {
 const CreateBoardModal = ({ setShowCreateBoardModal }: Props) => {
   const { setMemberFound } = useMemberContext();
   const [newBoardMutation, { data }] = useMutation(CREATE_BOARD, {
-    onError: (error) => {
+    onError: () => {
       setMemberFound(false);
     },
   });
