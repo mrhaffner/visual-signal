@@ -37,7 +37,7 @@ const App = () => {
             <LoadingBoard />
           )}
         </Route>
-        <Route path="/boards">
+        <Route exact path="/boards">
           {memberFound ? (
             <Boards />
           ) : memberFound === false ? (
@@ -46,7 +46,7 @@ const App = () => {
             <LoadingBoard />
           )}
         </Route>
-        <Route path="/login">
+        <Route exact path="/login">
           {memberFound ? (
             <Redirect to="/boards" />
           ) : memberFound === false ? (
@@ -55,6 +55,7 @@ const App = () => {
             <LoadingBoard />
           )}
         </Route>
+        {/* <Route exact path="/404"><PageNotFound /></Route> */}
         <Route exact path="/">
           {memberFound ? (
             <Redirect to="/boards" />
@@ -64,6 +65,8 @@ const App = () => {
             <LoadingBoard />
           )}
         </Route>
+        <Route component={PageNotFound} />
+        {/* <Redirect to= */}
       </Switch>
       {memberFound && showMenuPopover && (
         <MemberMenuPopover

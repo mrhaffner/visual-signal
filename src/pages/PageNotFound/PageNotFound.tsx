@@ -1,3 +1,4 @@
+import { useHistory } from 'react-router';
 import useMemberContext from '../../hooks/useMemberContext';
 import MainText from './MainText';
 import {
@@ -12,21 +13,31 @@ import {
 
 const PageNotFound = () => {
   const { member, logOut } = useMemberContext();
+  const history = useHistory();
+  const goToLogin = () => {
+    history.push('/login');
+  };
+
+  const handleLogOut = () => {
+    logOut();
+    goToLogin();
+  };
   return (
     <>
       <Wrapper>
         <Content>
           <Container>
             <Title>Page not found.</Title>
-            <MainText memberFound={!!member} logOut={logOut} />
+            <MainText memberFound={!!member} goToLogin={goToLogin} />
             {member && (
               <>
                 <LinkContainer>
                   <span>
                     Not <StyledBoldText>{member.fullName}</StyledBoldText> ?{' '}
                   </span>
-                  <StyledLink onClick={logOut}>Switch Accounts</StyledLink>
-                  {/* clicking logs user out and redirects to login */}
+                  <StyledLink onClick={handleLogOut}>
+                    Switch Accounts
+                  </StyledLink>
                 </LinkContainer>
               </>
             )}

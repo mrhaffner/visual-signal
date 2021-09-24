@@ -2,10 +2,10 @@ import { StyledText, StyledLink } from './style';
 
 interface Props {
   memberFound: boolean;
-  logOut: () => void;
+  goToLogin: () => void;
 }
 
-const MainText = ({ memberFound, logOut }: Props) => {
+const MainText = ({ memberFound, goToLogin }: Props) => {
   return (
     <>
       {memberFound ? (
@@ -16,7 +16,7 @@ const MainText = ({ memberFound, logOut }: Props) => {
       ) : (
         <StyledText>
           This page may be private. You may be able to view it by{' '}
-          <StyledLink onClick={logOut}>logging in</StyledLink>.
+          <StyledLink onClick={goToLogin}>logging in</StyledLink>.
         </StyledText>
       )}
     </>
