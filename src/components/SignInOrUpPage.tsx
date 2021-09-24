@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import SignInOrUpFooter from './SignInOrUpFooter';
+import { useState } from 'react';
 
 const Wrapper = styled.div`
   background-color: #f9fafc;
@@ -109,7 +110,41 @@ const RightImgContainer = styled.div`
   z-index: -999;
 `;
 
-const SignInOrUpPage = ({ bottomLink, formTitle, form }: any) => {
+const LogInPrompt = styled.div`
+  border-radius: 4px;
+  background: #faf3c0;
+  border: 1px solid #f2d600;
+  display: inline-block;
+  padding: 0.5em 1em;
+  word-wrap: break-word;
+  color: #4d4d4d;
+  font-weight: 300;
+  font-family: '-apple-system', BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+`;
+
+const LogInLink = styled(Link)`
+  color: #298fca;
+  font-size: 18px;
+  text-decoration: underline;
+  cursor: pointer;
+  line-height: 28.8px;
+  &:focus-visible {
+    outline: -webkit-focus-ring-color auto 1px;
+  }
+`;
+
+const StyledPromptText = styled.div`
+  line-height: 28.8px;
+  font-size: 14px;
+`;
+
+const SignInOrUpPage = ({
+  bottomLink,
+  formTitle,
+  form,
+  emailInUse = false,
+}: any) => {
   return (
     <Wrapper>
       <div>
@@ -117,6 +152,15 @@ const SignInOrUpPage = ({ bottomLink, formTitle, form }: any) => {
         <MainSection>
           <MainWrapper>
             <FormContainer>
+              {emailInUse && (
+                <LogInPrompt>
+                  <StyledPromptText>
+                    Hey, that email is already in use by another Atlassian
+                    account. You'll need to login with Atlassian to use Trello.
+                  </StyledPromptText>
+                  <LogInLink to="/login">Log in with Atlassian</LogInLink>
+                </LogInPrompt>
+              )}
               <Title>{formTitle}</Title>
               {form}
               <Line />

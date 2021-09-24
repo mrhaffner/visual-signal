@@ -8,6 +8,7 @@ import useMemberContext from './hooks/useMemberContext';
 import NavBar from './components/NavBar';
 import useToggle from './hooks/useToggle';
 import MemberMenuPopover from './components/Popovers/MemberMenuPopover';
+import PageNotFound from './pages/PageNotFound';
 
 const LoadingBoard = () => <div>loading</div>;
 

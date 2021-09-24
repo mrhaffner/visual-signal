@@ -17,7 +17,11 @@ const TOS = styled.p`
   font-weight: 300;
 `;
 
-const SignUpFormInitial = () => {
+interface Props {
+  setEmailInUse: (input: boolean) => void;
+}
+
+const SignUpFormInitial = ({ setEmailInUse }: Props) => {
   const [validateEmail, { data }] = useLazyQuery(VALIDATE_EMAIL);
   const [email, setEmail] = useState(null);
 
@@ -49,12 +53,17 @@ const SignUpFormInitial = () => {
     }
   }, [watchEmail]);
 
+  useEffect(() => {
+    if (data && data.validateEmail === false) {
+      setEmailInUse(true);
+    } else {
+      setEmailInUse(false);
+    }
+  }, [data]);
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <EmailInput autoFocus={false} register={register} email="" />
-      {data && data.validateEmail === false && (
-        <InputErrorField text="Email address already in use" />
-      )}
       <TOS>
         By signing up, you confirm that you've read and accepted our Terms of
         Service and Privacy Policy.
