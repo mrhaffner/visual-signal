@@ -6,8 +6,6 @@ import OpenListComposer from '../../components/Composers/OpenListComposer';
 import { useEffect, useState } from 'react';
 import ListComposer from '../../components/Composers/ListComposer';
 import BoardHeader from './BoardHeader';
-import NavBar from '../../components/NavBar';
-import MemberMenuPopover from '../../components/Popovers/MemberMenuPopover';
 import useMemberContext from '../../hooks/useMemberContext';
 import useToggle from '../../hooks/useToggle';
 import ProfilePopover from '../../components/Popovers/ProfilePopover';
@@ -32,10 +30,9 @@ const Board = () => {
     addList,
   } = useBoardContext();
 
-  const { member, logOut, setMemberFound } = useMemberContext();
+  const { member, setMemberFound } = useMemberContext();
   let history = useHistory();
   const [showComposer, setShowComposer] = useState(false);
-  const [showMenuPopover, toggleMenuPopover] = useToggle();
   const [showInvitePopover, toggleInvitePopover] = useToggle();
   const [popoverMember, setPopoverMember] = useState<MemberInfo | null>(null);
   const [inviteBtnPosition, setInviteBtnPosition] = useState(0);
@@ -67,11 +64,6 @@ const Board = () => {
 
   return (
     <>
-      <NavBar
-        setBlue={false}
-        isLoading={loading}
-        toggleMenuPopover={toggleMenuPopover}
-      />
       <BoardHeader
         setInviteBtnPosition={setInviteBtnPosition}
         handleDelete={deleteBoard}
@@ -99,14 +91,6 @@ const Board = () => {
           )}
         </Droppable>
       </DragDropContext>
-      <MemberMenuPopover
-        logOut={logOut}
-        showPopover={showMenuPopover}
-        togglePopover={toggleMenuPopover}
-        initials={member.initials}
-        name={member.fullName}
-        email={member.email}
-      />
       {popoverMember && (
         <ProfilePopover
           facePilePosition={facePilePosition}

@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import useKeyPress from '../../hooks/useKeyPress';
 import useOnClickOutside from '../../hooks/useOnClickOutside';
+import useToggle from '../../hooks/useToggle';
 import { CloseBtn } from './sharedStyles';
 
 const Wrapper = styled.section`
@@ -175,7 +176,6 @@ interface Props {
   initials: string;
   name: string;
   email: string;
-  showPopover: any;
   togglePopover: any;
   logOut: any;
 }
@@ -184,7 +184,6 @@ const MemberMenuPopover = ({
   initials,
   name,
   email,
-  showPopover,
   togglePopover,
   logOut,
 }: Props) => {
@@ -196,14 +195,10 @@ const MemberMenuPopover = ({
   });
 
   useEffect(() => {
-    if (esc && showPopover) {
+    if (esc) {
       togglePopover();
     }
   }, [esc]);
-
-  if (!showPopover) {
-    return <></>;
-  }
 
   return (
     <Wrapper ref={ref}>

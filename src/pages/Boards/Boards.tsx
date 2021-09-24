@@ -11,10 +11,7 @@ import { BoardInterface } from '../../types';
 import BoardList from './BoardList';
 import styled from 'styled-components';
 import CreateBoardModal from './CreateBoardModal';
-import NavBar from '../../components/NavBar';
 import useMemberContext from '../../hooks/useMemberContext';
-import MemberMenuPopover from '../../components/Popovers/MemberMenuPopover';
-import useToggle from '../../hooks/useToggle';
 
 const AllBoards = styled.div`
   /* margin: 40px 16px 0; */
@@ -23,7 +20,7 @@ const AllBoards = styled.div`
   width: 100%;
 `;
 
-const Wrapper = styled.div`
+const Wrapper = styled.main`
   display: flex;
   justify-content: center;
 `;
@@ -43,8 +40,7 @@ const BoardsTitle = styled.h3`
 `;
 
 const Boards = () => {
-  const { member, logOut, setMemberFound } = useMemberContext();
-  const [showMenuPopover, toggleMenuPopover] = useToggle();
+  const { member, setMemberFound } = useMemberContext();
 
   const { loading, error, data, subscribeToMore, refetch } =
     useQuery(GET_MY_BOARDS);
@@ -138,11 +134,6 @@ const Boards = () => {
 
   return (
     <>
-      <NavBar
-        setBlue={true}
-        isLoading={loading}
-        toggleMenuPopover={toggleMenuPopover}
-      />
       <Wrapper>
         <AllBoards>
           <BoardsTitle>YOUR BOARDS</BoardsTitle>
@@ -157,14 +148,6 @@ const Boards = () => {
           )}
         </AllBoards>
       </Wrapper>
-      <MemberMenuPopover
-        logOut={logOut}
-        showPopover={showMenuPopover}
-        togglePopover={toggleMenuPopover}
-        initials={member.initials}
-        name={member.fullName}
-        email={member.email}
-      />
     </>
   );
 };

@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import useMemberContext from '../../hooks/useMemberContext';
+import { useLocation } from 'react-router-dom';
 
 interface NavProps {
   setBlue: boolean;
@@ -129,8 +130,10 @@ const MemberMenuText = styled.span`
   white-space: nowrap;
 `;
 
-const NavBar = ({ isLoading, setBlue, toggleMenuPopover }: any) => {
+const NavBar = ({ isLoading, toggleMenuPopover }: any) => {
   const { member } = useMemberContext();
+  const location = useLocation();
+  const setBlue = !location.pathname.includes('boards');
   return (
     <>
       <Nav setBlue={setBlue}>
