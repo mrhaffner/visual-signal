@@ -31,7 +31,7 @@ import {
   BOARD_DELETED_SUBSCRIPTION,
   REMOVE_FROM_BOARD_SUBSCRIPTION,
 } from '../graphql/subscriptions/all';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import useMemberContext from '../hooks/useMemberContext';
 
 interface Props {
@@ -41,7 +41,6 @@ interface Props {
 const BoardProvider = ({ children }: Props) => {
   // @ts-ignore comment
   let { boardId } = useParams();
-  const history = useHistory();
   const { loading, error, data, subscribeToMore } = useQuery(GET_BOARD, {
     variables: { id: boardId },
   });

@@ -1,5 +1,4 @@
 import { Switch, Route, Redirect } from 'react-router-dom';
-import BoardProvider from './providers/BoardProvider';
 import Board from './pages/Board';
 import Boards from './pages/Boards';
 import SignUp from './pages/SignUp';
@@ -28,9 +27,7 @@ const App = () => {
       <Switch>
         <Route path="/board/:boardId">
           {memberFound ? (
-            <BoardProvider>
-              <Board />
-            </BoardProvider>
+            <Board />
           ) : memberFound === false ? (
             <Redirect to="/login" />
           ) : (
@@ -55,7 +52,6 @@ const App = () => {
             <LoadingBoard />
           )}
         </Route>
-        {/* <Route exact path="/404"><PageNotFound /></Route> */}
         <Route exact path="/">
           {memberFound ? (
             <Redirect to="/boards" />
@@ -66,7 +62,6 @@ const App = () => {
           )}
         </Route>
         <Route component={PageNotFound} />
-        {/* <Redirect to= */}
       </Switch>
       {memberFound && showMenuPopover && (
         <MemberMenuPopover
