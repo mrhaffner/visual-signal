@@ -10,6 +10,7 @@ import {
   REMOVE_MEMBER_FROM_BOARD,
   UPDATE_MEMBER_LEVEL_BOARD,
 } from '../../../graphql/mutations/all';
+import useMemberContext from '../../../hooks/useMemberContext';
 
 interface Props {
   member: MemberInfo;
@@ -32,6 +33,7 @@ const ProfilePopover = ({
   facePilePosition,
   setPopoverMember,
 }: Props) => {
+  const { setMemberFound } = useMemberContext();
   const [popoverContentType, setPopoverContentType] = useState('main');
 
   const ref = useRef(null);
@@ -51,7 +53,11 @@ const ProfilePopover = ({
 
   const leaveOrRemove = member.idMember === myId ? 'leave' : 'remove';
 
-  const [removeMember] = useMutation(REMOVE_MEMBER_FROM_BOARD);
+  const [removeMember] = useMutation(REMOVE_MEMBER_FROM_BOARD, {
+    onError: () => {
+      setMemberFound(false);
+    },
+  });
 
   const handleRemove = () => {
     const inputObj = {
@@ -66,7 +72,11 @@ const ProfilePopover = ({
     setPopoverMember(null);
   };
 
-  const [updateMemberLevel] = useMutation(UPDATE_MEMBER_LEVEL_BOARD);
+  const [updateMemberLevel] = useMutation(UPDATE_MEMBER_LEVEL_BOARD, {
+    onError: () => {
+      setMemberFound(false);
+    },
+  });
 
   const handleMemberLevelUpdate = (newLevel: string) => {
     const inputObj = {

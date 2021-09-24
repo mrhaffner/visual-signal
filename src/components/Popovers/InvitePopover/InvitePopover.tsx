@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { INVITE_MEMBER } from '../../../graphql/mutations/all';
 import useKeyPress from '../../../hooks/useKeyPress';
+import useMemberContext from '../../../hooks/useMemberContext';
 import useOnClickOutside from '../../../hooks/useOnClickOutside';
 import { CloseBtn } from '../sharedStyles';
 import {
@@ -26,7 +27,13 @@ const InvitePopover = ({
   boardId,
   inviteBtnPosition,
 }: Props) => {
-  const [invite] = useMutation(INVITE_MEMBER);
+  const { setMemberFound } = useMemberContext();
+
+  const [invite] = useMutation(INVITE_MEMBER, {
+    onError: () => {
+      setMemberFound(false);
+    },
+  }); ///add on error and the profile popover too!
 
   const { register, handleSubmit, watch } = useForm();
   const watchInput = watch('input');
