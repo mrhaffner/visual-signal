@@ -11,7 +11,7 @@ const MainText = ({ memberFound, goToLogin }: Props) => {
       {memberFound ? (
         <StyledText>
           This page may be private. If someone gave you this link, they may need
-          to invite you to one of their boards or Workspaces.
+          to invite you to one of their boards.
         </StyledText>
       ) : (
         <StyledText>

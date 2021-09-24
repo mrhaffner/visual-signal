@@ -51,11 +51,11 @@ const BoardProvider = ({ children }: Props) => {
   const [board, setBoard] = useState<BoardInterface | null>(null);
 
   useEffect(() => {
-    if (data && data.getBoardById[0]) {
+    if (data?.getBoardById) {
       setBoard(data.getBoardById[0]); //!!!
-    } else if (data) {
-      //force refetch?
-      history.push('/boards');
+      // } else if (data) {
+      //   //force refetch?
+      //   history.push('/boards');
     }
   }, [data]);
 

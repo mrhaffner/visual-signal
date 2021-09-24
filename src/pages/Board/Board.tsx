@@ -12,6 +12,7 @@ import ProfilePopover from '../../components/Popovers/ProfilePopover';
 import { MemberInfo } from '../../types';
 import InvitePopover from '../../components/Popovers/InvitePopover';
 import { useHistory } from 'react-router';
+import PageNotFound from '../PageNotFound';
 
 const Wrapper = styled.div`
   display: flex;
@@ -50,7 +51,9 @@ const Board = () => {
     if (error) setMemberFound(false);
   }, [error]);
 
-  if (loading || board === null) return <></>;
+  if (loading) return <>loading</>;
+
+  if (board === null) return <PageNotFound />;
 
   if (error) return <p>Error :(</p>;
 
