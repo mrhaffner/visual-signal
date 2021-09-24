@@ -3,10 +3,8 @@ import EmailInput from '../../components/Inputs/EmailInput';
 import GreenFormButton from '../../components/Buttons/GreenFormButton';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useHistory } from 'react-router-dom';
 import { useLazyQuery } from '@apollo/client';
 import { VALIDATE_EMAIL } from '../../graphql/queries/all';
-import InputErrorField from '../../components/Inputs/InputErrorField';
 
 const TOS = styled.p`
   /* margin-top: 20px; */
@@ -19,29 +17,22 @@ const TOS = styled.p`
 
 interface Props {
   setEmailInUse: (input: boolean) => void;
+  setEmail: (input: string) => void;
 }
 
-const SignUpFormInitial = ({ setEmailInUse }: Props) => {
+const SignUpFormInitial = ({ setEmailInUse, setEmail }: any) => {
   const [validateEmail, { data }] = useLazyQuery(VALIDATE_EMAIL);
-  const [email, setEmail] = useState(null);
 
   const { register, handleSubmit, watch } = useForm();
   const watchEmail = watch('email');
 
   const [disabled, setDisabled] = useState(true);
-  let history = useHistory();
 
   const onSubmit = (data: any) => {
     const { email } = data;
     validateEmail({ variables: { email } });
     setEmail(email);
   };
-
-  useEffect(() => {
-    if (data && data.validateEmail) {
-      history.push(`/${email}`);
-    }
-  }, [data]);
 
   const regex = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/i;
 

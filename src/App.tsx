@@ -55,16 +55,7 @@ const App = () => {
             <LoadingBoard />
           )}
         </Route>
-        <Route path="/:slug">
-          {memberFound ? (
-            <Redirect to="/boards" />
-          ) : memberFound === false ? (
-            <SignUp />
-          ) : (
-            <LoadingBoard />
-          )}
-        </Route>
-        <Route path="/">
+        <Route exact path="/">
           {memberFound ? (
             <Redirect to="/boards" />
           ) : memberFound === false ? (
