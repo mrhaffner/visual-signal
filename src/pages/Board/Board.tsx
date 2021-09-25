@@ -51,7 +51,7 @@ const Board = () => {
     if (error) setMemberFound(false);
   }, [error]);
 
-  if (loading) return <>loading</>;
+  if (loading) return <></>;
 
   if (board === null) return <PageNotFound />;
 

@@ -9,7 +9,7 @@ import useToggle from './hooks/useToggle';
 import MemberMenuPopover from './components/Popovers/MemberMenuPopover';
 import PageNotFound from './pages/PageNotFound';
 
-const LoadingBoard = () => <div>loading</div>;
+const LoadingBoard = () => <div></div>;
 
 const App = () => {
   const { memberFound, member, logOut } = useMemberContext();

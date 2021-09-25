@@ -5,6 +5,7 @@ import useBoardContext from '../../hooks/useBoardContext';
 import DeleteCardButton from '../../components/Buttons/DeleteCardButton';
 import InlineTextEditCard from '../../components/Inputs/InlineTextEditCard';
 import useHover from '../../hooks/useHover';
+import { useState } from 'react';
 
 interface BoardItemStylesProps {
   isDragging: boolean;
@@ -44,6 +45,13 @@ interface Props {
 const Card = ({ card, index }: Props) => {
   const { deleteCard, newCardName } = useBoardContext();
   const [hoverRef, isHovered] = useHover<HTMLDivElement>();
+  const [cardText, setCardText] = useState(card.name);
+  const handleSetText = (text: string) => {
+    if (text.length) {
+      setCardText(text);
+      newCardName({ _id: card._id, name: text });
+    }
+  };
 
   return (
     <Draggable draggableId={card._id} index={index}>
@@ -55,12 +63,7 @@ const Card = ({ card, index }: Props) => {
           isDragging={snapshot.isDragging}
         >
           <CardDetails ref={hoverRef}>
-            <InlineTextEditCard
-              text={card.name}
-              onSetText={(text: string) =>
-                newCardName({ _id: card._id, name: text })
-              }
-            />
+            <InlineTextEditCard text={cardText} onSetText={handleSetText} />
             <DeleteCardButton
               handleDelete={deleteCard}
               id={card._id}
