@@ -83,3 +83,26 @@ export const reorderCardsAcrossLists = (
   // @ts-ignore comment
   updateBoard(newBoard);
 };
+
+export const addCardHelper = (
+  boardData: BoardInterface,
+  cardObject: any,
+  listData: any,
+  updateBoard: React.Dispatch<React.SetStateAction<BoardInterface | null>>,
+) => {
+  const foundList = boardData.lists.find((x) => x._id === listData._id);
+  cardObject = { ...cardObject, _id: Math.random().toString() };
+  //@ts-ignore
+  let newCardArray = [...foundList.cards, cardObject];
+
+  const newList = {
+    ...listData,
+    cards: newCardArray,
+  };
+
+  const newLists = boardData.lists.map((x) =>
+    x._id === listData._id ? newList : x,
+  );
+  const newBoard = { ...boardData, lists: newLists };
+  updateBoard(newBoard);
+};

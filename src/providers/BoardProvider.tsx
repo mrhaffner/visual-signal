@@ -5,6 +5,7 @@ import { BoardInterface, CardInterface, ListInterface } from '../types';
 import { DropResult } from 'react-beautiful-dnd';
 import { BoardContext } from '../hooks/useBoardContext';
 import {
+  addCardHelper,
   reorderCardsAcrossLists,
   reorderCardsInSameList,
   reorderLists,
@@ -325,37 +326,18 @@ const BoardProvider = ({ children }: Props) => {
       return;
     }
     try {
-      const cardObject = {
+      let cardObject = {
         name: input,
         pos: newItemPosition(list.cards),
         idList: list._id,
         idBoard: board._id,
       };
       newCardMutation({ variables: { createCardInput: cardObject } });
-      // const oldList = board.lists.filter(
-      //   (x: ListInterface) => x._id === list._id,
-      // )[0];
-      // console.log(oldList);
-
-      // let cards = [...oldList.cards];
-      // console.log(cards);
-
-      // //@ts-ignore
-      // cards = [...oldList.cards, cardObject];
-      // console.log(cards);
-      // oldList.cards = cards;
-      // const newLists = board.lists.map((x: ListInterface) =>
-      //   x._id === list._id ? oldList : x,
-      // );
-      // console.log(newLists);
-
-      // setBoard({ ...board, lists: newLists });
+      addCardHelper(board, cardObject, list, setBoard);
     } catch (e) {
       console.log(e);
     }
   };
-
-  // console.log(board);
 
   const newCardName = (updateObject: any) => {
     try {
