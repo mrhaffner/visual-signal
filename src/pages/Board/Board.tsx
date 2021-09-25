@@ -17,7 +17,28 @@ import PageNotFound from '../PageNotFound';
 const Wrapper = styled.div`
   display: flex;
   align-items: flex-start;
+  flex-shrink: 0;
   margin-left: 4px;
+
+  max-height: 100%;
+  margin-bottom: 8px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 8px;
+
+  &::-webkit-scrollbar {
+    height: 12px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #00000026;
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.7);
+  }
 `;
 
 const Board = () => {

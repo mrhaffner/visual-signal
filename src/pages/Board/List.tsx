@@ -20,6 +20,7 @@ const Wrapper = styled.div`
   white-space: normal;
   width: 272px;
   margin: 0 4px;
+  flex-shrink: 0;
 `;
 
 const TitleContainer = styled.div`
