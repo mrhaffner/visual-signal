@@ -133,7 +133,7 @@ const MemberMenuText = styled.span`
 const NavBar = ({ isLoading, toggleMenuPopover }: any) => {
   const { member } = useMemberContext();
   const location = useLocation();
-  const setBlue = !location.pathname.includes('boards');
+  const setBlue = !location.pathname.includes('board/');
   return (
     <>
       <Nav setBlue={setBlue}>

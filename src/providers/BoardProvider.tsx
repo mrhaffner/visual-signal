@@ -1,7 +1,7 @@
 import { useState, useEffect, ReactNode } from 'react';
 import { GET_BOARD } from '../graphql/queries/all';
 import { useQuery, useMutation } from '@apollo/client';
-import { BoardInterface, ListInterface } from '../types';
+import { BoardInterface, CardInterface, ListInterface } from '../types';
 import { DropResult } from 'react-beautiful-dnd';
 import { BoardContext } from '../hooks/useBoardContext';
 import {
@@ -332,10 +332,30 @@ const BoardProvider = ({ children }: Props) => {
         idBoard: board._id,
       };
       newCardMutation({ variables: { createCardInput: cardObject } });
+      // const oldList = board.lists.filter(
+      //   (x: ListInterface) => x._id === list._id,
+      // )[0];
+      // console.log(oldList);
+
+      // let cards = [...oldList.cards];
+      // console.log(cards);
+
+      // //@ts-ignore
+      // cards = [...oldList.cards, cardObject];
+      // console.log(cards);
+      // oldList.cards = cards;
+      // const newLists = board.lists.map((x: ListInterface) =>
+      //   x._id === list._id ? oldList : x,
+      // );
+      // console.log(newLists);
+
+      // setBoard({ ...board, lists: newLists });
     } catch (e) {
       console.log(e);
     }
   };
+
+  // console.log(board);
 
   const newCardName = (updateObject: any) => {
     try {

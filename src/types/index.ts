@@ -32,6 +32,7 @@ export interface ListInterface extends CommonData {
 export interface CardInterface extends CommonData {
   idList: string;
   pos: number;
+  idBoard: string;
 }
 
 // export enum ProfilePopoverContentType {
