@@ -82,9 +82,10 @@ interface Props {
 const BoardTitleForm = ({ text, submitData }: Props) => {
   const [showForm, setShowForm] = useState(false);
 
-  const { register, handleSubmit, setFocus, reset } = useForm({
+  const { register, handleSubmit, setFocus, reset, watch } = useForm({
     defaultValues: { input: text },
   });
+  const watchInput = watch('input');
 
   const wrapperRef = useRef(null);
 
@@ -97,7 +98,11 @@ const BoardTitleForm = ({ text, submitData }: Props) => {
 
   useOnClickOutside(wrapperRef, () => {
     if (showForm) {
-      onSubmit();
+      if (!watchInput.length) {
+        reset({ input: text });
+      } else {
+        onSubmit();
+      }
       setShowForm(false);
     }
   });
@@ -111,7 +116,11 @@ const BoardTitleForm = ({ text, submitData }: Props) => {
   useEffect(() => {
     // if Enter is pressed, save the text and case the editor
     if (enter && showForm) {
-      onSubmit();
+      if (!watchInput.length) {
+        reset({ input: text });
+      } else {
+        onSubmit();
+      }
       setShowForm(false);
     }
     // if Escape is pressed, revert the text and close the editor

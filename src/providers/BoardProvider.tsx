@@ -255,6 +255,7 @@ const BoardProvider = ({ children }: Props) => {
       updateBoardNameMutation({
         variables: { updateBoardInput: updateObject },
       });
+      setBoard({ ...board, name: input });
     } catch (e) {
       console.log(e);
     }

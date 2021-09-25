@@ -105,7 +105,6 @@ const List = ({ list, index }: Props) => {
 
             <DeleteListButton handleDelete={deleteList} id={list._id} />
           </TitleContainer>
-
           <Droppable droppableId={list._id} type="card">
             {(provided, snapshot) => (
               <Container
@@ -118,7 +117,6 @@ const List = ({ list, index }: Props) => {
               </Container>
             )}
           </Droppable>
-          {/* This could be a component named toggle card composer */}
           {showComposer ? (
             <CardComposer
               setShowComposer={setShowComposer}
