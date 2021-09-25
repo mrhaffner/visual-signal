@@ -6,9 +6,10 @@ import useKeypress from '../../hooks/useKeyPress';
 import { useRef, useEffect } from 'react';
 
 const CardComposerContainer = styled.div`
-  padding-bottom: 8px;
-  margin: 4px;
-  padding: 4px;
+  /* padding-bottom: 8px; */
+  /* margin: 4px; */
+  /* padding: 4px; */
+  padding-bottom: 35px;
 `;
 
 const CardTextInputContainer = styled.form`

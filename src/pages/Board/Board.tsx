@@ -20,7 +20,7 @@ const Wrapper = styled.div`
   flex-shrink: 0;
   margin-left: 4px;
 
-  max-height: 100%;
+  /* max-height: 100%; */
   margin-bottom: 8px;
   overflow-x: auto;
   overflow-y: hidden;

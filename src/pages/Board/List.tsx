@@ -6,7 +6,7 @@ import useBoardContext from '../../hooks/useBoardContext';
 import DeleteListButton from '../../components/Buttons/DeleteListButton';
 import OpenCardComposer from '../../components/Composers/OpenCardComposer';
 import CardComposer from '../../components/Composers/CardComposer';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import ListTitleInput from '../../components/Inputs/ListTitleInput';
 
 const Wrapper = styled.div`
@@ -21,6 +21,7 @@ const Wrapper = styled.div`
   width: 272px;
   margin: 0 4px;
   flex-shrink: 0;
+  max-height: 91.5vh;
 `;
 
 const TitleContainer = styled.div`
@@ -50,6 +51,7 @@ const TitleDragHandle = styled.h2<DragHandleProps>`
 
 type BoardItemStylesProps = {
   isDraggingOver: boolean;
+  showComposer: boolean;
 };
 
 // const Container = styled.div<BoardItemStylesProps>`
@@ -68,6 +70,22 @@ const Container = styled.div<BoardItemStylesProps>`
   overflow-y: auto;
   padding: 0 4px;
   z-index: 1;
+
+  -webkit-transform: translateZ(0);
+  &::-webkit-scrollbar {
+    height: 8px;
+    width: 8px;
+  }
+  &::-webkit-scrollbar-track {
+    background: #091e4214;
+    border-radius: 3px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 3px;
+    background-color: #091e4214;
+  }
+  ${(props) => props.showComposer && 'margin-bottom: 6px'};
 `;
 
 interface Props {
@@ -85,6 +103,12 @@ const List = ({ list, index }: Props) => {
       setHidden(true);
     }
   };
+  const composerRef = useRef(null);
+
+  useEffect(() => {
+    //@ts-ignore
+    composerRef.current?.scrollIntoView();
+  });
 
   return (
     <Draggable draggableId={list._id} index={index}>
@@ -109,16 +133,30 @@ const List = ({ list, index }: Props) => {
           <Droppable droppableId={list._id} type="card">
             {(provided, snapshot) => (
               <Container
+                showComposer={showComposer}
                 ref={provided.innerRef}
                 {...provided.droppableProps}
                 isDraggingOver={snapshot.isDraggingOver}
               >
                 <CardList cards={list.cards} />
                 {provided.placeholder}
+                {showComposer && (
+                  <>
+                    <CardComposer
+                      setShowComposer={setShowComposer}
+                      submitData={addCard}
+                      list={list}
+                    />
+                    <div ref={composerRef} />
+                  </>
+                )}
               </Container>
             )}
           </Droppable>
-          {showComposer ? (
+          {!showComposer && (
+            <OpenCardComposer setShowComposer={setShowComposer} />
+          )}
+          {/* {showComposer ? (
             <CardComposer
               setShowComposer={setShowComposer}
               submitData={addCard}
@@ -126,7 +164,7 @@ const List = ({ list, index }: Props) => {
             />
           ) : (
             <OpenCardComposer setShowComposer={setShowComposer} />
-          )}
+          )} */}
         </Wrapper>
       )}
     </Draggable>
