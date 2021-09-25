@@ -47,7 +47,8 @@ const ListTitleInput = ({
   hidden,
   setHidden,
 }: Props) => {
-  const { register, handleSubmit, reset } = useForm();
+  const { register, handleSubmit, reset, watch } = useForm();
+  const watchInput = watch('input');
   const [key, setKey] = useState(Math.random());
 
   const inputRef = useRef(null);
@@ -74,6 +75,9 @@ const ListTitleInput = ({
 
   const handleKeyPress = (e: any) => {
     if (e.key === 'Enter') {
+      if (!watchInput.length) {
+        setKey(Math.random());
+      }
       e.preventDefault();
       // @ts-ignore comment
       inputRef.current.blur();
