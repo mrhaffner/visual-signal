@@ -44,6 +44,7 @@ const BoardProvider = ({ children }: Props) => {
   let { boardId } = useParams();
   const { loading, error, data, subscribeToMore } = useQuery(GET_BOARD, {
     variables: { id: boardId },
+    fetchPolicy: 'network-only',
   });
 
   const { setMemberFound } = useMemberContext();
@@ -174,8 +175,6 @@ const BoardProvider = ({ children }: Props) => {
     }
 
     if (type === 'list') {
-      reorderLists(board, source, destination, setBoard);
-
       const newPos = updateItemPosition(
         board.lists,
         destination.index,
@@ -190,6 +189,7 @@ const BoardProvider = ({ children }: Props) => {
       updateListPosMutation({
         variables: { updateListPosInput: updateListObject },
       });
+      reorderLists(board, source, destination, setBoard);
 
       return;
     }
