@@ -32,7 +32,7 @@ import {
   BOARD_DELETED_SUBSCRIPTION,
   REMOVE_FROM_BOARD_SUBSCRIPTION,
 } from '../graphql/subscriptions/all';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import useMemberContext from '../hooks/useMemberContext';
 
 interface Props {
@@ -46,6 +46,8 @@ const BoardProvider = ({ children }: Props) => {
     variables: { id: boardId },
     fetchPolicy: 'network-only',
   });
+
+  let history = useHistory();
 
   const { setMemberFound } = useMemberContext();
 
@@ -266,6 +268,7 @@ const BoardProvider = ({ children }: Props) => {
     deleteBoardMutation({
       variables: { boardId: id },
     });
+    history.push('/boards');
   };
 
   const addList = (input: string) => {

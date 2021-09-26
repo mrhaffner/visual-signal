@@ -48,9 +48,9 @@ const Boards = () => {
   const { loading, error, data, subscribeToMore, refetch } =
     useQuery(GET_MY_BOARDS);
 
-  useEffect(() => {
-    refetch();
-  }, []);
+  // useEffect(() => {
+  //   refetch();
+  // }, []);
 
   const [boardList, setBoardList] = useState<BoardInterface[]>([]);
   const [showCreateBoardModal, setShowCreateBoardModal] = useState(false);
