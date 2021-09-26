@@ -51,6 +51,7 @@ export const NEW_BOARD = gql`
       boardObj {
         _id
         name
+        color
       }
     }
   }

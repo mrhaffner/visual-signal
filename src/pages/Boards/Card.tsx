@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { BoardColorKeys } from '../../types';
+import { useRef } from 'react';
+import useHover from '../../hooks/useHover';
 
 const Wrapper = styled.li`
   margin: 0 2% 2% 0;
@@ -61,9 +63,20 @@ const Container = styled(Link)<ColorProps>`
   padding: 8px;
   position: relative;
   text-decoration: none;
-  &:hover {
+  /* &:hover {
     background-color: grey;
-  }
+  } */
+`;
+
+const BoardTileFade = styled.span`
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  border-radius: 3px;
+  display: block;
+  background-color: #00000040;
 `;
 
 const TitleContainer = styled.div`
@@ -102,10 +115,14 @@ interface Props {
 }
 
 const Card = ({ name, url, color }: Props) => {
+  const [hoverRef, isHovered] = useHover();
+
   return (
     <>
-      <Wrapper>
+      {/* @ts-ignore */}
+      <Wrapper ref={hoverRef}>
         <Container to={url} color={color}>
+          {isHovered && <BoardTileFade />}
           <TitleContainer>
             <TitleSubContainer>
               <Title>{name}</Title>
