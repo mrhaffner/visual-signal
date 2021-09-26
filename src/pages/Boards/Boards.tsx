@@ -23,6 +23,9 @@ const AllBoards = styled.div`
 const Wrapper = styled.main`
   display: flex;
   justify-content: center;
+  @media only screen and (max-width: 900px) {
+    margin: 0 13%;
+  }
 `;
 
 const BoardsTitle = styled.h3`

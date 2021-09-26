@@ -14,6 +14,22 @@ const Wrapper = styled.li`
   &:nth-child(4n) {
     margin-right: 0;
   }
+
+  @media only screen and (min-width: 751px) and (max-width: 900px) {
+    width: 32%;
+    :nth-child(4n) {
+      margin-right: 2%;
+    }
+  }
+
+  @media only screen and (max-width: 750px) {
+    margin-bottom: 8px;
+    margin-right: 8px;
+    width: calc(50% - 4px);
+    :nth-child(2n) {
+      margin-right: 0;
+    }
+  }
 `;
 
 const Container = styled(Link)`

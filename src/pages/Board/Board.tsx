@@ -33,6 +33,8 @@ const Wrapper = styled.div`
   &::-webkit-scrollbar-track {
     background: #00000026;
     border-radius: 4px;
+    /* border-right: 13px white solid;
+    background-clip: padding-box; */
   }
 
   &::-webkit-scrollbar-thumb {
