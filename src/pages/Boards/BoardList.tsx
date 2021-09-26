@@ -22,7 +22,12 @@ const BoardList = ({ boardList, setShowCreateBoardModal }: Props) => {
       {boardList.map((board) => {
         const url = `/board/${board._id}`;
         return (
-          <Card key={board.name + Math.random()} url={url} name={board.name} />
+          <Card
+            key={board.name + Math.random()}
+            url={url}
+            name={board.name}
+            color={board.color}
+          />
         );
       })}
       <CreateBoardTile setShowCreateBoardModal={setShowCreateBoardModal} />

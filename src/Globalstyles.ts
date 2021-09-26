@@ -2,6 +2,7 @@ import { createGlobalStyle } from 'styled-components';
 import reset from 'styled-reset';
 // @ts-ignore comment
 import trellicons from './fonts/trellicons.ttf';
+import { ColorKeys } from './types';
 
 const colors = {
   blue: 'rgb(0, 121, 191)',
@@ -15,19 +16,6 @@ const colors = {
   grey: 'rgb(131, 140, 145)',
   default: '',
 };
-
-enum ColorKeys {
-  BLUE = 'blue',
-  ORANGE = 'orange',
-  GREEN = 'green',
-  RED = 'red',
-  PURPLE = 'purple',
-  PINK = 'pink',
-  LIME = 'lime',
-  SKY = 'sky',
-  GREY = 'grey',
-  DEFAULT = 'default',
-}
 
 interface GlobalProps {
   color: ColorKeys;

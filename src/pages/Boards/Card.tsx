@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { BoardColorKeys } from '../../types';
 
 const Wrapper = styled.li`
   margin: 0 2% 2% 0;
@@ -32,11 +33,28 @@ const Wrapper = styled.li`
   }
 `;
 
-const Container = styled(Link)`
+const colors = {
+  blue: 'rgb(0, 121, 191)',
+  orange: 'rgb(210, 144, 52)',
+  green: 'rgb(81, 152, 57)',
+  red: 'rgb(176, 70, 50)',
+  purple: 'rgb(137, 96, 158)',
+  pink: 'rgb(205, 90, 145)',
+  lime: 'rgb(75, 191, 107)',
+  sky: 'rgb(0, 174, 204)',
+  grey: 'rgb(131, 140, 145)',
+};
+
+interface ColorProps {
+  color: BoardColorKeys;
+}
+
+const Container = styled(Link)<ColorProps>`
   margin-right: 0;
   border-radius: 3px;
   display: block;
-  background-color: #97a0af;
+  background-color: ${(props) => colors[props.color] || '#97a0af'};
+  /* background-color: #97a0af; */
   background-position: 50%;
   background-size: cover;
   line-height: 20px;
@@ -80,13 +98,14 @@ const Title = styled.div`
 interface Props {
   name: string;
   url: string;
+  color: BoardColorKeys;
 }
 
-const Card = ({ name, url }: Props) => {
+const Card = ({ name, url, color }: Props) => {
   return (
     <>
       <Wrapper>
-        <Container to={url}>
+        <Container to={url} color={color}>
           <TitleContainer>
             <TitleSubContainer>
               <Title>{name}</Title>

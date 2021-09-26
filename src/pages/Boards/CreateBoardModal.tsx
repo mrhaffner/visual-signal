@@ -245,18 +245,6 @@ const CreateBoardModal = ({ setShowCreateBoardModal }: Props) => {
     setShowCreateBoardModal(false);
   });
 
-  // const colors = {
-  //   blue: 'rgb(0, 121, 191)',
-  //   orange: 'rgb(210, 144, 52)',
-  //   green: 'rgb(81, 152, 57)',
-  //   red: 'rgb(176, 70, 50)',
-  //   purple: 'rgb(137, 96, 158)',
-  //   pink: 'rgb(205, 90, 145)',
-  //   lime: 'rgb(75, 191, 107)',
-  //   sky: 'rgb(0, 174, 204)',
-  //   grey: 'rgb(131, 157, 172)',
-  // };
-
   const colors = [
     'blue',
     'orange',
@@ -270,8 +258,6 @@ const CreateBoardModal = ({ setShowCreateBoardModal }: Props) => {
   ];
 
   const randomizer = (colors: any) => {
-    // var keys = Object.keys(obj);
-    // return obj[keys[(keys.length * Math.random()) << 0]];
     return colors[Math.floor(Math.random() * colors.length)];
   };
 

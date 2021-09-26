@@ -76,14 +76,6 @@ const Board = ({ setBoardColor }: Props) => {
     }
   });
 
-  // useEffect(() => {
-  //   if (board) {
-  //     if (memberLevel.length === 0) {
-  //       history.push('/boards');
-  //     }
-  //   }
-  // });
-
   useEffect(() => {
     if (board) {
       setBoardColor(board.color);
@@ -99,10 +91,6 @@ const Board = ({ setBoardColor }: Props) => {
   if (board === null) return <PageNotFound />;
 
   if (error) return <p>Error :(</p>;
-
-  // const memberLevel = board.members.filter(
-  //   (x: MemberInfo) => x.idMember === member._id,
-  // );
 
   const adminCount = board.members.filter(
     (x: MemberInfo) => x.memberType !== 'normal',
