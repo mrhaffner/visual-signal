@@ -21,6 +21,7 @@ export interface BoardInterface extends CommonData {
   lists: ListInterface[];
   idMemberCreator: string;
   members: [MemberInfo];
+  color: ColorKeys;
 }
 
 export interface ListInterface extends CommonData {
@@ -41,3 +42,16 @@ export interface CardInterface extends CommonData {
 //   leave = 'leave',
 //   remove = 'remove',
 // }
+
+export enum ColorKeys {
+  BLUE = 'blue',
+  ORANGE = 'orange',
+  GREEN = 'green',
+  RED = 'red',
+  PURPLE = 'purple',
+  PINK = 'pink',
+  LIME = 'lime',
+  SKY = 'sky',
+  GREY = 'grey',
+  DEFAULT = 'default',
+}

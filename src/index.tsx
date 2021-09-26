@@ -6,7 +6,6 @@ import { setContext } from 'apollo-link-context';
 import { getMainDefinition } from '@apollo/client/utilities';
 import { WebSocketLink } from '@apollo/client/link/ws';
 import { BrowserRouter as Router } from 'react-router-dom';
-import GlobalStyles from './GlobalStyles';
 import MemberProvider from './providers/MemberProvider';
 import cache from './graphql/cache';
 
@@ -60,7 +59,6 @@ ReactDOM.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
       <Router forceRefresh={false}>
-        <GlobalStyles />
         <MemberProvider>
           <App />
         </MemberProvider>

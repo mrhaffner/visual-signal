@@ -1,4 +1,4 @@
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route, Redirect, useLocation } from 'react-router-dom';
 import Board from './pages/Board';
 import Boards from './pages/Boards';
 import SignUp from './pages/SignUp';
@@ -8,15 +8,27 @@ import NavBar from './components/NavBar';
 import useToggle from './hooks/useToggle';
 import MemberMenuPopover from './components/Popovers/MemberMenuPopover';
 import PageNotFound from './pages/PageNotFound';
+import { useEffect, useState } from 'react';
+import { ColorKeys } from './types';
+import GlobalStyles from './GlobalStyles';
 
 const LoadingBoard = () => <div></div>;
 
 const App = () => {
   const { memberFound, member, logOut } = useMemberContext();
   const [showMenuPopover, toggleMenuPopover] = useToggle();
+  //@ts-ignore
+  const [boardColor, setBoardColor] = useState<ColorKeys>('default');
+  const location = useLocation();
+
+  useEffect(() => {
+    //@ts-ignore
+    if (!location.pathname.includes('board/')) setBoardColor('default');
+  });
 
   return (
     <>
+      <GlobalStyles color={boardColor} />
       {memberFound && (
         <NavBar
           // how to handle isLoading?
@@ -27,7 +39,7 @@ const App = () => {
       <Switch>
         <Route path="/board/:boardId">
           {memberFound ? (
-            <Board />
+            <Board setBoardColor={setBoardColor} />
           ) : memberFound === false ? (
             <Redirect to="/login" />
           ) : (

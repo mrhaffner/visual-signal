@@ -1,10 +1,11 @@
 import { gql } from '@apollo/client';
 
 export const CREATE_BOARD = gql`
-  mutation CreateBoard($nameInput: String!) {
-    createBoard(name: $nameInput) {
+  mutation CreateBoard($boardInput: CreateBoardInput!) {
+    createBoard(input: $boardInput) {
       name
       _id
+      color
     }
   }
 `;

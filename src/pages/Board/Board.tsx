@@ -9,7 +9,7 @@ import BoardHeader from './BoardHeader';
 import useMemberContext from '../../hooks/useMemberContext';
 import useToggle from '../../hooks/useToggle';
 import ProfilePopover from '../../components/Popovers/ProfilePopover';
-import { MemberInfo } from '../../types';
+import { ColorKeys, MemberInfo } from '../../types';
 import InvitePopover from '../../components/Popovers/InvitePopover';
 import { useHistory } from 'react-router';
 import PageNotFound from '../PageNotFound';
@@ -19,7 +19,6 @@ const Wrapper = styled.div`
   align-items: flex-start;
   flex-shrink: 0;
   margin-left: 4px;
-
   /* max-height: 100%; */
   margin-bottom: 8px;
   overflow-x: auto;
@@ -43,7 +42,11 @@ const Wrapper = styled.div`
   }
 `;
 
-const Board = () => {
+interface Props {
+  setBoardColor: (input: ColorKeys) => void;
+}
+
+const Board = ({ setBoardColor }: Props) => {
   const {
     loading,
     error,
@@ -62,11 +65,28 @@ const Board = () => {
   const [inviteBtnPosition, setInviteBtnPosition] = useState(0);
   const [facePilePosition, setFacePilePosition] = useState(0);
 
+  // const memberLevel =
+  //   board?.members.filter((x: MemberInfo) => x.idMember === member._id) || [];
+
+  // useEffect(() => {
+  //   if (board) {
+  //     if (memberLevel?.length === 0) {
+  //       history.push('/boards');
+  //     }
+  //   }
+  // });
+
   useEffect(() => {
     if (board) {
       if (memberLevel.length === 0) {
         history.push('/boards');
       }
+    }
+  });
+
+  useEffect(() => {
+    if (board) {
+      setBoardColor(board.color);
     }
   });
 

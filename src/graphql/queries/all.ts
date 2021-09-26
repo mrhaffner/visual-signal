@@ -5,6 +5,7 @@ export const ALL_BOARDS = gql`
     allBoards {
       _id
       name
+      color
     }
   }
 `;
@@ -14,6 +15,7 @@ export const GET_BOARD = gql`
     getBoardById(_id: $id) {
       _id
       name
+      color
       members {
         idMember
         memberType
@@ -42,6 +44,7 @@ export const GET_MY_BOARDS = gql`
     getMyBoards {
       _id
       name
+      color
     }
   }
 `;

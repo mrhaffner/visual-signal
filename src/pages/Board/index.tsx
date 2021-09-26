@@ -1,9 +1,14 @@
 import BoardProvider from '../../providers/BoardProvider';
 import Board from './Board';
+import { ColorKeys } from '../../types';
 
-const WrappedBoard = () => (
+interface Props {
+  setBoardColor: (input: ColorKeys) => void;
+}
+
+const WrappedBoard = ({ setBoardColor }: Props) => (
   <BoardProvider>
-    <Board />
+    <Board setBoardColor={setBoardColor} />
   </BoardProvider>
 );
 
