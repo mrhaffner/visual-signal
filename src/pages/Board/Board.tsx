@@ -65,12 +65,20 @@ const Board = ({ setBoardColor }: Props) => {
   const [inviteBtnPosition, setInviteBtnPosition] = useState(0);
   const [facePilePosition, setFacePilePosition] = useState(0);
 
-  // const memberLevel =
-  //   board?.members.filter((x: MemberInfo) => x.idMember === member._id) || [];
+  const memberLevel =
+    board?.members.filter((x: MemberInfo) => x.idMember === member._id) || [];
+
+  useEffect(() => {
+    if (board) {
+      if (memberLevel?.length === 0) {
+        history.push('/boards');
+      }
+    }
+  });
 
   // useEffect(() => {
   //   if (board) {
-  //     if (memberLevel?.length === 0) {
+  //     if (memberLevel.length === 0) {
   //       history.push('/boards');
   //     }
   //   }
@@ -78,17 +86,9 @@ const Board = ({ setBoardColor }: Props) => {
 
   useEffect(() => {
     if (board) {
-      if (memberLevel.length === 0) {
-        history.push('/boards');
-      }
-    }
-  });
-
-  useEffect(() => {
-    if (board) {
       setBoardColor(board.color);
     }
-  });
+  }, [board?.color]);
 
   useEffect(() => {
     if (error) setMemberFound(false);
@@ -100,9 +100,9 @@ const Board = ({ setBoardColor }: Props) => {
 
   if (error) return <p>Error :(</p>;
 
-  const memberLevel = board.members.filter(
-    (x: MemberInfo) => x.idMember === member._id,
-  );
+  // const memberLevel = board.members.filter(
+  //   (x: MemberInfo) => x.idMember === member._id,
+  // );
 
   const adminCount = board.members.filter(
     (x: MemberInfo) => x.memberType !== 'normal',

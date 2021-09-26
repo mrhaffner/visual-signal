@@ -24,7 +24,7 @@ const App = () => {
   useEffect(() => {
     //@ts-ignore
     if (!location.pathname.includes('board/')) setBoardColor('default');
-  });
+  }, [location]);
 
   return (
     <>
