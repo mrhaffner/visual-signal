@@ -69,12 +69,10 @@ const MemberProvider = ({ children }: Props) => {
   }, [token]);
 
   useEffect(() => {
-    if (memberData?.getMemberInfo) {
-      console.log(memberData);
-
+    if (memberData) {
       setMember(memberData.getMyMemberInfo);
       //@ts-ignore
-      setMemberFound(true); //
+      if (memberData.getMyMemberInfo) setMemberFound(true); //!!//
     }
   }, [memberData]);
 

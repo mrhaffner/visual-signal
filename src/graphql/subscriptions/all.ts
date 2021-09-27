@@ -6,6 +6,7 @@ export const BOARD_UPDATE_SUBSCRIPTION = gql`
       _id
       name
       idMemberCreator
+      color
       members {
         idMember
         memberType
