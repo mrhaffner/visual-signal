@@ -18,6 +18,8 @@ const ListComposerContainer = styled.div`
   &:hover {
     background-color: #00000029;
   }
+  flex-shrink: 0;
+  margin-right: 8px;
 `;
 
 const ListComposer = styled.a`

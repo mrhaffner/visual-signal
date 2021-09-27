@@ -20,6 +20,8 @@ const ListWrapper = styled.div`
   vertical-align: top;
   white-space: nowrap;
   width: 272px;
+  flex-shrink: 0;
+  margin-right: 8px;
 `;
 
 const StyledInput = styled.input`
