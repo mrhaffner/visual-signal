@@ -11,6 +11,8 @@ const TitleContainer = styled.div`
   font-weight: 700;
   line-height: 32px;
   /* max-width: calc(100% - 24px); */
+  max-width: 30vw;
+  /* max-width: 30%; */
   overflow: hidden;
   padding: 0;
   text-decoration: none;
@@ -37,8 +39,6 @@ const TitleText = styled.h1`
 `;
 
 const TitleInput = styled.input`
-  /* what this about? calculated? */
-  width: 89px;
   background-color: #fff;
   border: 0;
   /* display: none; */
@@ -136,7 +136,6 @@ const BoardTitleForm = ({ text, submitData }: Props) => {
         <TitleInput
           spellCheck="false"
           dir="auto"
-          maxLength={512}
           {...register('input', { required: true })}
         />
       ) : (
