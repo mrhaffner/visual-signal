@@ -80,6 +80,7 @@ const BoardProvider = ({ children }: Props) => {
     variables: { idBoards: [boardId] },
     updateQuery: (prev, { subscriptionData }) => {
       if (!subscriptionData.data.boardDeleted) return prev;
+      history.push('/boards');
       return Object.assign({}, prev, {
         getBoardById: [],
       });
