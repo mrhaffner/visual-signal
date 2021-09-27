@@ -31,7 +31,6 @@ const SignUpFormInitial = ({ setEmailInUse, setEmail }: any) => {
   const onSubmit = (data: any) => {
     const { email } = data;
     validateEmail({ variables: { email } });
-    setEmail(email);
   };
 
   const regex = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/i;
@@ -47,8 +46,9 @@ const SignUpFormInitial = ({ setEmailInUse, setEmail }: any) => {
   useEffect(() => {
     if (data && data.validateEmail === false) {
       setEmailInUse(true);
-    } else {
+    } else if (data && data.validateEmail === true) {
       setEmailInUse(false);
+      setEmail(watchEmail);
     }
   }, [data]);
 
