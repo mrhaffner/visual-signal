@@ -86,7 +86,7 @@ const Board = ({ setBoardColor }: Props) => {
     if (error) setMemberFound(false);
   }, [error]);
 
-  if (loading) return <></>;
+  if (loading || !board) return <></>;
 
   if (board === null) return <PageNotFound />;
 

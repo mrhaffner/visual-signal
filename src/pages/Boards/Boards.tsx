@@ -51,8 +51,6 @@ const Boards = () => {
   );
 
   useEffect(() => {
-    console.log('ho');
-
     refetch();
   }, []);
 
@@ -80,8 +78,6 @@ const Boards = () => {
     },
     updateQuery: (prev, { subscriptionData }) => {
       if (!subscriptionData.data.boardDeleted) return prev;
-      console.log('hum');
-
       const filtered = prev.getMyBoards.filter((x: any) => {
         return x._id !== subscriptionData.data.boardDeleted;
       });

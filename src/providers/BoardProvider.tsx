@@ -80,6 +80,7 @@ const BoardProvider = ({ children }: Props) => {
     variables: { idBoards: [boardId] },
     updateQuery: (prev, { subscriptionData }) => {
       if (!subscriptionData.data.boardDeleted) return prev;
+
       history.push('/boards');
       return Object.assign({}, prev, {
         getBoardById: [],
@@ -91,6 +92,8 @@ const BoardProvider = ({ children }: Props) => {
     document: REMOVE_FROM_BOARD_SUBSCRIPTION,
     updateQuery: (prev, { subscriptionData }) => {
       if (!subscriptionData.data.removeFromBoard) return prev;
+      if (subscriptionData.data.removeFromBoard.boardId !== board?._id) return;
+      history.push('/boards');
 
       return Object.assign({}, prev, {
         getBoardById: [],
