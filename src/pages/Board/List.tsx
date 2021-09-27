@@ -21,7 +21,7 @@ const Wrapper = styled.div`
   width: 272px;
   margin: 0 4px;
   flex-shrink: 0;
-  max-height: 91.5vh;
+  /* max-height: 91.5vh; */
 `;
 
 const TitleContainer = styled.div`
@@ -71,7 +71,7 @@ const Container = styled.div<BoardItemStylesProps>`
   padding: 0 4px;
   z-index: 1;
 
-  -webkit-transform: translateZ(0);
+  /* -webkit-transform: translateZ(0); */
   &::-webkit-scrollbar {
     height: 8px;
     width: 8px;
@@ -85,7 +85,7 @@ const Container = styled.div<BoardItemStylesProps>`
     border-radius: 3px;
     background-color: #091e4214;
   }
-  ${(props) => props.showComposer && 'margin-bottom: 6px'};
+  ${(props) => props.showComposer && 'margin-bottom: 6px'}
 `;
 
 interface Props {

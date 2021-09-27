@@ -19,12 +19,11 @@ const Wrapper = styled.div`
   align-items: flex-start;
   flex-shrink: 0;
   margin-left: 4px;
-  /* max-height: 100%; */
+  height: 92vh;
   margin-bottom: 8px;
   overflow-x: auto;
   overflow-y: hidden;
   padding-bottom: 8px;
-
   &::-webkit-scrollbar {
     height: 12px;
   }
