@@ -1,11 +1,11 @@
 This is the Front End for my Visual Signal project - a Trello Clone!
 
 Main technologies and libraries used:
-React / Typescript
-Apollo Client / GraphQl 
-Websockets for real time updates across users
-Styled Components
-Atlassian's own React Beautiful Drag and Drop
+* React / Typescript
+* Apollo Client / GraphQl 
+* Websockets for real time updates across users
+* Styled Components
+* Atlassian's own React Beautiful Drag and Drop
 
 Watch the demo:
 
