@@ -29,6 +29,7 @@ const GlobalStyles = createGlobalStyle<GlobalProps>`
         src: url(${trellicons}) format("truetype");
         font-weight: 400;
         font-style: normal;
+        font-display: fallback
     }
 
     body {
