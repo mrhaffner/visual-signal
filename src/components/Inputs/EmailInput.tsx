@@ -40,7 +40,8 @@ const EmailInput = ({ register, autoFocus, email, submittedEmpty }: any) => {
       spellCheck="false"
       autoCapitalize="false"
       placeholder="Enter email"
-      autoComplete="username email"
+      // autoComplete="username email"
+      autoComplete="off"
       autoFocus={autoFocus}
       defaultValue={email}
       {...register('email', {

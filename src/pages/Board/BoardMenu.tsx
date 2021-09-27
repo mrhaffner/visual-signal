@@ -81,7 +81,8 @@ const BoardMenu = ({ handleDelete, id }: Props) => {
     <Wrapper>
       <Container onClick={handleClick}>
         <Icon />
-        <Text>Show Menu</Text>
+        {/* <Text>Show Menu</Text> */}
+        <Text>Delete Board</Text>
       </Container>
     </Wrapper>
   );

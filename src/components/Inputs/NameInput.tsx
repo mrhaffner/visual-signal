@@ -36,7 +36,8 @@ const NameInput = ({ register, autoFocus, submittedEmpty }: any) => {
       name="fullName"
       autoCorrect="off"
       placeholder="Enter full name"
-      autoComplete="name"
+      // autoComplete="name"
+      autoComplete="off"
       {...register('fullName', { required: true, minLength: 3, maxLength: 24 })}
       autoFocus={autoFocus}
     />
