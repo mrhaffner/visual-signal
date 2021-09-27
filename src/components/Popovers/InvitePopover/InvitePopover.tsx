@@ -5,6 +5,7 @@ import { INVITE_MEMBER } from '../../../graphql/mutations/all';
 import useKeyPress from '../../../hooks/useKeyPress';
 import useMemberContext from '../../../hooks/useMemberContext';
 import useOnClickOutside from '../../../hooks/useOnClickOutside';
+import InputErrorField from '../../Inputs/InputErrorField';
 import { CloseBtn } from '../sharedStyles';
 import {
   Header,
@@ -28,12 +29,23 @@ const InvitePopover = ({
   inviteBtnPosition,
 }: Props) => {
   const { setMemberFound } = useMemberContext();
+  const [showError, setShowError] = useState(false);
 
-  const [invite] = useMutation(INVITE_MEMBER, {
-    onError: () => {
-      setMemberFound(false);
+  const [invite, { data: inviteData, error }] = useMutation(INVITE_MEMBER, {
+    onError: (error) => {
+      if (error.message === 'Response not successful: Received status code 400')
+        setMemberFound(false);
+      if (
+        error.message === 'Member does not exist' ||
+        error.message === 'Member already belongs to this board!'
+      ) {
+        setShowError(true);
+      }
     },
-  }); ///add on error and the profile popover too!
+    onCompleted: () => {
+      toggleInvitePopover();
+    },
+  });
 
   const { register, handleSubmit, watch } = useForm();
   const watchInput = watch('input');
@@ -62,10 +74,10 @@ const InvitePopover = ({
     }
   }, [watchInput]);
 
-  //add email regex
   const onSubmit = handleSubmit((data) => {
     invite({ variables: { inviteInput: { email: data.input, boardId } } });
-    toggleInvitePopover();
+    console.log(inviteData);
+    setShowError(false);
   });
 
   return (
@@ -90,6 +102,7 @@ const InvitePopover = ({
               pattern: regex,
             })}
           ></MemberInput>
+          {showError && error && <InputErrorField text={error.message} />}
           <SendBtn disabled={disabled} onClick={onSubmit}>
             Send invitation
           </SendBtn>
