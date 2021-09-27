@@ -128,6 +128,7 @@ interface Props {
   toggleInvitePopover: () => void;
   setInviteBtnPosition: (input: number) => void;
   setFacePilePosition: (input: number) => void;
+  amAdmin: boolean;
 }
 
 const BoardHeader = ({
@@ -138,6 +139,7 @@ const BoardHeader = ({
   toggleInvitePopover,
   setInviteBtnPosition,
   setFacePilePosition,
+  amAdmin,
 }: Props) => {
   const inviteBtnRef = useRef(0);
   const facePileRef = useRef(0);
@@ -186,7 +188,7 @@ const BoardHeader = ({
           <InviteText>Invite</InviteText>
         </InviteBtn>
       </LeftWrapper>
-      <BoardMenu handleDelete={handleDelete} id={board._id} />
+      {amAdmin && <BoardMenu handleDelete={handleDelete} id={board._id} />}
     </Wrapper>
   );
 };

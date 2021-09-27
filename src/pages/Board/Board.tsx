@@ -92,8 +92,14 @@ const Board = ({ setBoardColor }: Props) => {
 
   if (error) return <p>Error :(</p>;
 
-  const adminCount = board.members.filter(
+  const adminList = board.members.filter(
     (x: MemberInfo) => x.memberType !== 'normal',
+  );
+
+  const adminCount = adminList.length;
+
+  const amAdmin = !!adminList.filter(
+    (x: MemberInfo) => x.idMember === member._id,
   ).length;
 
   return (
@@ -106,6 +112,7 @@ const Board = ({ setBoardColor }: Props) => {
         setPopoverMember={setPopoverMember}
         toggleInvitePopover={toggleInvitePopover}
         setFacePilePosition={setFacePilePosition}
+        amAdmin={amAdmin}
       />
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="all-lists" direction="horizontal" type="list">
