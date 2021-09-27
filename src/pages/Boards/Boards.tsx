@@ -45,12 +45,16 @@ const BoardsTitle = styled.h3`
 const Boards = () => {
   const { member, setMemberFound } = useMemberContext();
 
-  const { loading, error, data, subscribeToMore, refetch } =
-    useQuery(GET_MY_BOARDS);
+  const { loading, error, data, subscribeToMore, refetch } = useQuery(
+    GET_MY_BOARDS,
+    { fetchPolicy: 'network-only' },
+  );
 
-  // useEffect(() => {
-  //   refetch();
-  // }, []);
+  useEffect(() => {
+    console.log('ho');
+
+    refetch();
+  }, []);
 
   const [boardList, setBoardList] = useState<BoardInterface[]>([]);
   const [showCreateBoardModal, setShowCreateBoardModal] = useState(false);
@@ -71,9 +75,13 @@ const Boards = () => {
 
   subscribeToMore({
     document: BOARD_DELETED_SUBSCRIPTION,
-    variables: { idBoards: member.idBoards },
+    variables: {
+      idBoards: boardList.map((x: any) => x._id),
+    },
     updateQuery: (prev, { subscriptionData }) => {
       if (!subscriptionData.data.boardDeleted) return prev;
+      console.log('hum');
+
       const filtered = prev.getMyBoards.filter((x: any) => {
         return x._id !== subscriptionData.data.boardDeleted;
       });
