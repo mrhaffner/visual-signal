@@ -26,6 +26,8 @@ const App = () => {
     if (!location.pathname.includes('board/')) setBoardColor('default');
   }, [location]);
 
+  console.log(memberFound);
+
   return (
     <>
       <GlobalStyles color={boardColor} />
