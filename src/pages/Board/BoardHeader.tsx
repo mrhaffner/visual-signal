@@ -169,7 +169,7 @@ const BoardHeader = ({
             <Avatar
               tabIndex={0}
               key={x.idMember}
-              index={board.members.map.length - index}
+              index={board.members.length - index}
               onClick={() => handleAvatarClick(x, index)}
             >
               <Initials>{x.initials}</Initials>
