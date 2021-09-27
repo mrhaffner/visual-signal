@@ -36,8 +36,8 @@ interface Props {
   id: string;
 }
 
-const DeleteListButton = memo(({ handleDelete, id }: Props) => (
+const DeleteListButton = ({ handleDelete, id }: Props) => (
   <Button onClick={() => handleDelete(id)}></Button>
-));
+);
 
 export default DeleteListButton;

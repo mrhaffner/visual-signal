@@ -1,8 +1,7 @@
 import { createGlobalStyle } from 'styled-components';
 import reset from 'styled-reset';
-// @ts-ignore comment
-import trellicons from './fonts/trellicons.ttf';
 import { ColorKeys } from './types';
+import './fonts/fontFix.css';
 
 const colors = {
   blue: 'rgb(0, 121, 191)',
@@ -23,14 +22,6 @@ interface GlobalProps {
 
 const GlobalStyles = createGlobalStyle<GlobalProps>`
     ${reset}
-
-    @font-face {
-        font-family: trellicons;
-        src: url(${trellicons}) format("truetype");
-        font-weight: 400;
-        font-style: normal;
-        font-display: fallback
-    }
 
     body {
         color: #172b4d;
