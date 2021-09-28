@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import EmailInput from '../../components/Inputs/EmailInput';
 import { useForm } from 'react-hook-form';
 import NameInput from '../../components/Inputs/NameInput';
@@ -9,15 +8,7 @@ import InputErrorField from '../../components/Inputs/InputErrorField';
 import { useEffect, useState } from 'react';
 import { useLazyQuery } from '@apollo/client';
 import { VALIDATE_EMAIL } from '../../graphql/queries/all';
-
-const TOS = styled.p`
-  /* margin-top: 20px; */
-  margin-bottom: 20px;
-  font-size: 12px;
-  line-height: 16px;
-  color: #5e6c84;
-  font-weight: 300;
-`;
+import { TOS } from './sharedStyle';
 
 const SignUpFormFinal = ({ email }: any) => {
   const [validateEmail, { data, loading }] = useLazyQuery(VALIDATE_EMAIL);

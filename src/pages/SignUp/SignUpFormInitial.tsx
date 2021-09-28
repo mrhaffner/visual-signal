@@ -1,19 +1,10 @@
-import styled from 'styled-components';
 import EmailInput from '../../components/Inputs/EmailInput';
 import GreenFormButton from '../../components/Buttons/GreenFormButton';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useLazyQuery } from '@apollo/client';
 import { VALIDATE_EMAIL } from '../../graphql/queries/all';
-
-const TOS = styled.p`
-  /* margin-top: 20px; */
-  margin-bottom: 20px;
-  font-size: 12px;
-  line-height: 16px;
-  color: #5e6c84;
-  font-weight: 300;
-`;
+import { TOS } from './sharedStyle';
 
 interface Props {
   setEmailInUse: (input: boolean) => void;
