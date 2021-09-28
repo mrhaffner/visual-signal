@@ -9,7 +9,7 @@ import {
   LinkContainer,
   StyledLink,
   StyledBoldText,
-} from './style';
+} from './sharedStyles';
 
 const PageNotFound = () => {
   const { member, logOut } = useMemberContext();

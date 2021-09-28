@@ -1,4 +1,4 @@
-import { StyledText, StyledLink } from './style';
+import { StyledText, StyledLink } from './sharedStyles';
 
 interface Props {
   memberFound: boolean;

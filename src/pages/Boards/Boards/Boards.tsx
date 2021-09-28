@@ -1,46 +1,17 @@
 import { useState, useEffect } from 'react';
 import { useQuery } from '@apollo/client';
-import { GET_MY_BOARDS } from '../../graphql/queries/all';
+import { GET_MY_BOARDS } from '../../../graphql/queries/all';
 import {
   BOARD_UPDATE_SUBSCRIPTION,
   BOARD_DELETED_SUBSCRIPTION,
   REMOVE_FROM_BOARD_SUBSCRIPTION,
   NEW_BOARD,
-} from '../../graphql/subscriptions/all';
-import { BoardInterface } from '../../types';
-import BoardList from './BoardList';
-import styled from 'styled-components';
-import CreateBoardModal from './CreateBoardModal';
-import useMemberContext from '../../hooks/useMemberContext';
-
-const AllBoards = styled.div`
-  /* margin: 40px 16px 0; */
-  max-width: 825px;
-  min-width: 288px;
-  width: 100%;
-`;
-
-const Wrapper = styled.main`
-  display: flex;
-  justify-content: center;
-  @media only screen and (max-width: 900px) {
-    margin: 0 13%;
-  }
-`;
-
-const BoardsTitle = styled.h3`
-  align-items: center;
-  color: #5e6c84;
-  display: flex;
-  flex: 1;
-  font-size: 16px;
-  font-weight: 700;
-  line-height: 24px;
-  margin: 20px 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-`;
+} from '../../../graphql/subscriptions/all';
+import { BoardInterface } from '../../../types';
+import BoardList from '../BoardList';
+import CreateBoardModal from '../CreateBoardModal/';
+import useMemberContext from '../../../hooks/useMemberContext';
+import { AllBoards, BoardsTitle, Wrapper } from './style';
 
 const Boards = () => {
   const { member, setMemberFound } = useMemberContext();

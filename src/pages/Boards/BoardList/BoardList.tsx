@@ -1,16 +1,7 @@
-import styled from 'styled-components';
-import { BoardInterface } from '../../types';
-import Card from './Card';
-import CreateBoardTile from './CreateBoardTile';
-
-const ListWrapper = styled.ul`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-`;
+import { BoardInterface } from '../../../types';
+import Card from '../Card';
+import CreateBoardTile from '../CreateBoardTile';
+import { ListWrapper } from './style';
 
 interface Props {
   boardList: BoardInterface[];

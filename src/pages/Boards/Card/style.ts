@@ -1,10 +1,8 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { BoardColorKeys } from '../../types';
-import { useRef } from 'react';
-import useHover from '../../hooks/useHover';
+import { BoardColorKeys } from '../../../types';
 
-const Wrapper = styled.li`
+export const Wrapper = styled.li`
   margin: 0 2% 2% 0;
   padding: 0;
   transform: translate(0);
@@ -51,24 +49,20 @@ interface ColorProps {
   color: BoardColorKeys;
 }
 
-const Container = styled(Link)<ColorProps>`
+export const Container = styled(Link)<ColorProps>`
   margin-right: 0;
   border-radius: 3px;
   display: block;
   background-color: ${(props) => colors[props.color] || '#97a0af'};
-  /* background-color: #97a0af; */
   background-position: 50%;
   background-size: cover;
   line-height: 20px;
   padding: 8px;
   position: relative;
   text-decoration: none;
-  /* &:hover {
-    background-color: grey;
-  } */
 `;
 
-const BoardTileFade = styled.span`
+export const BoardTileFade = styled.span`
   bottom: 0;
   left: 0;
   position: absolute;
@@ -79,7 +73,7 @@ const BoardTileFade = styled.span`
   background-color: #00000040;
 `;
 
-const TitleContainer = styled.div`
+export const TitleContainer = styled.div`
   display: flex;
   flex-direction: column;
   height: 80px;
@@ -89,7 +83,7 @@ const TitleContainer = styled.div`
   line-height: 20px;
 `;
 
-const TitleSubContainer = styled.div`
+export const TitleSubContainer = styled.div`
   word-wrap: break-word;
   display: inline-block;
   flex: 0 0 auto;
@@ -100,38 +94,10 @@ const TitleSubContainer = styled.div`
   width: 100%;
 `;
 
-const Title = styled.div`
+export const Title = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
   -webkit-box-orient: vertical;
   display: -webkit-box;
   -webkit-line-clamp: 2;
 `;
-
-interface Props {
-  name: string;
-  url: string;
-  color: BoardColorKeys;
-}
-
-const Card = ({ name, url, color }: Props) => {
-  const [hoverRef, isHovered] = useHover();
-
-  return (
-    <>
-      {/* @ts-ignore */}
-      <Wrapper ref={hoverRef}>
-        <Container to={url} color={color}>
-          {isHovered && <BoardTileFade />}
-          <TitleContainer>
-            <TitleSubContainer>
-              <Title>{name}</Title>
-            </TitleSubContainer>
-          </TitleContainer>
-        </Container>
-      </Wrapper>
-    </>
-  );
-};
-
-export default Card;

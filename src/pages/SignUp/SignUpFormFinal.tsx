@@ -8,7 +8,7 @@ import InputErrorField from '../../components/Inputs/InputErrorField';
 import { useEffect, useState } from 'react';
 import { useLazyQuery } from '@apollo/client';
 import { VALIDATE_EMAIL } from '../../graphql/queries/all';
-import { TOS } from './sharedStyle';
+import { TOS } from './sharedStyles';
 
 const SignUpFormFinal = ({ email }: any) => {
   const [validateEmail, { data, loading }] = useLazyQuery(VALIDATE_EMAIL);

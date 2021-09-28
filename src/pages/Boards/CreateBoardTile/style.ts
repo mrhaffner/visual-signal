@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const Wrapper = styled.li`
+export const Wrapper = styled.li`
   margin: 0 2% 2% 0;
   padding: 0;
   transform: translate(0);
@@ -31,7 +31,7 @@ const Wrapper = styled.li`
   }
 `;
 
-const Container = styled.div`
+export const Container = styled.div`
   background-color: #091e420a;
   border: none;
   box-shadow: none;
@@ -67,7 +67,7 @@ const Container = styled.div`
   }
 `;
 
-const Text = styled.p`
+export const Text = styled.p`
   margin: 0 0 8px;
   color: #172b4d;
   font-weight: 400;
@@ -77,21 +77,3 @@ const Text = styled.p`
     color: #0079bf;
   }
 `;
-
-interface Props {
-  setShowCreateBoardModal: (bool: boolean) => void;
-}
-
-const CreateBoardTile = ({ setShowCreateBoardModal }: Props) => {
-  const openPopover = () => setShowCreateBoardModal(true);
-
-  return (
-    <Wrapper onClick={openPopover}>
-      <Container>
-        <Text>Create new board</Text>
-      </Container>
-    </Wrapper>
-  );
-};
-
-export default CreateBoardTile;
