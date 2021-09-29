@@ -5,7 +5,7 @@ interface Props {
 }
 
 const CreateBoardTile = ({ setShowCreateBoardModal }: Props) => {
-  const openPopover = () => setShowCreateBoardModal(true);
+  const openPopover = () => setShowCreateBoardModal(false);
 
   return (
     <Wrapper onClick={openPopover}>

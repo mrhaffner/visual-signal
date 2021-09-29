@@ -1,3 +1,3 @@
-import CreateBoardModal from '../CreateBoardModal';
+import CreateBoardTile from './CreateBoardTile';
 
-export default CreateBoardModal;
+export default CreateBoardTile;
