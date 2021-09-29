@@ -1,45 +1,18 @@
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
-import styled from 'styled-components';
-import ListList from './ListList';
-import useBoardContext from '../../hooks/useBoardContext';
-import OpenListComposer from '../../components/Composers/OpenListComposer';
+import ListList from '../ListList';
+import useBoardContext from '../../../hooks/useBoardContext';
+import OpenListComposer from '../../../components/Composers/OpenListComposer';
 import { useEffect, useState } from 'react';
-import ListComposer from '../../components/Composers/ListComposer';
-import BoardHeader from './BoardHeader';
-import useMemberContext from '../../hooks/useMemberContext';
-import useToggle from '../../hooks/useToggle';
-import ProfilePopover from '../../components/Popovers/ProfilePopover';
-import { ColorKeys, MemberInfo } from '../../types';
-import InvitePopover from '../../components/Popovers/InvitePopover';
+import ListComposer from '../../../components/Composers/ListComposer';
+import BoardHeader from '../BoardHeader/BoardHeader';
+import useMemberContext from '../../../hooks/useMemberContext';
+import useToggle from '../../../hooks/useToggle';
+import ProfilePopover from '../../../components/Popovers/ProfilePopover';
+import { ColorKeys, MemberInfo } from '../../../types';
+import InvitePopover from '../../../components/Popovers/InvitePopover';
 import { useHistory } from 'react-router';
-import PageNotFound from '../PageNotFound';
-
-const Wrapper = styled.div`
-  display: flex;
-  align-items: flex-start;
-  flex-shrink: 0;
-  margin-left: 4px;
-  height: 92vh;
-  margin-bottom: 8px;
-  overflow-x: auto;
-  overflow-y: hidden;
-  padding-bottom: 8px;
-  &::-webkit-scrollbar {
-    height: 12px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: #00000026;
-    border-radius: 4px;
-    /* border-right: 13px white solid;
-    background-clip: padding-box; */
-  }
-
-  &::-webkit-scrollbar-thumb {
-    border-radius: 4px;
-    background-color: rgba(255, 255, 255, 0.7);
-  }
-`;
+import PageNotFound from '../../PageNotFound';
+import { Wrapper } from './style';
 
 interface Props {
   setBoardColor: (input: ColorKeys) => void;

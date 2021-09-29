@@ -1,12 +1,11 @@
 import styled from 'styled-components';
 
-const Wrapper = styled.div`
-  /* float: right; */
+export const Wrapper = styled.div`
   display: block;
   position: relative;
 `;
 
-const Container = styled.a`
+export const Container = styled.a`
   background-color: #00000014;
   transition: 0.1s ease;
   color: #172b4d;
@@ -32,7 +31,7 @@ const Container = styled.a`
   }
 `;
 
-const Icon = styled.span`
+export const Icon = styled.span`
   color: #42526e;
   background-clip: content-box;
   background-origin: content-box;
@@ -57,7 +56,7 @@ const Icon = styled.span`
   }
 `;
 
-const Text = styled.span`
+export const Text = styled.span`
   overflow: hidden;
   padding-right: 12px;
   text-overflow: ellipsis;
@@ -66,26 +65,3 @@ const Text = styled.span`
   font-size: 14px;
   line-height: 32px;
 `;
-
-interface Props {
-  handleDelete: (id: string) => void;
-  id: string;
-}
-
-const BoardMenu = ({ handleDelete, id }: Props) => {
-  const handleClick = () => {
-    handleDelete(id);
-  };
-
-  return (
-    <Wrapper>
-      <Container onClick={handleClick}>
-        <Icon />
-        {/* <Text>Show Menu</Text> */}
-        <Text>Delete Board</Text>
-      </Container>
-    </Wrapper>
-  );
-};
-
-export default BoardMenu;
