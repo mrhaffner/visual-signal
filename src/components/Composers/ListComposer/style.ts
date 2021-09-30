@@ -1,10 +1,6 @@
 import styled from 'styled-components';
-import { useForm } from 'react-hook-form';
-import useOnClickOutside from '../../hooks/useOnClickOutside';
-import useKeypress from '../../hooks/useKeyPress';
-import React, { useRef, useEffect } from 'react';
 
-const ListWrapper = styled.div`
+export const ListWrapper = styled.div`
   background-color: #ebecf0;
   border-radius: 3px;
   height: auto;
@@ -24,7 +20,7 @@ const ListWrapper = styled.div`
   margin-right: 8px;
 `;
 
-const StyledInput = styled.input`
+export const StyledInput = styled.input`
   background-color: #fff;
   box-shadow: inset 0 0 0 2px #0079bf;
   display: block;
@@ -51,12 +47,12 @@ const StyledInput = styled.input`
   cursor: text;
 `;
 
-const ControlsContainer = styled.div`
+export const ControlsContainer = styled.div`
   height: 32px;
   transition: margin 85ms ease-in, height 85ms ease-in;
 `;
 
-const AddButton = styled.input`
+export const AddButton = styled.input`
   margin-bottom: 0;
   margin-top: 0;
   vertical-align: top;
@@ -98,7 +94,7 @@ const AddButton = styled.input`
   }
 `;
 
-const CancelButton = styled.a`
+export const CancelButton = styled.a`
   color: #42526e;
   height: 32px;
   line-height: 32px;
@@ -122,61 +118,3 @@ const CancelButton = styled.a`
 
   font-size: 26px;
 `;
-
-interface Props {
-  setShowComposer: (newState: boolean) => void;
-  submitData: (data: string) => void;
-}
-
-const ListComposer = ({ setShowComposer, submitData }: Props) => {
-  const { register, handleSubmit, setFocus, reset } = useForm();
-
-  const wrapperRef = useRef(null);
-
-  const enter = useKeypress('Enter');
-  const esc = useKeypress('Escape');
-
-  const onSubmit = handleSubmit((data) => {
-    submitData(data.input);
-    reset();
-  });
-
-  useOnClickOutside(wrapperRef, () => {
-    onSubmit();
-    setShowComposer(false);
-  });
-
-  useEffect(() => {
-    setFocus('input');
-  }, [submitData]);
-
-  useEffect(() => {
-    if (enter) {
-      onSubmit();
-    }
-    if (esc) {
-      reset();
-      setShowComposer(false);
-    }
-  }, [enter, esc]);
-
-  return (
-    <ListWrapper ref={wrapperRef}>
-      <form onSubmit={onSubmit}>
-        <StyledInput
-          type="text"
-          placeholder="Enter list title..."
-          maxLength={512}
-          autoComplete="off"
-          {...register('input', { required: true })}
-        />
-      </form>
-      <ControlsContainer>
-        <AddButton type="submit" value="Add list" onClick={onSubmit} />
-        <CancelButton onClick={() => setShowComposer(false)} />
-      </ControlsContainer>
-    </ListWrapper>
-  );
-};
-
-export default ListComposer;

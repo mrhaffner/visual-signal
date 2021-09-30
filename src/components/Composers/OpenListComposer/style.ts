@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const ListComposerContainer = styled.div`
+export const ListComposerContainer = styled.div`
   display: flex;
   justify-content: space-between;
   max-height: 38px;
@@ -22,7 +22,7 @@ const ListComposerContainer = styled.div`
   margin-right: 8px;
 `;
 
-const ListComposer = styled.a`
+export const ListComposer = styled.a`
   display: block;
   flex: 1 0 auto;
   margin: 2px 0 8px 8px;
@@ -34,7 +34,7 @@ const ListComposer = styled.a`
   color: #172b4d;
 `;
 
-const PlusIcon = styled.span`
+export const PlusIcon = styled.span`
   margin-right: 2px;
   font-size: 16px;
   height: 20px;
@@ -54,20 +54,3 @@ const PlusIcon = styled.span`
   }
   color: #42526e;
 `;
-
-interface Props {
-  setShowComposer: (newState: boolean) => void;
-}
-
-const OpenListComposer = ({ setShowComposer }: Props) => {
-  return (
-    <ListComposerContainer>
-      <ListComposer onClick={() => setShowComposer(true)}>
-        <PlusIcon />
-        Add another list
-      </ListComposer>
-    </ListComposerContainer>
-  );
-};
-
-export default OpenListComposer;

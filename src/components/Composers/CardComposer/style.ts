@@ -1,18 +1,13 @@
 import styled from 'styled-components';
-import { ListInterface } from '../../types';
-import { useForm } from 'react-hook-form';
-import useOnClickOutside from '../../hooks/useOnClickOutside';
-import useKeypress from '../../hooks/useKeyPress';
-import { useRef, useEffect } from 'react';
 
-const CardComposerContainer = styled.div`
+export const CardComposerContainer = styled.div`
   /* padding-bottom: 8px; */
   /* margin: 4px; */
   /* padding: 4px; */
   padding-bottom: 35px;
 `;
 
-const CardTextInputContainer = styled.form`
+export const CardTextInputContainer = styled.form`
   background-color: #fff;
   border-radius: 3px;
   box-shadow: 0 1px 0 #091e4240;
@@ -26,14 +21,14 @@ const CardTextInputContainer = styled.form`
   z-index: 0;
 `;
 
-const CardDetailsContainer = styled.div`
+export const CardDetailsContainer = styled.div`
   overflow: hidden;
   padding: 6px 8px 2px;
   position: relative;
   z-index: 10;
 `;
 
-const StyledTextArea = styled.textarea`
+export const StyledTextArea = styled.textarea`
   overflow: hidden;
   overflow-wrap: break-word;
   resize: none;
@@ -59,11 +54,11 @@ const StyledTextArea = styled.textarea`
   column-count: initial !important;
 `;
 
-const ControlsSection = styled.div`
+export const ControlsSection = styled.div`
   float: left;
 `;
 
-const AddButton = styled.input`
+export const AddButton = styled.input`
   margin-bottom: 0;
   margin-top: 0;
   vertical-align: top;
@@ -105,7 +100,7 @@ const AddButton = styled.input`
   }
 `;
 
-const CancelButton = styled.a`
+export const CancelButton = styled.a`
   color: #6b778c;
   height: 32px;
   line-height: 32px;
@@ -129,68 +124,3 @@ const CancelButton = styled.a`
 
   font-size: 26px;
 `;
-
-interface Props {
-  setShowComposer: (newState: boolean) => void;
-  submitData: (data: string, list: ListInterface) => void;
-  list: ListInterface;
-}
-
-const CardComposer = ({ setShowComposer, submitData, list }: Props) => {
-  const { register, handleSubmit, setFocus, reset } = useForm();
-
-  const onSubmit = handleSubmit((data) => {
-    submitData(data.input, list);
-    reset();
-  });
-
-  const wrapperRef = useRef(null);
-
-  const esc = useKeypress('Escape');
-
-  useOnClickOutside(wrapperRef, () => {
-    onSubmit();
-    setShowComposer(false);
-  });
-
-  useEffect(() => {
-    setFocus('input');
-  }, [submitData]);
-
-  useEffect(() => {
-    if (esc) {
-      reset();
-      setShowComposer(false);
-    }
-  }, [esc]);
-
-  const onPressEnter = (e: any) => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      onSubmit();
-    }
-  };
-
-  return (
-    <CardComposerContainer ref={wrapperRef}>
-      <CardTextInputContainer onSubmit={onSubmit}>
-        <CardDetailsContainer>
-          <StyledTextArea
-            placeholder="Enter a title for this card..."
-            dir="auto"
-            {...register('input', { required: true })}
-            onKeyPress={(e) => onPressEnter(e)}
-          />
-        </CardDetailsContainer>
-        <div>
-          <ControlsSection>
-            <AddButton type="submit" value="Add card" />
-            <CancelButton onClick={() => setShowComposer(false)} />
-          </ControlsSection>
-        </div>
-      </CardTextInputContainer>
-    </CardComposerContainer>
-  );
-};
-
-export default CardComposer;

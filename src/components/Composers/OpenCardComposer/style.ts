@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const CardComposerContainer = styled.div`
+export const CardComposerContainer = styled.div`
   display: flex;
   justify-content: space-between;
   max-height: 38px;
@@ -8,7 +8,7 @@ const CardComposerContainer = styled.div`
   padding-right: 8px;
 `;
 
-const CardComposer = styled.a`
+export const CardComposer = styled.a`
   border-radius: 3px;
   color: #5e6c84;
   display: block;
@@ -25,7 +25,7 @@ const CardComposer = styled.a`
   }
 `;
 
-const PlusIcon = styled.span`
+export const PlusIcon = styled.span`
   color: #6b778c;
   margin-right: 2px;
   font-size: 16px;
@@ -46,23 +46,6 @@ const PlusIcon = styled.span`
   }
 `;
 
-const StyledText = styled.span`
+export const StyledText = styled.span`
   color: #5e6c84;
 `;
-
-interface Props {
-  setShowComposer: (newState: boolean) => void;
-}
-
-const OpenCardComposer = ({ setShowComposer }: Props) => {
-  return (
-    <CardComposerContainer>
-      <CardComposer onClick={() => setShowComposer(true)}>
-        <PlusIcon />
-        <StyledText>Add a card</StyledText>
-      </CardComposer>
-    </CardComposerContainer>
-  );
-};
-
-export default OpenCardComposer;
