@@ -4,7 +4,7 @@ interface FormInputProps {
   submittedEmpty: boolean;
 }
 
-const FormInput = styled.input<FormInputProps>`
+export const FormInput = styled.input<FormInputProps>`
   width: 100%;
   font-size: 14px;
   background-color: #fafbfc !important;
@@ -28,28 +28,3 @@ const FormInput = styled.input<FormInputProps>`
     box-shadow: 0 0 0;
   }
 `;
-
-const EmailInput = ({ register, autoFocus, email, submittedEmpty }: any) => {
-  return (
-    <FormInput
-      submittedEmpty={submittedEmpty}
-      type="email"
-      name="email"
-      tabIndex={0}
-      autoCorrect="off"
-      spellCheck="false"
-      autoCapitalize="false"
-      placeholder="Enter email"
-      // autoComplete="username email"
-      autoComplete="off"
-      autoFocus={autoFocus}
-      defaultValue={email}
-      {...register('email', {
-        required: true,
-        pattern: /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/i,
-      })}
-    />
-  );
-};
-
-export default EmailInput;

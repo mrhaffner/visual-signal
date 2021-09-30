@@ -4,7 +4,7 @@ interface FormInputProps {
   submittedEmpty: boolean;
 }
 
-const FormInput = styled.input<FormInputProps>`
+export const FormInput = styled.input<FormInputProps>`
   width: 100%;
   font-size: 14px;
   background-color: #fafbfc !important;
@@ -28,21 +28,3 @@ const FormInput = styled.input<FormInputProps>`
     box-shadow: 0 0 0;
   }
 `;
-
-const PasswordRegisterInput = ({ register, submittedEmpty }: any) => {
-  return (
-    <FormInput
-      submittedEmpty={submittedEmpty}
-      type="password"
-      name="password"
-      autoCorrect="off"
-      spellCheck="false"
-      autoCapitalize="false"
-      placeholder="Create password"
-      autoComplete="new-password"
-      {...register('password', { required: true })}
-    />
-  );
-};
-
-export default PasswordRegisterInput;

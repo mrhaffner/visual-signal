@@ -4,7 +4,7 @@ interface FormInputProps {
   submittedEmpty: boolean;
 }
 
-const FormInput = styled.input<FormInputProps>`
+export const FormInput = styled.input<FormInputProps>`
   width: 100%;
   font-size: 14px;
   background-color: #fafbfc !important;
@@ -28,20 +28,3 @@ const FormInput = styled.input<FormInputProps>`
     box-shadow: 0 0 0;
   }
 `;
-
-const NameInput = ({ register, autoFocus, submittedEmpty }: any) => {
-  return (
-    <FormInput
-      submittedEmpty={submittedEmpty}
-      name="fullName"
-      autoCorrect="off"
-      placeholder="Enter full name"
-      // autoComplete="name"
-      autoComplete="off"
-      {...register('fullName', { required: true, minLength: 3, maxLength: 24 })}
-      autoFocus={autoFocus}
-    />
-  );
-};
-
-export default NameInput;

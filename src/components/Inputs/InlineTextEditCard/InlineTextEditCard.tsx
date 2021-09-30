@@ -1,45 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
-import useKeypress from '../../hooks/useKeyPress';
-import useOnClickOutside from '../../hooks/useOnClickOutside';
-import styled from 'styled-components';
+import useKeypress from '../../../hooks/useKeyPress';
+import useOnClickOutside from '../../../hooks/useOnClickOutside';
+import { Wrapper, Surface, TextInput } from './style';
 
-const Wrapper = styled.span`
-  word-wrap: break-word;
-  clear: both;
-  color: #172b4d;
-  display: block;
-  margin: 0 0 4px;
-  overflow: hidden;
-  text-decoration: none;
-`;
-
-interface SurfaceStyleProps {
-  isInputActive: boolean;
-}
-
-const Surface = styled.span<SurfaceStyleProps>`
-  cursor: pointer;
-  display: ${(props) => (props.isInputActive ? 'none' : '')};
-  cursor: ${(props) => (props.isInputActive ? '' : 'pointer')};
-`;
-
-interface InputStyleProps {
-  isInputActive: boolean;
-}
-
-const TextInput = styled.input<InputStyleProps>`
-  display: ${(props) => (props.isInputActive ? '' : 'none')};
-  font: inherit;
-  color: inherit;
-  text-align: inherit;
-  padding: 0;
-  background: none;
-  border: none;
-  outline: none;
-  width: 100%;
-`;
-
-function InlineTextEditCard(props: any) {
+const InlineTextEditCard = (props: any) => {
   const [isInputActive, setIsInputActive] = useState(false);
   const [inputValue, setInputValue] = useState(props.text);
 
@@ -102,6 +66,6 @@ function InlineTextEditCard(props: any) {
       />
     </Wrapper>
   );
-}
+};
 
 export default InlineTextEditCard;
