@@ -4,7 +4,7 @@ interface StyleProps {
   disabled: boolean;
 }
 
-const SubmitButton = styled.input<StyleProps>`
+export const SubmitButton = styled.input<StyleProps>`
   background: ${(props) => (props.disabled ? '#e2e4e6' : '#5aac44')};
   color: ${(props) => (props.disabled ? 'hsl(0, 0%, 55%)' : '#fff')};
   width: 100%;
@@ -28,16 +28,3 @@ const SubmitButton = styled.input<StyleProps>`
     outline: none;
   }
 `;
-
-const GreenFormButton = ({ value, disabled }: any) => {
-  return (
-    <SubmitButton
-      tabIndex={0}
-      type="submit"
-      value={value}
-      disabled={disabled}
-    />
-  );
-};
-
-export default GreenFormButton;

@@ -1,7 +1,6 @@
-import { memo } from 'react';
 import styled from 'styled-components';
 
-const Button = styled.span`
+export const Button = styled.span`
   position: absolute;
   right: 4px;
   top: 4px;
@@ -30,14 +29,3 @@ const Button = styled.span`
     background-color: #091e4214;
   }
 `;
-
-interface Props {
-  handleDelete: (id: string) => void;
-  id: string;
-}
-
-const DeleteListButton = ({ handleDelete, id }: Props) => (
-  <Button onClick={() => handleDelete(id)}></Button>
-);
-
-export default DeleteListButton;

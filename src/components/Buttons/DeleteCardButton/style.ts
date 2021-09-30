@@ -4,7 +4,7 @@ interface BtnVisibilityProps {
   isHoveredOrDragging: boolean;
 }
 
-const Button = styled.span<BtnVisibilityProps>`
+export const Button = styled.span<BtnVisibilityProps>`
   visibility: ${(props) => (props.isHoveredOrDragging ? 'visible' : 'hidden')};
   font-family: trellicons;
   background-clip: padding-box;
@@ -40,28 +40,3 @@ const Button = styled.span<BtnVisibilityProps>`
     opacity: 1;
   }
 `;
-
-interface Props {
-  handleDelete: (id: string) => void;
-  id: string;
-  isHovered: boolean;
-  isDragging: boolean;
-}
-
-const DeleteCardButton = ({
-  handleDelete,
-  id,
-  isHovered,
-  isDragging,
-}: Props) => {
-  const isHoveredOrDragging = isHovered || isDragging;
-
-  return (
-    <Button
-      onClick={() => handleDelete(id)}
-      isHoveredOrDragging={isHoveredOrDragging}
-    ></Button>
-  );
-};
-
-export default DeleteCardButton;

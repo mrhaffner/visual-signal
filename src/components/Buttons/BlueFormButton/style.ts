@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const SubmitButton = styled.input`
+export const SubmitButton = styled.input`
   -webkit-box-align: baseline;
   align-items: baseline;
   border-width: 0px;
@@ -47,9 +47,3 @@ const SubmitButton = styled.input`
   }
   margin: 0 0 1.2em;
 `;
-
-const BlueFormButton = () => {
-  return <SubmitButton tabIndex={0} type="submit" value="Sign up" />;
-};
-
-export default BlueFormButton;
