@@ -4,7 +4,7 @@ import Boards from './pages/Boards';
 import SignUp from './pages/SignUp';
 import LogIn from './pages/LogIn/LogIn';
 import useMemberContext from './hooks/useMemberContext';
-import NavBar from './components/NavBar';
+import NavBar from './components/SharedLayouts/NavBar';
 import useToggle from './hooks/useToggle';
 import MemberMenuPopover from './components/Popovers/MemberMenuPopover';
 import PageNotFound from './pages/PageNotFound';

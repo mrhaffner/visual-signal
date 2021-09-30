@@ -1,4 +1,4 @@
-import SignInOrUpPage from '../../components/SignInOrUpPage';
+import SignInOrUpPage from '../../components/SharedLayouts/SignInOrUpPage';
 import LogInForm from './LogInForm';
 
 const LogIn = () => {

@@ -1,9 +1,7 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import SignInOrUpFooter from './SignInOrUpFooter';
-import { useState } from 'react';
 
-const Wrapper = styled.div`
+export const Wrapper = styled.div`
   background-color: #f9fafc;
   min-height: 100vh;
   display: flex;
@@ -18,7 +16,7 @@ const Wrapper = styled.div`
   justify-content: space-between;
 `;
 
-const Logo = styled.img`
+export const Logo = styled.img`
   display: block;
   height: 43px;
   margin-left: auto;
@@ -29,20 +27,20 @@ const Logo = styled.img`
   border: 0;
 `;
 
-const MainSection = styled.section`
+export const MainSection = styled.section`
   width: 100%;
   padding: 0px;
   overflow: visible;
   margin-bottom: 30px;
 `;
 
-const MainWrapper = styled.div`
+export const MainWrapper = styled.div`
   max-width: 400px;
   margin: 0 auto;
   position: relative;
 `;
 
-const FormContainer = styled.div`
+export const FormContainer = styled.div`
   background-color: #ffffff;
   border-radius: 3px;
   padding: 25px 40px;
@@ -53,7 +51,7 @@ const FormContainer = styled.div`
   position: relative;
 `;
 
-const Title = styled.h1`
+export const Title = styled.h1`
   text-align: center;
   color: #5e6c84;
   font-size: 16px;
@@ -64,7 +62,7 @@ const Title = styled.h1`
   font-weight: bold;
 `;
 
-const Line = styled.hr`
+export const Line = styled.hr`
   margin-top: 25px;
   display: block;
   height: 1px;
@@ -74,7 +72,7 @@ const Line = styled.hr`
   padding: 0;
 `;
 
-const BottomFormLink = styled.span`
+export const BottomFormLink = styled.span`
   text-align: center;
   font-size: 14px;
   display: block;
@@ -82,7 +80,7 @@ const BottomFormLink = styled.span`
   font-weight: 300;
 `;
 
-const BottomLink = styled(Link)`
+export const BottomLink = styled(Link)`
   text-decoration: none;
   color: #0052cc;
   background: transparent;
@@ -92,7 +90,7 @@ const BottomLink = styled(Link)`
   }
 `;
 
-const LeftImgContainer = styled.div`
+export const LeftImgContainer = styled.div`
   position: absolute;
   width: 400px;
   bottom: -16px;
@@ -105,7 +103,7 @@ const LeftImgContainer = styled.div`
   }
 `;
 
-const RightImgContainer = styled.div`
+export const RightImgContainer = styled.div`
   position: absolute;
   width: 400px;
   bottom: -16px;
@@ -117,7 +115,7 @@ const RightImgContainer = styled.div`
   }
 `;
 
-const LogInPrompt = styled.div`
+export const LogInPrompt = styled.div`
   border-radius: 4px;
   background: #faf3c0;
   border: 1px solid #f2d600;
@@ -130,7 +128,7 @@ const LogInPrompt = styled.div`
     Ubuntu, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
 `;
 
-const LogInLink = styled(Link)`
+export const LogInLink = styled(Link)`
   color: #298fca;
   font-size: 18px;
   text-decoration: underline;
@@ -141,60 +139,7 @@ const LogInLink = styled(Link)`
   }
 `;
 
-const StyledPromptText = styled.div`
+export const StyledPromptText = styled.div`
   line-height: 28.8px;
   font-size: 14px;
 `;
-
-const SignInOrUpPage = ({
-  bottomLink,
-  formTitle,
-  form,
-  emailInUse = false,
-}: any) => {
-  return (
-    <Wrapper>
-      <div>
-        <Logo src="https://d2k1ftgv7pobq7.cloudfront.net/meta/c/p/res/images/trello-header-logos/167dc7b9900a5b241b15ba21f8037cf8/trello-logo-blue.svg" />
-        <MainSection>
-          <MainWrapper>
-            <FormContainer>
-              {emailInUse && (
-                <LogInPrompt>
-                  <StyledPromptText>
-                    Hey, that email is already in use by another Atlassian
-                    account. You'll need to login with Atlassian to use Trello.
-                  </StyledPromptText>
-                  <LogInLink to="/login">Log in with Atlassian</LogInLink>
-                </LogInPrompt>
-              )}
-              <Title>{formTitle}</Title>
-              {form}
-              <Line />
-              <BottomFormLink>
-                <BottomLink to={bottomLink.link}>{bottomLink.text}</BottomLink>
-              </BottomFormLink>
-            </FormContainer>
-          </MainWrapper>
-        </MainSection>
-      </div>
-      <SignInOrUpFooter />
-      <LeftImgContainer>
-        <img
-          src={require('../assets/logo_left.svg').default}
-          width="400"
-          height="400"
-        />
-      </LeftImgContainer>
-      <RightImgContainer>
-        <img
-          src={require('../assets/logo_right.svg').default}
-          width="400"
-          height="400"
-        />
-      </RightImgContainer>
-    </Wrapper>
-  );
-};
-
-export default SignInOrUpPage;

@@ -1,4 +1,4 @@
-import useMemberContext from '../../hooks/useMemberContext';
+import useMemberContext from '../../../hooks/useMemberContext';
 import { useLocation } from 'react-router-dom';
 import {
   MemberMenuText,

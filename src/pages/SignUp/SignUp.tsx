@@ -1,4 +1,4 @@
-import SignInOrUpPage from '../../components/SignInOrUpPage';
+import SignInOrUpPage from '../../components/SharedLayouts/SignInOrUpPage';
 import SignUpFormInitial from './SignUpFormInitial';
 import SignUpFormFinal from './SignUpFormFinal';
 import { useState } from 'react';
