@@ -1,13 +1,11 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import useMemberContext from '../../hooks/useMemberContext';
-import { useLocation } from 'react-router-dom';
 
 interface NavProps {
   setBlue: boolean;
 }
 
-const Nav = styled.nav<NavProps>`
+export const Nav = styled.nav<NavProps>`
   background-color: ${(props) =>
     props.setBlue ? '#026aa7' : 'rgba(0, 0, 0, 0.32)'};
   min-height: 40px;
@@ -18,14 +16,14 @@ const Nav = styled.nav<NavProps>`
   align-items: center;
 `;
 
-const NavContainer = styled.div`
+export const NavContainer = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
 `;
 
-const NavLogoContainer = styled(Link)`
+export const NavLogoContainer = styled(Link)`
   display: block;
   position: relative;
   flex-shrink: 0;
@@ -44,7 +42,7 @@ interface LoadingProps {
   isLoading: boolean;
 }
 
-const NavImage = styled.div<LoadingProps>`
+export const NavImage = styled.div<LoadingProps>`
   width: 80px;
   height: 16px;
   margin: 7px 0;
@@ -67,9 +65,7 @@ const NavImage = styled.div<LoadingProps>`
   }
 `;
 
-const SideContainer = styled.div``;
-
-const OpenMemberMenu = styled.button`
+export const OpenMemberMenu = styled.button`
   border: none;
   box-shadow: none;
   background-color: transparent;
@@ -88,25 +84,23 @@ const OpenMemberMenu = styled.button`
   margin: 0 4px 0 0;
   padding: 0;
   white-space: nowrap;
-
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
     'Noto Sans', 'Ubuntu', 'Droid Sans', 'Helvetica Neue', sans-serif;
   font-size: 14px;
   cursor: pointer;
-  //display: flex;
   transition-property: background-color, border-color, box-shadow;
   transition-duration: 85ms;
   transition-timing-function: ease;
 `;
 
-const MemberMenuTextWrapper = styled.div`
+export const MemberMenuTextWrapper = styled.div`
   position: relative;
   line-height: 10px;
   overflow: hidden;
   white-space: nowrap;
 `;
 
-const MemberMenuText = styled.span`
+export const MemberMenuText = styled.span`
   height: 32px;
   width: 32px;
   line-height: 32px;
@@ -129,30 +123,3 @@ const MemberMenuText = styled.span`
   overflow: hidden;
   white-space: nowrap;
 `;
-
-const NavBar = ({ isLoading, toggleMenuPopover }: any) => {
-  const { member } = useMemberContext();
-  const location = useLocation();
-  const setBlue = !location.pathname.includes('board/');
-  return (
-    <>
-      <Nav setBlue={setBlue}>
-        <NavContainer>
-          <SideContainer></SideContainer>
-          <NavLogoContainer to="/boards">
-            <NavImage isLoading={isLoading} />
-          </NavLogoContainer>
-          <SideContainer>
-            <OpenMemberMenu onClick={() => toggleMenuPopover()}>
-              <MemberMenuTextWrapper>
-                <MemberMenuText>{member.initials}</MemberMenuText>
-              </MemberMenuTextWrapper>
-            </OpenMemberMenu>
-          </SideContainer>
-        </NavContainer>
-      </Nav>
-    </>
-  );
-};
-
-export default NavBar;
