@@ -1,15 +1,5 @@
 import { gql } from '@apollo/client';
 
-export const ALL_BOARDS = gql`
-  query GetAllBoards {
-    allBoards {
-      _id
-      name
-      color
-    }
-  }
-`;
-
 export const GET_BOARD = gql`
   query GetBoard($id: ID!) {
     getBoardById(_id: $id) {

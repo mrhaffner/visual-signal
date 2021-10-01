@@ -1,6 +1,5 @@
 import { useState, useEffect, ReactNode } from 'react';
-import { GET_BOARD } from '../graphql/queries/all';
-import { useQuery, useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import { BoardInterface, CardInterface, ListInterface } from '../types';
 import { DropResult } from 'react-beautiful-dnd';
 import { BoardContext } from '../hooks/useBoardContext';
@@ -27,13 +26,9 @@ import {
   updateItemPosition,
   updateItemPositionAcross,
 } from '../utlities/calculatePositionHelpers';
-import {
-  BOARD_UPDATE_SUBSCRIPTION,
-  BOARD_DELETED_SUBSCRIPTION,
-  REMOVE_FROM_BOARD_SUBSCRIPTION,
-} from '../graphql/subscriptions/all';
 import { useParams, useHistory } from 'react-router-dom';
 import useMemberContext from '../hooks/useMemberContext';
+import useGetUpdateBoard from '../hooks/graphQL/useGetUpdateBoard';
 
 interface Props {
   children: ReactNode;
@@ -42,64 +37,23 @@ interface Props {
 const BoardProvider = ({ children }: Props) => {
   // @ts-ignore comment
   let { boardId } = useParams();
-  const { loading, error, data, subscribeToMore } = useQuery(GET_BOARD, {
-    variables: { id: boardId },
-    fetchPolicy: 'network-only',
-  });
+
+  const { loading, error, board, setBoard } = useGetUpdateBoard(boardId);
 
   let history = useHistory();
 
   const { setMemberFound } = useMemberContext();
 
-  const [board, setBoard] = useState<BoardInterface | null>(null);
+  // const [board, setBoard] = useState<BoardInterface | null>(null);
 
-  useEffect(() => {
-    if (data?.getBoardById) {
-      setBoard(data.getBoardById[0]); //!!!
-      // } else if (data) {
-      //   //force refetch?
-      //   history.push('/boards');
-    }
-  }, [data]);
-
-  subscribeToMore({
-    document: BOARD_UPDATE_SUBSCRIPTION,
-    updateQuery: (prev, { subscriptionData }) => {
-      if (!subscriptionData.data.boardUpdated) return prev;
-      const updatedBoard = subscriptionData.data.boardUpdated;
-
-      if (boardId !== updatedBoard._id) return prev;
-      return Object.assign({}, prev, {
-        getBoardById: updatedBoard, //?
-      });
-    },
-  });
-
-  subscribeToMore({
-    document: BOARD_DELETED_SUBSCRIPTION,
-    variables: { idBoards: [boardId] },
-    updateQuery: (prev, { subscriptionData }) => {
-      if (!subscriptionData.data.boardDeleted) return prev;
-
-      history.push('/boards');
-      return Object.assign({}, prev, {
-        getBoardById: [],
-      });
-    },
-  });
-
-  subscribeToMore({
-    document: REMOVE_FROM_BOARD_SUBSCRIPTION,
-    updateQuery: (prev, { subscriptionData }) => {
-      if (!subscriptionData.data.removeFromBoard) return prev;
-      if (subscriptionData.data.removeFromBoard.boardId !== board?._id) return;
-      history.push('/boards');
-
-      return Object.assign({}, prev, {
-        getBoardById: [],
-      });
-    },
-  });
+  // useEffect(() => {
+  //   if (data?.getBoardById) {
+  //     setBoard(data.getBoardById[0]); //!!!
+  //     // } else if (data) {
+  //     //   //force refetch?
+  //     //   history.push('/boards');
+  //   }
+  // }, [data]);
 
   const [updateBoardNameMutation] = useMutation(UPDATE_BOARD_NAME, {
     onError: () => {
