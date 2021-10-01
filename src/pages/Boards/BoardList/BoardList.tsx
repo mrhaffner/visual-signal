@@ -5,9 +5,9 @@ import { ListWrapper } from './style';
 
 interface Props {
   boardList: BoardInterface[];
-  setShowCreateBoardModal: (bool: boolean) => void;
+  toggleCreateBoardModal: () => void;
 }
-const BoardList = ({ boardList, setShowCreateBoardModal }: Props) => {
+const BoardList = ({ boardList, toggleCreateBoardModal }: Props) => {
   return (
     <ListWrapper>
       {boardList.map((board) => {
@@ -21,7 +21,7 @@ const BoardList = ({ boardList, setShowCreateBoardModal }: Props) => {
           />
         );
       })}
-      <CreateBoardTile setShowCreateBoardModal={setShowCreateBoardModal} />
+      <CreateBoardTile toggleCreateBoardModal={toggleCreateBoardModal} />
     </ListWrapper>
   );
 };

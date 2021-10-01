@@ -1,12 +1,13 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import BoardList from '../BoardList';
 import CreateBoardModal from '../CreateBoardModal/';
 import useMemberContext from '../../../hooks/useMemberContext';
 import { AllBoards, BoardsTitle, Wrapper } from './style';
 import useGetUpdateBoards from '../../../hooks/graphQL/useGetUpdateBoards';
+import useToggle from '../../../hooks/useToggle';
 
 const Boards = () => {
-  const [showCreateBoardModal, setShowCreateBoardModal] = useState(false);
+  const [showCreateBoardModal, toggleCreateBoardModal] = useToggle();
 
   const { setMemberFound } = useMemberContext();
   const { loading, error, boardList, refetch } = useGetUpdateBoards();
@@ -32,12 +33,10 @@ const Boards = () => {
           <BoardsTitle>YOUR BOARDS</BoardsTitle>
           <BoardList
             boardList={boardList}
-            setShowCreateBoardModal={setShowCreateBoardModal}
+            toggleCreateBoardModal={toggleCreateBoardModal}
           />
           {showCreateBoardModal && (
-            <CreateBoardModal
-              setShowCreateBoardModal={setShowCreateBoardModal}
-            />
+            <CreateBoardModal toggleCreateBoardModal={toggleCreateBoardModal} />
           )}
         </AllBoards>
       </Wrapper>

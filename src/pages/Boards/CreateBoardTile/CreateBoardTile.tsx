@@ -1,14 +1,12 @@
 import { Container, Text, Wrapper } from './style';
 
 interface Props {
-  setShowCreateBoardModal: (bool: boolean) => void;
+  toggleCreateBoardModal: () => void;
 }
 
-const CreateBoardTile = ({ setShowCreateBoardModal }: Props) => {
-  const openPopover = () => setShowCreateBoardModal(false);
-
+const CreateBoardTile = ({ toggleCreateBoardModal }: Props) => {
   return (
-    <Wrapper onClick={openPopover}>
+    <Wrapper onClick={toggleCreateBoardModal}>
       <Container>
         <Text>Create new board</Text>
       </Container>

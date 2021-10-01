@@ -22,10 +22,10 @@ import {
 } from './style';
 
 interface Props {
-  setShowCreateBoardModal: (bool: boolean) => void;
+  toggleCreateBoardModal: () => void;
 }
 
-const CreateBoardModal = ({ setShowCreateBoardModal }: Props) => {
+const CreateBoardModal = ({ toggleCreateBoardModal }: Props) => {
   const { setMemberFound } = useMemberContext();
   const [newBoardMutation, { data }] = useMutation(CREATE_BOARD, {
     onError: () => {
@@ -45,8 +45,6 @@ const CreateBoardModal = ({ setShowCreateBoardModal }: Props) => {
 
   const esc = useKeyPress('Escape');
 
-  const closeModal = () => setShowCreateBoardModal(false);
-
   useEffect(() => {
     setFocus('input');
     //can remove setFocus from dependency array
@@ -59,11 +57,11 @@ const CreateBoardModal = ({ setShowCreateBoardModal }: Props) => {
   });
 
   useEffect(() => {
-    if (esc) closeModal();
+    if (esc) toggleCreateBoardModal();
   }, [esc]);
 
   useOnClickOutside(wrapperRef, () => {
-    setShowCreateBoardModal(false);
+    toggleCreateBoardModal();
   });
 
   const colors = [
@@ -103,7 +101,7 @@ const CreateBoardModal = ({ setShowCreateBoardModal }: Props) => {
           <div>
             <SelectContainer>
               <Card>
-                <CloseButton onClick={closeModal}>
+                <CloseButton onClick={toggleCreateBoardModal}>
                   <IconContainer>
                     <CloseIcon>
                       <CloseSVG
