@@ -1,6 +1,6 @@
-import { useState, useEffect, ReactNode } from 'react';
+import { ReactNode } from 'react';
 import { useMutation } from '@apollo/client';
-import { BoardInterface, CardInterface, ListInterface } from '../types';
+import { CardInterface, ListInterface } from '../types';
 import { DropResult } from 'react-beautiful-dnd';
 import { BoardContext } from '../hooks/useBoardContext';
 import {
@@ -43,17 +43,6 @@ const BoardProvider = ({ children }: Props) => {
   let history = useHistory();
 
   const { setMemberFound } = useMemberContext();
-
-  // const [board, setBoard] = useState<BoardInterface | null>(null);
-
-  // useEffect(() => {
-  //   if (data?.getBoardById) {
-  //     setBoard(data.getBoardById[0]); //!!!
-  //     // } else if (data) {
-  //     //   //force refetch?
-  //     //   history.push('/boards');
-  //   }
-  // }, [data]);
 
   const [updateBoardNameMutation] = useMutation(UPDATE_BOARD_NAME, {
     onError: () => {
