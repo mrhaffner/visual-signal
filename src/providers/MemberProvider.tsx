@@ -16,8 +16,10 @@ const MemberProvider = ({ children }: Props) => {
   const [token, setToken] = useState(null);
   const { member, setMember, memberFound, setMemberFound, getMemberData } =
     useGetMember();
+
   const [login, { data: loginData }] = useMutation(LOGIN);
   const [signUp, signUpData] = useMutation(CREATE_MEMBER);
+  const [updateMemberBoards] = useMutation(UPDATE_MEMBER_BOARDS);
 
   const logOut = () => {
     localStorage.removeItem('trello-member-token');
@@ -58,8 +60,6 @@ const MemberProvider = ({ children }: Props) => {
       getMemberData();
     }
   }, [token]);
-
-  const [updateMemberBoards] = useMutation(UPDATE_MEMBER_BOARDS);
 
   return (
     <MemberContext.Provider

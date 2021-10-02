@@ -114,23 +114,6 @@ export const UPDATE_MEMBER_BOARDS = gql`
   }
 `;
 
-//obviously change this?
-export const UPDATE_MEMBER_PASSWORD = gql`
-  mutation UpdateMemberPasswordMutation(
-    $passwordInput: UpdateMemberPasswordInput!
-  ) {
-    updateMemberpassWord(input: $passwordInput) {
-      _id
-    }
-  }
-`;
-
-export const DELETE_MEMBER = gql`
-  mutation DeleteMemberMutation($deleteMemberInput: ID!) {
-    deleteMember(_id: $deleteMemberInput)
-  }
-`;
-
 export const LOGIN = gql`
   mutation Login($loginInput: LoginInput!) {
     login(input: $loginInput) {

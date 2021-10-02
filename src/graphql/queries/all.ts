@@ -39,35 +39,6 @@ export const GET_MY_BOARDS = gql`
   }
 `;
 
-export const ALL_LISTS = gql`
-  query GetAllLists {
-    allLists {
-      _id
-      name
-      pos
-      cards {
-        _id
-        name
-        pos
-        idList
-      }
-    }
-  }
-`;
-
-export const GET_MEMBER_BY_EMAIL = gql`
-  query GetMemberByEmail($email: String!) {
-    getMemberByEmail(email: $email) {
-      _id
-      fullName
-      initials
-      username
-      idBoards
-      email
-    }
-  }
-`;
-
 export const GET_MY_MEMBER_INFO = gql`
   query GetMyMemberInfo {
     getMyMemberInfo {
