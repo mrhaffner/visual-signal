@@ -88,7 +88,7 @@ export const addCardHelper = (
   boardData: BoardInterface,
   cardObject: any,
   listData: any,
-  updateBoard: React.Dispatch<React.SetStateAction<BoardInterface | null>>,
+  updateBoard: (input: BoardInterface) => void,
 ) => {
   const foundList = boardData.lists.find((x) => x._id === listData._id);
   cardObject = { ...cardObject, _id: Math.random().toString() };
