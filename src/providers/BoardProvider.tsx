@@ -29,6 +29,8 @@ import {
 import { useParams, useHistory } from 'react-router-dom';
 import useMemberContext from '../hooks/useMemberContext';
 import useGetUpdateBoard from '../hooks/queries/useGetUpdateBoard';
+import useNewBoardName from '../hooks/mutations/board/useNewBoardName';
+import useDeleteBoard from '../hooks/mutations/board/useDeleteBoard';
 
 interface Props {
   children: ReactNode;
@@ -40,21 +42,10 @@ const BoardProvider = ({ children }: Props) => {
 
   const { loading, error, board, setBoard } = useGetUpdateBoard(boardId);
 
-  let history = useHistory();
-
   const { setMemberFound } = useMemberContext();
 
-  const [updateBoardNameMutation] = useMutation(UPDATE_BOARD_NAME, {
-    onError: () => {
-      setMemberFound(false);
-    },
-  });
-
-  const [deleteBoardMutation] = useMutation(DELETE_BOARD, {
-    onError: () => {
-      setMemberFound(false);
-    },
-  });
+  const newBoardName = useNewBoardName(board, setBoard);
+  const deleteBoard = useDeleteBoard();
 
   const [newListMutation] = useMutation(CREATE_LIST, {
     onError: () => {
@@ -188,34 +179,6 @@ const BoardProvider = ({ children }: Props) => {
     updateCardPosMutation({
       variables: { updateCardPosInput: updateCardObject },
     });
-  };
-
-  const newBoardName = (input: string) => {
-    if (board === null) {
-      console.log(
-        "Board is null!  Don't worry, this will never actually happen.",
-      );
-      return;
-    }
-    try {
-      const updateObject = {
-        _id: board._id,
-        name: input,
-      };
-      updateBoardNameMutation({
-        variables: { updateBoardInput: updateObject },
-      });
-      setBoard({ ...board, name: input });
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  const deleteBoard = (id: string) => {
-    deleteBoardMutation({
-      variables: { boardId: id },
-    });
-    history.push('/boards');
   };
 
   const addList = (input: string) => {
