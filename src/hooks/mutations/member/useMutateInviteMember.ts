@@ -1,7 +1,7 @@
 import { useMutation } from '@apollo/client';
 import { useState } from 'react';
-import { INVITE_MEMBER } from '../../graphql/mutations/all';
-import useMemberContext from '../useMemberContext';
+import { INVITE_MEMBER } from '../../../graphql/mutations/all';
+import useMemberContext from '../../useMemberContext';
 
 const useMutateInviteMember = (toggleInvitePopover: () => void) => {
   const { setMemberFound } = useMemberContext();

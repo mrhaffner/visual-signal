@@ -5,7 +5,7 @@ import {
   LOGIN,
   UPDATE_MEMBER_BOARDS,
 } from '../graphql/mutations/all';
-import useGetMember from '../hooks/graphQL/useGetMember';
+import useGetMember from '../hooks/queries/useGetMember';
 import { MemberContext } from '../hooks/useMemberContext';
 
 interface Props {

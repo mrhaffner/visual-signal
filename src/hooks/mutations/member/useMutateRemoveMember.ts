@@ -1,6 +1,6 @@
-import useMemberContext from '../useMemberContext';
+import useMemberContext from '../../useMemberContext';
 import { useMutation } from '@apollo/client';
-import { REMOVE_MEMBER_FROM_BOARD } from '../../graphql/mutations/all';
+import { REMOVE_MEMBER_FROM_BOARD } from '../../../graphql/mutations/all';
 
 const useMutateRemoveMember = () => {
   const { setMemberFound } = useMemberContext();

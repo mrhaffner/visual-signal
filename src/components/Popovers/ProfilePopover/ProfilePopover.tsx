@@ -5,8 +5,8 @@ import { MemberInfo, MemberType } from '../../../types';
 import SecondaryPopover from './SecondaryContent';
 import MainPopoverContent from './MainPopoverContent';
 import { Wrapper } from './style';
-import useMutateRemoveMember from '../../../hooks/graphQL/useMutateRemoveMember';
-import useMutateUpdateMemberLevel from '../../../hooks/graphQL/useMutateUpdateMemberLevel';
+import useMutateRemoveMember from '../../../hooks/mutations/member/useMutateRemoveMember';
+import useMutateUpdateMemberLevel from '../../../hooks/mutations/member/useMutateUpdateMemberLevel';
 
 interface Props {
   member: MemberInfo;

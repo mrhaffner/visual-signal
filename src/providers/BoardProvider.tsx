@@ -28,7 +28,7 @@ import {
 } from '../utlities/calculatePositionHelpers';
 import { useParams, useHistory } from 'react-router-dom';
 import useMemberContext from '../hooks/useMemberContext';
-import useGetUpdateBoard from '../hooks/graphQL/useGetUpdateBoard';
+import useGetUpdateBoard from '../hooks/queries/useGetUpdateBoard';
 
 interface Props {
   children: ReactNode;

@@ -3,7 +3,7 @@ import BoardList from '../BoardList';
 import CreateBoardModal from '../CreateBoardModal/';
 import useMemberContext from '../../../hooks/useMemberContext';
 import { AllBoards, BoardsTitle, Wrapper } from './style';
-import useGetUpdateBoards from '../../../hooks/graphQL/useGetUpdateBoards';
+import useGetUpdateBoards from '../../../hooks/queries/useGetUpdateBoards';
 import useToggle from '../../../hooks/useToggle';
 
 const Boards = () => {

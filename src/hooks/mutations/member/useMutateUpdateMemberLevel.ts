@@ -1,6 +1,6 @@
-import useMemberContext from '../useMemberContext';
+import useMemberContext from '../../useMemberContext';
 import { useMutation } from '@apollo/client';
-import { UPDATE_MEMBER_LEVEL_BOARD } from '../../graphql/mutations/all';
+import { UPDATE_MEMBER_LEVEL_BOARD } from '../../../graphql/mutations/all';
 
 const useMutateUpdateMemberLevel = () => {
   const { setMemberFound } = useMemberContext();

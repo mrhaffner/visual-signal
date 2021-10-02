@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import useMutateInviteMember from '../../../hooks/graphQL/useMutateInviteMember';
+import useMutateInviteMember from '../../../hooks/mutations/member/useMutateInviteMember';
 import useKeyPress from '../../../hooks/useKeyPress';
 import useOnClickOutside from '../../../hooks/useOnClickOutside';
 import InputErrorField from '../../Inputs/InputErrorField';
