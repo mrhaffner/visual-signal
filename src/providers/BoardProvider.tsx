@@ -33,6 +33,7 @@ import useNewBoardName from '../hooks/mutations/board/useNewBoardName';
 import useDeleteBoard from '../hooks/mutations/board/useDeleteBoard';
 import useAddList from '../hooks/mutations/board/useAddList';
 import useNewListName from '../hooks/mutations/board/useNewListName';
+import useDeleteList from '../hooks/mutations/board/useDeleteList';
 
 interface Props {
   children: ReactNode;
@@ -50,18 +51,7 @@ const BoardProvider = ({ children }: Props) => {
   const deleteBoard = useDeleteBoard();
   const addList = useAddList(board);
   const newListName = useNewListName(board);
-
-  const [updateListPosMutation] = useMutation(UPDATE_LIST_POS, {
-    onError: () => {
-      setMemberFound(false);
-    },
-  });
-
-  const [deleteListMutation] = useMutation(DELETE_LIST, {
-    onError: () => {
-      setMemberFound(false);
-    },
-  });
+  const deleteList = useDeleteList(board);
 
   const [newCardMutation] = useMutation(CREATE_CARD, {
     onError: () => {
@@ -82,6 +72,12 @@ const BoardProvider = ({ children }: Props) => {
   });
 
   const [deleteCardMutation] = useMutation(DELETE_CARD, {
+    onError: () => {
+      setMemberFound(false);
+    },
+  });
+
+  const [updateListPosMutation] = useMutation(UPDATE_LIST_POS, {
     onError: () => {
       setMemberFound(false);
     },
@@ -171,24 +167,6 @@ const BoardProvider = ({ children }: Props) => {
     updateCardPosMutation({
       variables: { updateCardPosInput: updateCardObject },
     });
-  };
-
-  const deleteList = (idList: string) => {
-    if (board === null) {
-      console.log(
-        "Board is null!  Don't worry, this will never actually happen.",
-      );
-      return;
-    }
-    try {
-      const deleteObject = {
-        _id: idList,
-        idBoard: board._id,
-      };
-      deleteListMutation({ variables: { deleteListInput: deleteObject } });
-    } catch (e) {
-      console.log(e);
-    }
   };
 
   const addCard = (input: string, list: ListInterface) => {
