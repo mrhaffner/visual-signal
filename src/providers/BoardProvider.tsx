@@ -32,6 +32,7 @@ import useGetUpdateBoard from '../hooks/queries/useGetUpdateBoard';
 import useNewBoardName from '../hooks/mutations/board/useNewBoardName';
 import useDeleteBoard from '../hooks/mutations/board/useDeleteBoard';
 import useAddList from '../hooks/mutations/board/useAddList';
+import useNewListName from '../hooks/mutations/board/useNewListName';
 
 interface Props {
   children: ReactNode;
@@ -48,20 +49,9 @@ const BoardProvider = ({ children }: Props) => {
   const newBoardName = useNewBoardName(board, setBoard);
   const deleteBoard = useDeleteBoard();
   const addList = useAddList(board);
-
-  // const [newListMutation] = useMutation(CREATE_LIST, {
-  //   onError: () => {
-  //     setMemberFound(false);
-  //   },
-  // });
+  const newListName = useNewListName(board);
 
   const [updateListPosMutation] = useMutation(UPDATE_LIST_POS, {
-    onError: () => {
-      setMemberFound(false);
-    },
-  });
-
-  const [updateListNameMutation] = useMutation(UPDATE_LIST_NAME, {
     onError: () => {
       setMemberFound(false);
     },
@@ -181,38 +171,6 @@ const BoardProvider = ({ children }: Props) => {
     updateCardPosMutation({
       variables: { updateCardPosInput: updateCardObject },
     });
-  };
-
-  // const addList = (input: string) => {
-  //   if (board === null) {
-  //     console.log(
-  //       "Board is null!  Don't worry, this will never actually happen.",
-  //     );
-  //     return;
-  //   }
-  //   try {
-  //     const listObject = {
-  //       name: input,
-  //       pos: newItemPosition(board.lists),
-  //       idBoard: board._id,
-  //     };
-  //     newListMutation({ variables: { createListInput: listObject } });
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // };
-
-  const newListName = (updateObject: any) => {
-    try {
-      // @ts-ignore
-      const obj = { ...updateObject, idBoard: board._id };
-
-      updateListNameMutation({
-        variables: { updateListNameInput: obj },
-      });
-    } catch (e) {
-      console.log(e);
-    }
   };
 
   const deleteList = (idList: string) => {

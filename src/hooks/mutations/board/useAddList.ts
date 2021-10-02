@@ -14,7 +14,7 @@ const useAddList = (board: BoardInterface | null) => {
   });
 
   const addList = (input: string) => {
-    if (board === null) return;
+    if (!board) return;
     try {
       const listObject = {
         name: input,
