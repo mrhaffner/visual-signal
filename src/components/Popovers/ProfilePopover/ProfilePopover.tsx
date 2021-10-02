@@ -5,12 +5,8 @@ import { MemberInfo, MemberType } from '../../../types';
 import SecondaryPopover from './SecondaryContent';
 import MainPopoverContent from './MainPopoverContent';
 import { Wrapper } from './style';
-import { useMutation } from '@apollo/client';
-import {
-  REMOVE_MEMBER_FROM_BOARD,
-  UPDATE_MEMBER_LEVEL_BOARD,
-} from '../../../graphql/mutations/all';
-import useMemberContext from '../../../hooks/useMemberContext';
+import useMutateRemoveMember from '../../../hooks/graphQL/useMutateRemoveMember';
+import useMutateUpdateMemberLevel from '../../../hooks/graphQL/useMutateUpdateMemberLevel';
 
 interface Props {
   member: MemberInfo;
@@ -33,7 +29,13 @@ const ProfilePopover = ({
   facePilePosition,
   setPopoverMember,
 }: Props) => {
-  const { setMemberFound } = useMemberContext();
+  const removeMember = useMutateRemoveMember();
+  const updateMemberLevel = useMutateUpdateMemberLevel();
+
+  const capitalMyMemberType = myMemberLevel === 'normal' ? 'Normal' : 'Admin';
+  const leaveOrRemove = member.idMember === myId ? 'leave' : 'remove';
+  const onlyOneAdmin = adminCount === 1 && member.memberType === 'admin';
+
   const [popoverContentType, setPopoverContentType] = useState('main');
 
   const ref = useRef(null);
@@ -49,16 +51,6 @@ const ProfilePopover = ({
     }
   }, [esc]);
 
-  const capitalMyMemberType = myMemberLevel === 'normal' ? 'Normal' : 'Admin';
-
-  const leaveOrRemove = member.idMember === myId ? 'leave' : 'remove';
-
-  const [removeMember] = useMutation(REMOVE_MEMBER_FROM_BOARD, {
-    onError: () => {
-      setMemberFound(false);
-    },
-  });
-
   const handleRemove = () => {
     const inputObj = {
       memberId: member.idMember,
@@ -72,12 +64,6 @@ const ProfilePopover = ({
     setPopoverMember(null);
   };
 
-  const [updateMemberLevel] = useMutation(UPDATE_MEMBER_LEVEL_BOARD, {
-    onError: () => {
-      setMemberFound(false);
-    },
-  });
-
   const handleMemberLevelUpdate = (newLevel: string) => {
     const inputObj = {
       memberId: member.idMember,
@@ -87,8 +73,6 @@ const ProfilePopover = ({
     updateMemberLevel({ variables: { updateInput: inputObj } });
     setPopoverMember(null);
   };
-
-  const onlyOneAdmin = adminCount === 1 && member.memberType === 'admin';
 
   return (
     <Wrapper ref={ref} left={facePilePosition}>
