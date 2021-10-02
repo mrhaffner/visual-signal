@@ -1,32 +1,18 @@
 import { ReactNode } from 'react';
 import { useMutation } from '@apollo/client';
-import { CardInterface, ListInterface } from '../types';
 import { DropResult } from 'react-beautiful-dnd';
 import { BoardContext } from '../hooks/useBoardContext';
 import {
-  addCardHelper,
   reorderCardsAcrossLists,
   reorderCardsInSameList,
   reorderLists,
 } from '../utlities/onDragEndHelpers';
+import { UPDATE_LIST_POS, UPDATE_CARD_POS } from '../graphql/mutations/all';
 import {
-  CREATE_LIST,
-  UPDATE_LIST_POS,
-  DELETE_LIST,
-  CREATE_CARD,
-  UPDATE_CARD_POS,
-  DELETE_CARD,
-  UPDATE_BOARD_NAME,
-  UPDATE_CARD_NAME,
-  UPDATE_LIST_NAME,
-  DELETE_BOARD,
-} from '../graphql/mutations/all';
-import {
-  newItemPosition,
   updateItemPosition,
   updateItemPositionAcross,
 } from '../utlities/calculatePositionHelpers';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import useMemberContext from '../hooks/useMemberContext';
 import useGetUpdateBoard from '../hooks/queries/useGetUpdateBoard';
 import useNewBoardName from '../hooks/mutations/board/useNewBoardName';
@@ -36,6 +22,7 @@ import useNewListName from '../hooks/mutations/board/useNewListName';
 import useDeleteList from '../hooks/mutations/board/useDeleteList';
 import useAddCard from '../hooks/mutations/board/useAddCard';
 import useNewCardName from '../hooks/mutations/board/useNewCardName';
+import useDeleteCard from '../hooks/mutations/board/useDeleteCard';
 
 interface Props {
   children: ReactNode;
@@ -56,14 +43,9 @@ const BoardProvider = ({ children }: Props) => {
   const deleteList = useDeleteList(board);
   const addCard = useAddCard(board, setBoard);
   const newCardName = useNewCardName(board);
+  const deleteCard = useDeleteCard(board);
 
   const [updateCardPosMutation] = useMutation(UPDATE_CARD_POS, {
-    onError: () => {
-      setMemberFound(false);
-    },
-  });
-
-  const [deleteCardMutation] = useMutation(DELETE_CARD, {
     onError: () => {
       setMemberFound(false);
     },
@@ -159,24 +141,6 @@ const BoardProvider = ({ children }: Props) => {
     updateCardPosMutation({
       variables: { updateCardPosInput: updateCardObject },
     });
-  };
-
-  const deleteCard = (cardId: string) => {
-    if (board === null) {
-      console.log(
-        "Board is null!  Don't worry, this will never actually happen.",
-      );
-      return;
-    }
-    try {
-      const deleteObject = {
-        _id: cardId,
-        idBoard: board._id,
-      };
-      deleteCardMutation({ variables: { deleteCardInput: deleteObject } });
-    } catch (e) {
-      console.log(e);
-    }
   };
 
   return (
