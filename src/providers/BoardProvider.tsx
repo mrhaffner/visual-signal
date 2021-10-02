@@ -35,6 +35,7 @@ import useAddList from '../hooks/mutations/board/useAddList';
 import useNewListName from '../hooks/mutations/board/useNewListName';
 import useDeleteList from '../hooks/mutations/board/useDeleteList';
 import useAddCard from '../hooks/mutations/board/useAddCard';
+import useNewCardName from '../hooks/mutations/board/useNewCardName';
 
 interface Props {
   children: ReactNode;
@@ -54,14 +55,9 @@ const BoardProvider = ({ children }: Props) => {
   const newListName = useNewListName(board);
   const deleteList = useDeleteList(board);
   const addCard = useAddCard(board, setBoard);
+  const newCardName = useNewCardName(board);
 
   const [updateCardPosMutation] = useMutation(UPDATE_CARD_POS, {
-    onError: () => {
-      setMemberFound(false);
-    },
-  });
-
-  const [updateCardNameMutation] = useMutation(UPDATE_CARD_NAME, {
     onError: () => {
       setMemberFound(false);
     },
@@ -163,18 +159,6 @@ const BoardProvider = ({ children }: Props) => {
     updateCardPosMutation({
       variables: { updateCardPosInput: updateCardObject },
     });
-  };
-
-  const newCardName = (updateObject: any) => {
-    try {
-      // @ts-ignore
-      const obj = { ...updateObject, idBoard: board._id };
-      updateCardNameMutation({
-        variables: { updateCardNameInput: obj },
-      });
-    } catch (e) {
-      console.log(e);
-    }
   };
 
   const deleteCard = (cardId: string) => {
