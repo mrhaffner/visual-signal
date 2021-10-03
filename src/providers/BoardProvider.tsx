@@ -1,15 +1,6 @@
 import { ReactNode } from 'react';
 import { DropResult } from 'react-beautiful-dnd';
 import { BoardContext } from '../hooks/useBoardContext';
-import {
-  reorderCardsAcrossLists,
-  reorderCardsInSameList,
-  reorderLists,
-} from '../utlities/onDragEndHelpers';
-import {
-  updateItemPosition,
-  updateItemPositionAcross,
-} from '../utlities/calculatePositionHelpers';
 import { useParams } from 'react-router-dom';
 import useGetUpdateBoard from '../hooks/queries/useGetUpdateBoard';
 import useNewBoardName from '../hooks/mutations/board/useNewBoardName';
@@ -21,15 +12,15 @@ import useAddCard from '../hooks/mutations/board/useAddCard';
 import useNewCardName from '../hooks/mutations/board/useNewCardName';
 import useDeleteCard from '../hooks/mutations/board/useDeleteCard';
 import useUpdateListPos from '../hooks/mutations/board/useUpdateListPos';
-import useUpdateCardPos from '../hooks/mutations/board/useUpdateCardPos';
 import useReorderCardsSameList from '../hooks/mutations/board/useReorderCardsSameList';
+import useReorderCardsAcrossLists from '../hooks/mutations/board/useReorderCardsAcrossLists';
 
 interface Props {
   children: ReactNode;
 }
 
 const BoardProvider = ({ children }: Props) => {
-  // @ts-ignore comment
+  //@ts-ignore
   let { boardId } = useParams();
 
   const { loading, error, board, setBoard } = useGetUpdateBoard(boardId);
@@ -44,8 +35,7 @@ const BoardProvider = ({ children }: Props) => {
   const deleteCard = useDeleteCard(board);
   const handleUpdateListPos = useUpdateListPos();
   const handleReorderCardsSameList = useReorderCardsSameList();
-
-  const updateCardPosMutation = useUpdateCardPos();
+  const handleReorderCardsAcrossLists = useReorderCardsAcrossLists();
 
   const onDragEnd = (result: DropResult) => {
     if (!board) return;
@@ -67,51 +57,11 @@ const BoardProvider = ({ children }: Props) => {
     }
 
     if (source.droppableId === destination.droppableId) {
-      // reorderCardsInSameList(board, source, destination, setBoard);
-      // const list = board.lists.find((x) => x._id === source.droppableId);
-      // const newPos = updateItemPosition(
-      //   // @ts-ignore comment
-      //   list.cards,
-      //   destination.index,
-      //   source.index,
-      // );
-      // const updateCardObject = {
-      //   // @ts-ignore comment
-      //   _id: list.cards[source.index]._id,
-      //   pos: newPos,
-      //   idBoard: board._id,
-      // };
-
-      // updateCardPosMutation({
-      //   variables: { updateCardPosInput: updateCardObject },
-      // });
       handleReorderCardsSameList(board, source, destination, setBoard);
       return;
     }
 
-    reorderCardsAcrossLists(board, source, destination, setBoard);
-    const sourceList = board.lists.find((x) => x._id === source.droppableId);
-    const destinationList = board.lists.find(
-      (x) => x._id === destination.droppableId,
-    );
-
-    const newPos = updateItemPositionAcross(
-      // @ts-ignore comment
-      destinationList.cards,
-      destination.index,
-    );
-
-    const updateCardObject = {
-      // @ts-ignore comment
-      _id: sourceList.cards[source.index]._id,
-      pos: newPos,
-      idList: destination.droppableId,
-      idBoard: board._id,
-    };
-
-    updateCardPosMutation({
-      variables: { updateCardPosInput: updateCardObject },
-    });
+    handleReorderCardsAcrossLists(board, source, destination, setBoard);
   };
 
   return (
