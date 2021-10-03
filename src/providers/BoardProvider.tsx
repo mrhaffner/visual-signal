@@ -14,14 +14,14 @@ import useDeleteCard from '../hooks/mutations/board/useDeleteCard';
 import useUpdateListPos from '../hooks/mutations/board/useUpdateListPos';
 import useReorderCardsSameList from '../hooks/mutations/board/useReorderCardsSameList';
 import useReorderCardsAcrossLists from '../hooks/mutations/board/useReorderCardsAcrossLists';
+import { Params } from '../types';
 
 interface Props {
   children: ReactNode;
 }
 
 const BoardProvider = ({ children }: Props) => {
-  //@ts-ignore
-  let { boardId } = useParams();
+  let { boardId }: Params = useParams();
 
   const { loading, error, board, setBoard } = useGetUpdateBoard(boardId);
 

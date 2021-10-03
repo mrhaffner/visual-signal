@@ -60,3 +60,7 @@ enum ExtendColorKeys {
 }
 
 export type ColorKeys = BoardColorKeys | ExtendColorKeys;
+
+export interface Params {
+  [key: string]: string;
+}
