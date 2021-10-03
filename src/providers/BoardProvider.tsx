@@ -41,7 +41,8 @@ const BoardProvider = ({ children }: Props) => {
   const addCard = useAddCard(board, setBoard);
   const newCardName = useNewCardName(board);
   const deleteCard = useDeleteCard(board);
-  const updateListPosMutation = useUpdateListPos();
+  const handleUpdateListPos = useUpdateListPos();
+
   const updateCardPosMutation = useUpdateCardPos();
 
   const onDragEnd = (result: DropResult) => {
@@ -59,20 +60,7 @@ const BoardProvider = ({ children }: Props) => {
     }
 
     if (type === 'list') {
-      const newPos = updateItemPosition(
-        board.lists,
-        destination.index,
-        source.index,
-      );
-      const updateListObject = {
-        _id: board.lists[source.index]._id,
-        pos: newPos,
-        idBoard: board._id,
-      };
-      updateListPosMutation({
-        variables: { updateListPosInput: updateListObject },
-      });
-      reorderLists(board, source, destination, setBoard);
+      handleUpdateListPos(board, source, destination, setBoard);
       return;
     }
 
