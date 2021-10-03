@@ -1,5 +1,4 @@
 import { ReactNode } from 'react';
-import { useMutation } from '@apollo/client';
 import { DropResult } from 'react-beautiful-dnd';
 import { BoardContext } from '../hooks/useBoardContext';
 import {
@@ -7,13 +6,11 @@ import {
   reorderCardsInSameList,
   reorderLists,
 } from '../utlities/onDragEndHelpers';
-import { UPDATE_LIST_POS, UPDATE_CARD_POS } from '../graphql/mutations/all';
 import {
   updateItemPosition,
   updateItemPositionAcross,
 } from '../utlities/calculatePositionHelpers';
 import { useParams } from 'react-router-dom';
-import useMemberContext from '../hooks/useMemberContext';
 import useGetUpdateBoard from '../hooks/queries/useGetUpdateBoard';
 import useNewBoardName from '../hooks/mutations/board/useNewBoardName';
 import useDeleteBoard from '../hooks/mutations/board/useDeleteBoard';
@@ -24,6 +21,7 @@ import useAddCard from '../hooks/mutations/board/useAddCard';
 import useNewCardName from '../hooks/mutations/board/useNewCardName';
 import useDeleteCard from '../hooks/mutations/board/useDeleteCard';
 import useUpdateListPos from '../hooks/mutations/board/useUpdateListPos';
+import useUpdateCardPos from '../hooks/mutations/board/useUpdateCardPos';
 
 interface Props {
   children: ReactNode;
@@ -35,8 +33,6 @@ const BoardProvider = ({ children }: Props) => {
 
   const { loading, error, board, setBoard } = useGetUpdateBoard(boardId);
 
-  const { setMemberFound } = useMemberContext();
-
   const newBoardName = useNewBoardName(board, setBoard);
   const deleteBoard = useDeleteBoard();
   const addList = useAddList(board);
@@ -46,12 +42,7 @@ const BoardProvider = ({ children }: Props) => {
   const newCardName = useNewCardName(board);
   const deleteCard = useDeleteCard(board);
   const updateListPosMutation = useUpdateListPos();
-
-  const [updateCardPosMutation] = useMutation(UPDATE_CARD_POS, {
-    onError: () => {
-      setMemberFound(false);
-    },
-  });
+  const updateCardPosMutation = useUpdateCardPos();
 
   const onDragEnd = (result: DropResult) => {
     if (!board) return;
