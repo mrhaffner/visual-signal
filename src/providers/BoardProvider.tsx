@@ -22,6 +22,7 @@ import useNewCardName from '../hooks/mutations/board/useNewCardName';
 import useDeleteCard from '../hooks/mutations/board/useDeleteCard';
 import useUpdateListPos from '../hooks/mutations/board/useUpdateListPos';
 import useUpdateCardPos from '../hooks/mutations/board/useUpdateCardPos';
+import useReorderCardsSameList from '../hooks/mutations/board/useReorderCardsSameList';
 
 interface Props {
   children: ReactNode;
@@ -42,6 +43,7 @@ const BoardProvider = ({ children }: Props) => {
   const newCardName = useNewCardName(board);
   const deleteCard = useDeleteCard(board);
   const handleUpdateListPos = useUpdateListPos();
+  const handleReorderCardsSameList = useReorderCardsSameList();
 
   const updateCardPosMutation = useUpdateCardPos();
 
@@ -65,24 +67,25 @@ const BoardProvider = ({ children }: Props) => {
     }
 
     if (source.droppableId === destination.droppableId) {
-      reorderCardsInSameList(board, source, destination, setBoard);
-      const list = board.lists.find((x) => x._id === source.droppableId);
-      const newPos = updateItemPosition(
-        // @ts-ignore comment
-        list.cards,
-        destination.index,
-        source.index,
-      );
-      const updateCardObject = {
-        // @ts-ignore comment
-        _id: list.cards[source.index]._id,
-        pos: newPos,
-        idBoard: board._id,
-      };
+      // reorderCardsInSameList(board, source, destination, setBoard);
+      // const list = board.lists.find((x) => x._id === source.droppableId);
+      // const newPos = updateItemPosition(
+      //   // @ts-ignore comment
+      //   list.cards,
+      //   destination.index,
+      //   source.index,
+      // );
+      // const updateCardObject = {
+      //   // @ts-ignore comment
+      //   _id: list.cards[source.index]._id,
+      //   pos: newPos,
+      //   idBoard: board._id,
+      // };
 
-      updateCardPosMutation({
-        variables: { updateCardPosInput: updateCardObject },
-      });
+      // updateCardPosMutation({
+      //   variables: { updateCardPosInput: updateCardObject },
+      // });
+      handleReorderCardsSameList(board, source, destination, setBoard);
       return;
     }
 
