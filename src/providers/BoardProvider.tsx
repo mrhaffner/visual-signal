@@ -23,6 +23,7 @@ import useDeleteList from '../hooks/mutations/board/useDeleteList';
 import useAddCard from '../hooks/mutations/board/useAddCard';
 import useNewCardName from '../hooks/mutations/board/useNewCardName';
 import useDeleteCard from '../hooks/mutations/board/useDeleteCard';
+import useUpdateListPos from '../hooks/mutations/board/useUpdateListPos';
 
 interface Props {
   children: ReactNode;
@@ -44,6 +45,7 @@ const BoardProvider = ({ children }: Props) => {
   const addCard = useAddCard(board, setBoard);
   const newCardName = useNewCardName(board);
   const deleteCard = useDeleteCard(board);
+  const updateListPosMutation = useUpdateListPos();
 
   const [updateCardPosMutation] = useMutation(UPDATE_CARD_POS, {
     onError: () => {
@@ -51,19 +53,8 @@ const BoardProvider = ({ children }: Props) => {
     },
   });
 
-  const [updateListPosMutation] = useMutation(UPDATE_LIST_POS, {
-    onError: () => {
-      setMemberFound(false);
-    },
-  });
-
   const onDragEnd = (result: DropResult) => {
-    if (board === null) {
-      console.log(
-        "Board is null!  Don't worry, this will never actually happen.",
-      );
-      return;
-    }
+    if (!board) return;
 
     const { destination, source, type } = result;
 
@@ -87,12 +78,10 @@ const BoardProvider = ({ children }: Props) => {
         pos: newPos,
         idBoard: board._id,
       };
-      //can I do an optimistic update here and get rid of reoderLists()?
       updateListPosMutation({
         variables: { updateListPosInput: updateListObject },
       });
       reorderLists(board, source, destination, setBoard);
-
       return;
     }
 
