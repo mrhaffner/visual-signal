@@ -1,5 +1,5 @@
 import { useMutation } from '@apollo/client';
-import { DELETE_LIST } from '../../../graphql/mutations/all';
+import { DELETE_LIST } from '../../../graphql/mutations/board';
 import { BoardInterface } from '../../../types';
 import useMemberContext from '../../useMemberContext';
 

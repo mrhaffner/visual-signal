@@ -1,6 +1,6 @@
 import { useMutation } from '@apollo/client';
 import { DraggableLocation } from 'react-beautiful-dnd';
-import { UPDATE_LIST_POS } from '../../../graphql/mutations/all';
+import { UPDATE_LIST_POS } from '../../../graphql/mutations/board';
 import { BoardInterface } from '../../../types';
 import { updateItemPosition } from '../../../utlities/calculatePositionHelpers';
 import { reorderLists } from '../../../utlities/onDragEndHelpers';

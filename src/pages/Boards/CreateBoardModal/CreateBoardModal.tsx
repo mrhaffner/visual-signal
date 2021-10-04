@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import useOnClickOutside from '../../../hooks/useOnClickOutside';
 import { useEffect, useRef } from 'react';
-import { CREATE_BOARD } from '../../../graphql/mutations/all';
+import { CREATE_BOARD } from '../../../graphql/mutations/board';
 import { useMutation } from '@apollo/client';
 import { useHistory } from 'react-router-dom';
 import useKeyPress from '../../../hooks/useKeyPress';

@@ -1,6 +1,6 @@
 import { useMutation } from '@apollo/client';
 import useMemberContext from '../../useMemberContext';
-import { DELETE_BOARD } from '../../../graphql/mutations/all';
+import { DELETE_BOARD } from '../../../graphql/mutations/board';
 import { useHistory } from 'react-router';
 
 const useDeleteBoard = () => {

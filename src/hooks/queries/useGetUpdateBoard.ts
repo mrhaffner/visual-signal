@@ -1,12 +1,12 @@
 import { useQuery } from '@apollo/client';
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { GET_BOARD } from '../../graphql/queries/all';
+import { GET_BOARD } from '../../graphql/queries';
 import {
   BOARD_UPDATE_SUBSCRIPTION,
   BOARD_DELETED_SUBSCRIPTION,
   REMOVE_FROM_BOARD_SUBSCRIPTION,
-} from '../../graphql/subscriptions/all';
+} from '../../graphql/subscriptions';
 import { BoardInterface } from '../../types';
 
 const useGetUpdateBoard = (id: string) => {

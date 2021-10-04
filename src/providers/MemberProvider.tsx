@@ -4,7 +4,7 @@ import {
   CREATE_MEMBER,
   LOGIN,
   UPDATE_MEMBER_BOARDS,
-} from '../graphql/mutations/all';
+} from '../graphql/mutations/member';
 import useGetMember from '../hooks/queries/useGetMember';
 import { MemberContext } from '../hooks/useMemberContext';
 

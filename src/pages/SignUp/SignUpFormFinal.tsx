@@ -7,7 +7,7 @@ import useMemberContext from '../../hooks/useMemberContext';
 import InputErrorField from '../../components/Inputs/InputErrorField';
 import { useEffect, useState } from 'react';
 import { useLazyQuery } from '@apollo/client';
-import { VALIDATE_EMAIL } from '../../graphql/queries/all';
+import { VALIDATE_EMAIL } from '../../graphql/queries';
 import { TOS } from './sharedStyles';
 
 const SignUpFormFinal = ({ email }: any) => {

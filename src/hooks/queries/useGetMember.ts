@@ -1,6 +1,6 @@
 import { useLazyQuery } from '@apollo/client';
 import { useState, useEffect } from 'react';
-import { GET_MY_MEMBER_INFO } from '../../graphql/queries/all';
+import { GET_MY_MEMBER_INFO } from '../../graphql/queries';
 
 const useGetMember = () => {
   const [member, setMember] = useState(null);

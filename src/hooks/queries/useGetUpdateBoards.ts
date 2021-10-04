@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { GET_MY_BOARDS } from '../../graphql/queries/all';
+import { GET_MY_BOARDS } from '../../graphql/queries';
 import { useQuery } from '@apollo/client';
 import { BoardInterface } from '../../types';
 import {
@@ -7,7 +7,7 @@ import {
   BOARD_DELETED_SUBSCRIPTION,
   REMOVE_FROM_BOARD_SUBSCRIPTION,
   NEW_BOARD,
-} from '../../graphql/subscriptions/all';
+} from '../../graphql/subscriptions';
 
 const useGetUpdateBoards = () => {
   const [boardList, setBoardList] = useState<BoardInterface[]>([]);

@@ -1,5 +1,5 @@
 import { useMutation } from '@apollo/client';
-import { UPDATE_CARD_POS } from '../../../graphql/mutations/all';
+import { UPDATE_CARD_POS } from '../../../graphql/mutations/board';
 import useMemberContext from '../../useMemberContext';
 
 const useUpdateCardPos = () => {

@@ -1,5 +1,5 @@
 import { useMutation } from '@apollo/client';
-import { UPDATE_BOARD_NAME } from '../../../graphql/mutations/all';
+import { UPDATE_BOARD_NAME } from '../../../graphql/mutations/board';
 import { BoardInterface } from '../../../types';
 import useMemberContext from '../../useMemberContext';
 

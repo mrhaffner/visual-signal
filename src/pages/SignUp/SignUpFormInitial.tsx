@@ -3,7 +3,7 @@ import GreenFormButton from '../../components/Buttons/GreenFormButton';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useLazyQuery } from '@apollo/client';
-import { VALIDATE_EMAIL } from '../../graphql/queries/all';
+import { VALIDATE_EMAIL } from '../../graphql/queries';
 import { TOS } from './sharedStyles';
 
 interface Props {

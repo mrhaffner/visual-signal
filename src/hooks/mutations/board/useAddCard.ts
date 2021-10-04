@@ -1,5 +1,5 @@
 import { useMutation } from '@apollo/client';
-import { CREATE_CARD } from '../../../graphql/mutations/all';
+import { CREATE_CARD } from '../../../graphql/mutations/board';
 import { BoardInterface, ListInterface } from '../../../types';
 import { newItemPosition } from '../../../utlities/calculatePositionHelpers';
 import { addCardHelper } from '../../../utlities/onDragEndHelpers';

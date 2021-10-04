@@ -1,5 +1,5 @@
 import { useMutation } from '@apollo/client';
-import { CREATE_LIST } from '../../../graphql/mutations/all';
+import { CREATE_LIST } from '../../../graphql/mutations/board';
 import { BoardInterface } from '../../../types';
 import { newItemPosition } from '../../../utlities/calculatePositionHelpers';
 import useMemberContext from '../../useMemberContext';
