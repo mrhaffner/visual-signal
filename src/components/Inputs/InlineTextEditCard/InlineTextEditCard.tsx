@@ -3,9 +3,9 @@ import useKeypress from '../../../hooks/useKeyPress';
 import useOnClickOutside from '../../../hooks/useOnClickOutside';
 import { Wrapper, Surface, TextInput } from './style';
 
-const InlineTextEditCard = (props: any) => {
+const InlineTextEditCard = ({ text, onSetText }: any) => {
   const [isInputActive, setIsInputActive] = useState(false);
-  const [inputValue, setInputValue] = useState(props.text);
+  const [inputValue, setInputValue] = useState(text);
 
   const wrapperRef = useRef(null);
   const textRef = useRef(null);
@@ -17,7 +17,7 @@ const InlineTextEditCard = (props: any) => {
   // check to see if the user clicked outside of this component
   useOnClickOutside(wrapperRef, () => {
     if (isInputActive) {
-      props.onSetText(inputValue);
+      onSetText(inputValue);
       setIsInputActive(false);
     }
   });
@@ -34,12 +34,12 @@ const InlineTextEditCard = (props: any) => {
     if (isInputActive) {
       // if Enter is pressed, save the text and case the editor
       if (enter) {
-        props.onSetText(inputValue);
+        onSetText(inputValue);
         setIsInputActive(false);
       }
       // if Escape is pressed, revert the text and close the editor
       if (esc) {
-        setInputValue(props.text);
+        setInputValue(text);
         setIsInputActive(false);
       }
     }
@@ -52,7 +52,7 @@ const InlineTextEditCard = (props: any) => {
         onClick={() => setIsInputActive(true)}
         isInputActive={isInputActive}
       >
-        {props.text}
+        {text}
       </Surface>
       <TextInput
         ref={inputRef}

@@ -32,6 +32,7 @@ const useGetUpdateBoard = (id: string) => {
       const updatedBoard = subscriptionData.data.boardUpdated;
 
       if (id !== updatedBoard._id) return prev;
+
       return Object.assign({}, prev, {
         getBoardById: updatedBoard,
       });

@@ -4,7 +4,7 @@ import useBoardContext from '../../../hooks/useBoardContext';
 import DeleteCardButton from '../../../components/Buttons/DeleteCardButton';
 import InlineTextEditCard from '../../../components/Inputs/InlineTextEditCard';
 import useHover from '../../../hooks/useHover';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CardDetails, Wrapper } from './style';
 
 interface Props {
@@ -23,6 +23,11 @@ const Card = ({ card, index }: Props) => {
       newCardName({ _id: card._id, name: text });
     }
   };
+
+  useEffect(() => {
+    console.log(card.name);
+    setCardText(card.name);
+  }, [card]);
 
   return (
     <Draggable draggableId={card._id} index={index}>
