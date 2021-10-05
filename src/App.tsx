@@ -12,17 +12,13 @@ import { useEffect, useState } from 'react';
 import { ColorKeys } from './types';
 import GlobalStyles from './GlobalStyles';
 
-const LoadingBoard = () => <div></div>;
-
 const App = () => {
   const { memberFound, member, logOut } = useMemberContext();
   const [showMenuPopover, toggleMenuPopover] = useToggle();
-  //@ts-ignore
   const [boardColor, setBoardColor] = useState<ColorKeys>('default');
   const location = useLocation();
 
   useEffect(() => {
-    //@ts-ignore
     if (!location.pathname.includes('board/')) setBoardColor('default');
   }, [location]);
 
@@ -30,11 +26,7 @@ const App = () => {
     <>
       <GlobalStyles color={boardColor} />
       {memberFound && (
-        <NavBar
-          // how to handle isLoading?
-          isLoading={false}
-          toggleMenuPopover={toggleMenuPopover}
-        />
+        <NavBar isLoading={false} toggleMenuPopover={toggleMenuPopover} />
       )}
       <Switch>
         <Route path="/board/:boardId">
@@ -42,36 +34,28 @@ const App = () => {
             <Board setBoardColor={setBoardColor} />
           ) : memberFound === false ? (
             <Redirect to="/login" />
-          ) : (
-            <LoadingBoard />
-          )}
+          ) : null}
         </Route>
         <Route exact path="/boards">
           {memberFound ? (
             <Boards />
           ) : memberFound === false ? (
             <Redirect to="/login" />
-          ) : (
-            <LoadingBoard />
-          )}
+          ) : null}
         </Route>
         <Route exact path="/login">
           {memberFound ? (
             <Redirect to="/boards" />
           ) : memberFound === false ? (
             <LogIn />
-          ) : (
-            <LoadingBoard />
-          )}
+          ) : null}
         </Route>
         <Route exact path="/">
           {memberFound ? (
             <Redirect to="/boards" />
           ) : memberFound === false ? (
             <SignUp />
-          ) : (
-            <LoadingBoard />
-          )}
+          ) : null}
         </Route>
         <Route component={PageNotFound} />
       </Switch>

@@ -43,21 +43,30 @@ export interface CardInterface extends CommonData {
 //   remove = 'remove',
 // }
 
-export enum BoardColorKeys {
-  BLUE = 'blue',
-  ORANGE = 'orange',
-  GREEN = 'green',
-  RED = 'red',
-  PURPLE = 'purple',
-  PINK = 'pink',
-  LIME = 'lime',
-  SKY = 'sky',
-  GREY = 'grey',
-}
+// export enum BoardColorKeys {
+//   BLUE = 'blue',
+//   ORANGE = 'orange',
+//   GREEN = 'green',
+//   RED = 'red',
+//   PURPLE = 'purple',
+//   PINK = 'pink',
+//   LIME = 'lime',
+//   SKY = 'sky',
+//   GREY = 'grey',
+// }
 
-enum ExtendColorKeys {
-  DEFAULT = 'default',
-}
+export type BoardColorKeys =
+  | 'blue'
+  | 'orange'
+  | 'green'
+  | 'red'
+  | 'purple'
+  | 'pink'
+  | 'lime'
+  | 'sky'
+  | 'grey';
+
+export type ExtendColorKeys = 'default';
 
 export type ColorKeys = BoardColorKeys | ExtendColorKeys;
 

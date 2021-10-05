@@ -44,10 +44,8 @@ const splitLink = split(
       definition.operation === 'subscription'
     );
   },
-  //@ts-ignore
   wsLink,
-  //@ts-ignore
-  authLink.concat(httpLink),
+  authLink.concat(httpLink as any) as any,
 );
 
 const client = new ApolloClient({
