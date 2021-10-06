@@ -1,7 +1,7 @@
 import { DraggableLocation } from 'react-beautiful-dnd';
 import { BoardInterface } from '../../../types';
 import { updateItemPosition } from '../../../utlities/calculatePositionHelpers';
-import { reorderCardsInSameList } from '../../../utlities/onDragEndHelpers';
+import reorderCardsInSameList from '../../../utlities/onDragEndHelpers/reorderCardsInSameList';
 import useUpdateCardPos from './useUpdateCardPos';
 
 const useReorderCardsSameList = () => {

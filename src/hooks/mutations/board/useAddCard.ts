@@ -2,12 +2,12 @@ import { useMutation } from '@apollo/client';
 import { CREATE_CARD } from '../../../graphql/mutations/board';
 import { BoardInterface, ListInterface } from '../../../types';
 import { newItemPosition } from '../../../utlities/calculatePositionHelpers';
-import { addCardHelper } from '../../../utlities/onDragEndHelpers';
+import { addCardHelper } from '../../../utlities/addCardHelper';
 import useMemberContext from '../../useMemberContext';
 
 const useAddCard = (
   board: BoardInterface | null,
-  setBoard: (input: BoardInterface) => void,
+  setBoard: React.Dispatch<React.SetStateAction<BoardInterface | null>>,
 ) => {
   const { setMemberFound } = useMemberContext();
 
@@ -18,7 +18,7 @@ const useAddCard = (
   });
 
   const addCard = (input: string, list: ListInterface) => {
-    if (!board) return;
+    if (!board || !list._id || !board._id) return;
     try {
       let cardObject = {
         name: input,

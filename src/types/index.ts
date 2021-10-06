@@ -1,3 +1,5 @@
+import { DraggableLocation } from 'react-beautiful-dnd';
+
 interface CommonData {
   _id: string;
   name: string;
@@ -36,24 +38,12 @@ export interface CardInterface extends CommonData {
   idBoard: string;
 }
 
-// export enum ProfilePopoverContentType {
-//   main = 'main',
-//   levelChange = 'levelChange',
-//   leave = 'leave',
-//   remove = 'remove',
-// }
-
-// export enum BoardColorKeys {
-//   BLUE = 'blue',
-//   ORANGE = 'orange',
-//   GREEN = 'green',
-//   RED = 'red',
-//   PURPLE = 'purple',
-//   PINK = 'pink',
-//   LIME = 'lime',
-//   SKY = 'sky',
-//   GREY = 'grey',
-// }
+interface BaseCard {
+  name: string;
+  idList: string;
+  pos: number;
+  idBoard: string;
+}
 
 export type BoardColorKeys =
   | 'blue'
@@ -73,3 +63,17 @@ export type ColorKeys = BoardColorKeys | ExtendColorKeys;
 export interface Params {
   [key: string]: string;
 }
+
+export type OnDragEndHelperFn = (
+  boardData: BoardInterface,
+  sourceData: DraggableLocation,
+  destinationData: DraggableLocation,
+  updateBoard: React.Dispatch<React.SetStateAction<BoardInterface | null>>,
+) => void;
+
+export type AddCardHelper = (
+  boardData: BoardInterface,
+  cardObject: BaseCard,
+  listData: any,
+  updateBoard: React.Dispatch<React.SetStateAction<BoardInterface | null>>,
+) => void;
