@@ -1,4 +1,4 @@
-import { AddCardHelper, CardInterface } from '../types';
+import { AddCardHelper } from '../types';
 
 export const addCardHelper: AddCardHelper = (
   boardData,

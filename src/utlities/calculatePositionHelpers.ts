@@ -1,9 +1,11 @@
-export const newItemPosition = (arr: any) => {
+import { CardInterface, ListInterface } from '../types';
+
+export const newItemPosition = (arr: ListInterface[] | CardInterface[]) => {
   return arr.length ? arr[arr.length - 1].pos + 65536 : 65535;
 };
 
 export const updateItemPosition = (
-  arr: any,
+  arr: ListInterface[] | CardInterface[],
   destIndex: number,
   sourceIndex: number,
 ) => {
@@ -18,7 +20,10 @@ export const updateItemPosition = (
   }
 };
 
-export const updateItemPositionAcross = (arr: any, destIndex: number) => {
+export const updateItemPositionAcross = (
+  arr: CardInterface[],
+  destIndex: number,
+) => {
   if (destIndex === 0 && arr.length === 0) {
     return 65535;
   } else if (destIndex === 0) {
