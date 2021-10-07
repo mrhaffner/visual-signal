@@ -7,11 +7,11 @@ import { VALIDATE_EMAIL } from '../../graphql/queries';
 import { TOS } from './sharedStyles';
 
 interface Props {
-  setEmailInUse: (input: boolean) => void;
-  setEmail: (input: string) => void;
+  setEmailInUse: React.Dispatch<React.SetStateAction<boolean | null>>;
+  setEmail: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
-const SignUpFormInitial = ({ setEmailInUse, setEmail }: any) => {
+const SignUpFormInitial = ({ setEmailInUse, setEmail }: Props) => {
   const [validateEmail, { data }] = useLazyQuery(VALIDATE_EMAIL);
 
   const { register, handleSubmit, watch } = useForm();

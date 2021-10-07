@@ -10,7 +10,11 @@ import { useLazyQuery } from '@apollo/client';
 import { VALIDATE_EMAIL } from '../../graphql/queries';
 import { TOS } from './sharedStyles';
 
-const SignUpFormFinal = ({ email }: any) => {
+interface Props {
+  email: string;
+}
+
+const SignUpFormFinal = ({ email }: Props) => {
   const [validateEmail, { data, loading }] = useLazyQuery(VALIDATE_EMAIL);
   const [signUpParams, setSignUpParams] = useState(null);
   const [showNonUniqueEmailError, setShowNonUniqueEmailError] = useState(false);

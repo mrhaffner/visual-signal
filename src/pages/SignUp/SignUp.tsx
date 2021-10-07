@@ -5,8 +5,8 @@ import { useState } from 'react';
 import { formTitle, linkObj } from '../../constants/signup';
 
 const SignUp = () => {
-  const [emailInUse, setEmailInUse] = useState(null);
-  const [email, setEmail] = useState(null);
+  const [emailInUse, setEmailInUse] = useState<boolean | null>(null);
+  const [email, setEmail] = useState<string | null>(null);
 
   return (
     <SignInOrUpPage
