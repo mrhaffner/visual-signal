@@ -2,10 +2,9 @@ import SignInOrUpPage from '../../components/SharedLayouts/SignInOrUpPage';
 import SignUpFormInitial from './SignUpFormInitial';
 import SignUpFormFinal from './SignUpFormFinal';
 import { useState } from 'react';
+import { formTitle, linkObj } from '../../constants/signup';
 
 const SignUp = () => {
-  const linkObj = { link: '/login', text: 'Already have an account? Log In' };
-  const formTitle = 'Sign up for your account';
   const [emailInUse, setEmailInUse] = useState(null);
   const [email, setEmail] = useState(null);
 
