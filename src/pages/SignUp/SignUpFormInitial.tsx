@@ -1,47 +1,19 @@
 import EmailInput from '../../components/Inputs/EmailInput';
 import GreenFormButton from '../../components/Buttons/GreenFormButton';
-import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { useLazyQuery } from '@apollo/client';
-import { VALIDATE_EMAIL } from '../../graphql/queries';
 import { TOS } from './sharedStyles';
+import { EmailInUse, SetEmail } from '../../types';
+import useValidateEmail from '../../hooks/useValidateEmail';
 
 interface Props {
-  setEmailInUse: React.Dispatch<React.SetStateAction<boolean | null>>;
-  setEmail: React.Dispatch<React.SetStateAction<string | null>>;
+  setEmailInUse: EmailInUse;
+  setEmail: SetEmail;
 }
 
 const SignUpFormInitial = ({ setEmailInUse, setEmail }: Props) => {
-  const [validateEmail, { data }] = useLazyQuery(VALIDATE_EMAIL);
-
-  const { register, handleSubmit, watch } = useForm();
-  const watchEmail = watch('email');
-
-  const [disabled, setDisabled] = useState(true);
-
-  const onSubmit = (data: any) => {
-    const { email } = data;
-    validateEmail({ variables: { email } });
-  };
-
-  const regex = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/i;
-
-  useEffect(() => {
-    if (regex.test(watchEmail) === true) {
-      setDisabled(false);
-    } else {
-      setDisabled(true);
-    }
-  }, [watchEmail]);
-
-  useEffect(() => {
-    if (data && data.validateEmail === false) {
-      setEmailInUse(true);
-    } else if (data && data.validateEmail === true) {
-      setEmailInUse(false);
-      setEmail(watchEmail);
-    }
-  }, [data]);
+  const { handleSubmit, onSubmit, register, disabled } = useValidateEmail(
+    setEmailInUse,
+    setEmail,
+  );
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

@@ -77,3 +77,10 @@ export type AddCardHelper = (
   listData: any,
   updateBoard: React.Dispatch<React.SetStateAction<BoardInterface | null>>,
 ) => void;
+
+export type FormData = {
+  [key: string]: string;
+};
+
+export type EmailInUse = React.Dispatch<React.SetStateAction<boolean | null>>;
+export type SetEmail = React.Dispatch<React.SetStateAction<string | null>>;
