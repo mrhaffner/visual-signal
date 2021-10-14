@@ -20,6 +20,7 @@ import {
   CreateButtonContainer,
   CreateButton,
 } from './style';
+import { colorRandomizer } from '../../../utlities/colorRandomizer';
 
 interface Props {
   toggleCreateBoardModal: () => void;
@@ -64,26 +65,13 @@ const CreateBoardModal = ({ toggleCreateBoardModal }: Props) => {
     toggleCreateBoardModal();
   });
 
-  const colors = [
-    'blue',
-    'orange',
-    'green',
-    'red',
-    'purple',
-    'pink',
-    'lime',
-    'sky',
-    'grey',
-  ];
-
-  const randomizer = (colors: any) => {
-    return colors[Math.floor(Math.random() * colors.length)];
-  };
-
   const onSubmit = handleSubmit((formData) => {
     newBoardMutation({
       variables: {
-        boardInput: { name: formData.input, color: randomizer(colors) },
+        boardInput: {
+          name: formData.input,
+          color: colorRandomizer(),
+        },
       },
     });
   });

@@ -7,23 +7,22 @@ interface Props {
   boardList: BoardInterface[];
   toggleCreateBoardModal: () => void;
 }
-const BoardList = ({ boardList, toggleCreateBoardModal }: Props) => {
-  return (
-    <ListWrapper>
-      {boardList.map((board) => {
-        const url = `/board/${board._id}`;
-        return (
-          <Card
-            key={board.name + Math.random()}
-            url={url}
-            name={board.name}
-            color={board.color}
-          />
-        );
-      })}
-      <CreateBoardTile toggleCreateBoardModal={toggleCreateBoardModal} />
-    </ListWrapper>
-  );
-};
+
+const BoardList = ({ boardList, toggleCreateBoardModal }: Props) => (
+  <ListWrapper>
+    {boardList.map((board) => {
+      const url = `/board/${board._id}`;
+      return (
+        <Card
+          key={board.name + Math.random()}
+          url={url}
+          name={board.name}
+          color={board.color}
+        />
+      );
+    })}
+    <CreateBoardTile toggleCreateBoardModal={toggleCreateBoardModal} />
+  </ListWrapper>
+);
 
 export default BoardList;

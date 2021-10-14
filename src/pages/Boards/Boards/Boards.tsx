@@ -10,7 +10,7 @@ const Boards = () => {
   const [showCreateBoardModal, toggleCreateBoardModal] = useToggle();
 
   const { setMemberFound } = useMemberContext();
-  const { loading, error, boardList, refetch } = useGetUpdateBoards();
+  const { error, boardList, refetch } = useGetUpdateBoards();
 
   useEffect(() => {
     refetch();
@@ -22,25 +22,19 @@ const Boards = () => {
     }
   }, [error]);
 
-  // if (loading) return <></>;
-
-  // if (error) return <div>Error!</div>;
-
   return (
-    <>
-      <Wrapper>
-        <AllBoards>
-          <BoardsTitle>YOUR BOARDS</BoardsTitle>
-          <BoardList
-            boardList={boardList}
-            toggleCreateBoardModal={toggleCreateBoardModal}
-          />
-          {showCreateBoardModal && (
-            <CreateBoardModal toggleCreateBoardModal={toggleCreateBoardModal} />
-          )}
-        </AllBoards>
-      </Wrapper>
-    </>
+    <Wrapper>
+      <AllBoards>
+        <BoardsTitle>YOUR BOARDS</BoardsTitle>
+        <BoardList
+          boardList={boardList}
+          toggleCreateBoardModal={toggleCreateBoardModal}
+        />
+        {showCreateBoardModal && (
+          <CreateBoardModal toggleCreateBoardModal={toggleCreateBoardModal} />
+        )}
+      </AllBoards>
+    </Wrapper>
   );
 };
 

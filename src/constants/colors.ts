@@ -1,3 +1,5 @@
+import { BoardColorKeys } from '../types';
+
 export const colors = {
   blue: 'rgb(0, 121, 191)',
   orange: 'rgb(210, 144, 52)',
@@ -10,3 +12,15 @@ export const colors = {
   grey: 'rgb(131, 140, 145)',
   default: '',
 };
+
+export const colorsArray: BoardColorKeys[] = [
+  'blue',
+  'orange',
+  'green',
+  'red',
+  'purple',
+  'pink',
+  'lime',
+  'sky',
+  'grey',
+];

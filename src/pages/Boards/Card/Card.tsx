@@ -19,19 +19,17 @@ const Card = ({ name, url, color }: Props) => {
   const [hoverRef, isHovered] = useHover();
 
   return (
-    <>
-      {/* @ts-ignore */}
-      <Wrapper ref={hoverRef}>
-        <Container to={url} color={color}>
-          {isHovered && <BoardTileFade />}
-          <TitleContainer>
-            <TitleSubContainer>
-              <Title>{name}</Title>
-            </TitleSubContainer>
-          </TitleContainer>
-        </Container>
-      </Wrapper>
-    </>
+    //@ts-ignore
+    <Wrapper ref={hoverRef}>
+      <Container to={url} color={color}>
+        {isHovered && <BoardTileFade />}
+        <TitleContainer>
+          <TitleSubContainer>
+            <Title>{name}</Title>
+          </TitleSubContainer>
+        </TitleContainer>
+      </Container>
+    </Wrapper>
   );
 };
 
