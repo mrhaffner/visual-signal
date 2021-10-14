@@ -4,6 +4,7 @@ import PasswordInput from '../../components/Inputs/PasswordInput';
 import { useForm } from 'react-hook-form';
 import useMemberContext from '../../hooks/useMemberContext';
 import InputErrorField from '../../components/Inputs/InputErrorField';
+import { FormData } from '../../types';
 
 const LogInForm = () => {
   const { login, loginData } = useMemberContext();
@@ -15,7 +16,7 @@ const LogInForm = () => {
     reValidateMode: 'onChange',
   });
 
-  const onSubmit = (inputData: any) => {
+  const onSubmit = (inputData: FormData) => {
     const token = localStorage.getItem('trello-member-token');
     if (token) localStorage.removeItem('trello-member-token');
     login({ variables: { loginInput: inputData } });
