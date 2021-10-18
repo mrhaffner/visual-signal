@@ -1,5 +1,5 @@
 import { useMutation } from '@apollo/client';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, KeyboardEvent } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router';
 import { CREATE_BOARD } from '../graphql/mutations/board';
@@ -56,7 +56,7 @@ const useCreateBoardModal = (toggleCreateBoardModal: () => void) => {
     });
   });
 
-  const handleKeyPress = (e: any) => {
+  const handleKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       onSubmit();
     }
