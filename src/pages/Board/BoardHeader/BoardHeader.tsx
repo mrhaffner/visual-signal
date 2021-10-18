@@ -46,7 +46,6 @@ const BoardHeader = ({
   }, [inviteBtnRef]);
 
   const handleAvatarClick = (x: MemberInfo | null, idx: number) => {
-    //can you check if this is already open and do nothing on click?
     setPopoverMember(x);
     //@ts-ignore
     setFacePilePosition(facePileRef.current.offsetLeft + idx * 28);

@@ -17,7 +17,6 @@ const Card = ({ card, index }: Props) => {
   const [hoverRef, isHovered] = useHover<HTMLDivElement>();
   const [cardText, setCardText] = useState(card.name);
   const handleSetText = (text: string) => {
-    //could move this logic including state update to BoardProvider
     if (text.length) {
       setCardText(text);
       newCardName({ _id: card._id, name: text });
