@@ -1,11 +1,3 @@
-import { useForm } from 'react-hook-form';
-import useOnClickOutside from '../../../hooks/useOnClickOutside';
-import { useEffect, useRef } from 'react';
-import { CREATE_BOARD } from '../../../graphql/mutations/board';
-import { useMutation } from '@apollo/client';
-import { useHistory } from 'react-router-dom';
-import useKeyPress from '../../../hooks/useKeyPress';
-import useMemberContext from '../../../hooks/useMemberContext';
 import {
   ModalWrapper,
   OverlayContainer,
@@ -20,67 +12,15 @@ import {
   CreateButtonContainer,
   CreateButton,
 } from './style';
-import { colorRandomizer } from '../../../utlities/colorRandomizer';
+import useCreateBoardModal from '../../../hooks/useCreateBoardModal';
 
 interface Props {
   toggleCreateBoardModal: () => void;
 }
 
 const CreateBoardModal = ({ toggleCreateBoardModal }: Props) => {
-  const { setMemberFound } = useMemberContext();
-  const [newBoardMutation, { data }] = useMutation(CREATE_BOARD, {
-    onError: () => {
-      setMemberFound(false);
-    },
-  });
-
-  const history = useHistory();
-
-  const { register, handleSubmit, watch, setFocus } = useForm();
-  const watchInput = watch('input');
-
-  //may want to debounce this
-  const buttonDisabled = watchInput && watchInput.length > 0 ? false : true;
-
-  const wrapperRef = useRef(null);
-
-  const esc = useKeyPress('Escape');
-
-  useEffect(() => {
-    setFocus('input');
-    //can remove setFocus from dependency array
-  }, [setFocus]);
-
-  useEffect(() => {
-    if (data) {
-      history.push(`/board/${data.createBoard._id}`);
-    }
-  });
-
-  useEffect(() => {
-    if (esc) toggleCreateBoardModal();
-  }, [esc]);
-
-  useOnClickOutside(wrapperRef, () => {
-    toggleCreateBoardModal();
-  });
-
-  const onSubmit = handleSubmit((formData) => {
-    newBoardMutation({
-      variables: {
-        boardInput: {
-          name: formData.input,
-          color: colorRandomizer(),
-        },
-      },
-    });
-  });
-
-  const handleKeyPress = (e: any) => {
-    if (e.key === 'Enter') {
-      onSubmit();
-    }
-  };
+  const { wrapperRef, handleKeyPress, register, onSubmit, buttonDisabled } =
+    useCreateBoardModal(toggleCreateBoardModal);
 
   return (
     <OverlayWrapper>
