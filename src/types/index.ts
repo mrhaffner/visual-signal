@@ -84,3 +84,9 @@ export type FormData = {
 
 export type EmailInUse = React.Dispatch<React.SetStateAction<boolean | null>>;
 export type SetEmail = React.Dispatch<React.SetStateAction<string | null>>;
+
+export interface Member {
+  email: string;
+  fullName: string;
+  idBoards: string[];
+}
