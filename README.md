@@ -4,6 +4,11 @@
 
 https://user-images.githubusercontent.com/70085763/134999327-f4890607-6c4c-419e-80ca-70e48f5e40dc.mov
 
+#### Features
+- User creation / authentication / authorization
+- Sharing Boards between users
+- Real time updates with websockets
+
 #### Main technologies and libraries used:
 
 - React / Typescript
