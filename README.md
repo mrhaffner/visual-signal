@@ -6,7 +6,7 @@ https://user-images.githubusercontent.com/70085763/134999327-f4890607-6c4c-419e-
 
 #### Features
 - User creation / authentication / authorization
-- Sharing Boards between users
+- Sharing boards between users
 - Real time updates with websockets
 
 #### Main technologies and libraries used:
