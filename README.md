@@ -1,25 +1,32 @@
-### This is the front end for my Visual Signal project - a Trello Clone!
+## Visual Signal
 
-#### Watch the demo:
+Real time project management software - a Trello Clone!
+
+## Watch the demo:
 
 https://user-images.githubusercontent.com/70085763/134999327-f4890607-6c4c-419e-80ca-70e48f5e40dc.mov
 
-#### Features
+## Visit the back end's repository:
+
+https://github.com/mrhaffner/visual-signal-api
+
+## Features
 - User creation / authentication / authorization
 - Sharing boards between users
 - Real time updates with websockets
 
-#### Main technologies and libraries used:
+## Built with:
 
 - React / Typescript
 - Apollo Client / GraphQL
-- Websockets for real time updates across users
 - Styled Components
 - Atlassian's own React Beautiful Drag and Drop
 
-#### Visit the back end's repository:
+## Acknowledgements:
 
-https://github.com/mrhaffner/visual-signal-api
-
-#### Note
 Styles come directly from Trello and were adapted into Styled Components.
+
+## Potential improvements:
+
+- Testing
+- Proper documentation / comments
